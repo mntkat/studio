@@ -27,8 +27,8 @@
                         customMinimumSize="0, 27">
                     <sunaba.desktop.PopupMenu
                             name="File">
-                        <menuItem label="New Project" icon="studio://icons/16/blue-folder--plus.png"/>
-                        <menuItem label="Open Project" icon="studio://icons/16/blue-folder-open-document.png"/>
+                        <menuItem label="New File" icon="studio://icons/16/blue-folder--plus.png"/>
+                        <menuItem label="Open File" icon="studio://icons/16/blue-folder-open-document.png"/>
                         <menuItem label="Save File" icon="studio://icons/16/disk.png"/>
                         <menuItem label="Publish" icon="studio://icons/16/box--arrow.png"/>
                         <menuItem separator="true"/>
@@ -88,7 +88,7 @@
                     </sunaba.ui.HBoxContainer>
                     <sunaba.ui.Control name="spacer" sizeFlagsHorizontal="3"/>
                     <sunaba.ui.HBoxContainer
-                        name="righttToolbar"
+                        name="rightToolbar"
                         fullRect="true"
                         separation="0">
                         <sunaba.ui.Button
