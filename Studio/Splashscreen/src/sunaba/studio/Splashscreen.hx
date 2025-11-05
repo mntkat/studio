@@ -46,7 +46,7 @@ class Splashscreen extends Widget {
     public function openProject(path: String) {
         var window = new Window();
 
-        var appView = new AppView();
+        var appView = new DesktopAppView();
         window.addChild(appView);
         var args = appView.args;
         args.add(path);
