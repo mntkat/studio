@@ -58,7 +58,7 @@
             </sunaba.ui.Control>
             <sunaba.ui.Control
                 name="toolbar"
-                customMinimumSize="0,32">
+                customMinimumSize="0,40">
                 <sunaba.ui.HBoxContainer
                     name="hbox"
                     fullRect="true"
@@ -72,19 +72,19 @@
                             flat="true"
                             icon="studio://icons/16_1-5x/disk.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="reload"
                             flat="true"
                             icon="studio://icons/16_1-5x/arrow-circle-315.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="build"
                             flat="true"
                             icon="studio://icons/16_1-5x/hammer.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                     </sunaba.ui.HBoxContainer>
                     <sunaba.ui.Control name="spacer" sizeFlagsHorizontal="3"/>
                     <sunaba.ui.HBoxContainer
@@ -96,19 +96,19 @@
                             flat="true"
                             icon="studio://icons/16_1-5x/control.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="pause"
                             flat="true"
                             icon="studio://icons/16_1-5x/control-pause.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="stop"
                             flat="true"
                             icon="studio://icons/16_1-5x/control-stop-square.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                     </sunaba.ui.HBoxContainer>
                 </sunaba.ui.HBoxContainer>
             </sunaba.ui.Control>
@@ -122,7 +122,7 @@
                             flat="true"
                             icon="studio://icons/16_1-5x/blue-folder-stand.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                 </sunaba.ui.VBoxContainer>
                 <sunaba.ui.HSplitContainer
                         name="hsplit1"
@@ -150,7 +150,7 @@
                             flat="true"
                             icon="studio://icons/16_1-5x/clapperboard--pencil.png"
                             iconAlignment="1"
-                            customMinimumSize="32,32"/>
+                            customMinimumSize="40,40"/>
                 </sunaba.ui.VBoxContainer>
             </sunaba.ui.HBoxContainer>
 
