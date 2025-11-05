@@ -6,7 +6,7 @@ import sunaba.io.IoInterface;
 class EditorWidget extends Widget {
     private  var parent: Editor;
 
-Updated Exlpor    public function new(parent: Editor, area: EditorArea) {
+    public function new(parent: Editor, area: EditorArea) {
         super();
         this.parent = parent;
         if (area == EditorArea.leftSidebar) {
