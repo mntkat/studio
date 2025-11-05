@@ -229,10 +229,6 @@ class Editor extends Widget {
             }
 
             new Explorer(this, EditorArea.leftSidebar);
-            new EditorWidget(this, EditorArea.leftSidebar);
-            new EditorWidget(this, EditorArea.leftSidebar);
-            new EditorWidget(this, EditorArea.rightSidebar);
-            new EditorWidget(this, EditorArea.rightSidebar);
         }
         catch(e: Exception) {
             Debug.error(e.message);
