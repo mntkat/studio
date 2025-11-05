@@ -139,7 +139,7 @@
                                 sizeFlagsHorizontal="3"
                                 name="workspace"/>
                         <sunaba.ui.TabContainer
-                                name="righttSidebar"
+                                name="rightSidebar"
                                 customMinimumSize="200, 0"/>
                     </sunaba.ui.HSplitContainer>
                 </sunaba.ui.HSplitContainer>
