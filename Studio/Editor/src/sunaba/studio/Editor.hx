@@ -37,9 +37,9 @@ class Editor extends Widget {
     var centerTabContainer: TabContainer;
     var rightTabContainer: TabContainer;
 
-    var leftSidebarChildren: Array<Widget> = [];
-    var rightSidebarChildren: Array<Widget> = [];
-    var workspaceChildern: Array<Widget> = [];
+    var leftSidebarChildren: Array<EditorWidget> = [];
+    var rightSidebarChildren: Array<EditorWidget> = [];
+    var workspaceChildern: Array<EditorWidget> = [];
 
     public var saveFileButton: Button;
     public var reloadButton: Button;
@@ -348,5 +348,70 @@ class Editor extends Widget {
             tabButton.toggleMode = true;
             tabButton.buttonGroup = tabButtonGroup;
         }
+    }
+
+    public function setLeftSidebarTabIcon(widget: EditorWidget, icon: Texture2D) {
+        var index = leftSidebarChildren.indexOf(widget);
+        if (leftTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        leftTabContainer.setTabIcon(index, icon);
+    }
+
+    public function setRightSiderbarTabIcon(widget: EditorWidget, icon: Texture2D) {
+        var index = rightSidebarChildren.indexOf(widget);
+        if (rightTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        rightTabContainer.setTabIcon(index, icon);
+    }
+
+    public function setLeftSidebarTabTitle(widget: EditorWidget, title: String) {
+        var index = leftSidebarChildren.indexOf(widget);
+        if (leftTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        leftTabContainer.setTabTitle(index, title);
+    }
+
+    public function setRightSidebarTabTitle(widget: EditorWidget, title: String) {
+        var index = rightSidebarChildren.indexOf(widget);
+        if (rightTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        rightTabContainer.setTabTitle(index, title);
+    }
+
+    public function setWorkspaceTabIcon(widget: EditorWidget, icon: Texture2D) {
+        var index = workspaceChildern.indexOf(widget);
+        if (centerTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        centerTabContainer.setTabIcon(index, icon);
+    }
+
+    public function setWorkspaceTabTitle(widget: EditorWidget, title: String) {
+        var index = workspaceChildern.indexOf(widget);
+        if (centerTabContainer.getTabControl(index).isNull()) {
+            return;
+        }
+        centerTabContainer.setTabTitle(index, title);
+    }
+
+    public function addLeftSidebarChild(child: EditorWidget) {
+        leftSidebarChildren.push(child);
+        leftTabContainer.addChild(child);
+        refreshLeftSidebar();
+    }
+
+    public function addRightSidebarChild(child: EditorWidget) {
+        rightSidebarChildren.push(child);
+        rightTabContainer.addChild(child);
+        refreshRightSidebar();
+    }
+
+    public function addWorkspaceChild(child: EditorWidget) {
+        workspaceChildern.push(child);
+        centerTabContainer.addChild(child);
     }
 }
