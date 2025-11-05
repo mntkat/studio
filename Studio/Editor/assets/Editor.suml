@@ -8,5 +8,178 @@
                 offsetTop="-10"
                 offsetLeft="-10"
                 offsetRight="10"/>
+        <sunaba.ui.VBoxContainer
+                name="vbox"
+                fullRect="true"
+                separation="0">
+            <sunaba.ui.Control
+                    name="menuBarControl"
+                    customMinimumSize="0, 27">
+                <sunaba.ui.Label
+                        name="windowTitle"
+                        fullRect="true"
+                        text="Sunaba Studio"
+                        verticalAlignment="1"
+                        horizontalAlignment="1"/>
+                <sunaba.ui.MenuBar
+                        name="menuBar"
+                        fullRect="true"
+                        customMinimumSize="0, 27">
+                    <sunaba.desktop.PopupMenu
+                            name="File">
+                        <menuItem label="New Project" icon="studio://icons/16/blue-folder--plus.png"/>
+                        <menuItem label="Open Project" icon="studio://icons/16/blue-folder-open-document.png"/>
+                        <menuItem label="Save File" icon="studio://icons/16/disk.png"/>
+                        <menuItem label="Publish" icon="studio://icons/16/box--arrow.png"/>
+                        <menuItem separator="true"/>
+                        <menuItem label="Open Project in Visual Studio Code" icon="studio://icons/16/vscode.png"/>
+                        <menuItem label="Exit" icon="studio://icons/16/door-open-in.png"/>
+                    </sunaba.desktop.PopupMenu>
+                    <sunaba.desktop.PopupMenu
+                            name="Edit">
+                        <menuItem label="Undo" icon="studio://icons/16/arrow-curve-180-left.png"/>
+                        <menuItem label="Redo" icon="studio://icons/16/arrow-curve.png"/>
+                        <menuItem label="Cut" icon="studio://icons/16/scissors.png"/>
+                        <menuItem label="Copy" icon="studio://icons/16/document-copy.png"/>
+                        <menuItem label="Paste" icon="studio://icons/16/clipboard-paste.png"/>
+                    </sunaba.desktop.PopupMenu>
+                    <!--sunaba.desktop.PopupMenu
+                        name="View">
+                        <menuItem label="Toggle Fullscreen (F11)" icon="studio://icons/16/arrow-out.png"/>
+                        <menuItem label="Toggle Menubar (F2)" icon="studio://icons/16/application-blue.png"/>
+                    </sunaba.desktop.PopupMenu-->
+                    <sunaba.desktop.PopupMenu
+                        name="Tools">
+                    </sunaba.desktop.PopupMenu>
+                    <sunaba.desktop.PopupMenu
+                            name="Help">
+                        <menuItem label="Sunaba Docs" icon="studio://icons/16/book.png"/>
+                        <menuItem label="About" icon="studio://icons/16/information-italic.png"/>
+                    </sunaba.desktop.PopupMenu>
+                </sunaba.ui.MenuBar>
+            </sunaba.ui.Control>
+            <sunaba.ui.Control
+                name="toolbar"
+                customMinimumSize="0,32">
+                <sunaba.ui.HBoxContainer
+                    name="hbox"
+                    fullRect="true"
+                    separation="0">
+                    <sunaba.ui.HBoxContainer
+                        name="leftToolbar"
+                        fullRect="true"
+                        separation="0">
+                        <sunaba.ui.Button
+                            name="saveFile"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/disk.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                        <sunaba.ui.Button
+                            name="reload"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/arrow-circle-315.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                        <sunaba.ui.Button
+                            name="build"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/hammer.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    </sunaba.ui.HBoxContainer>
+                    <sunaba.ui.Control name="spacer" sizeFlagsHorizontal="3"/>
+                    <sunaba.ui.HBoxContainer
+                        name="righttToolbar"
+                        fullRect="true"
+                        separation="0">
+                        <sunaba.ui.Button
+                            name="play"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/control.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                        <sunaba.ui.Button
+                            name="pause"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/control-pause.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                        <sunaba.ui.Button
+                            name="stop"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/control-stop-square.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    </sunaba.ui.HBoxContainer>
+                </sunaba.ui.HBoxContainer>
+            </sunaba.ui.Control>
+            <sunaba.ui.HBoxContainer
+                    name="hbox"
+                    sizeFlagsVertical="3">
+                <sunaba.ui.VBoxContainer
+                        name="leftTabBar">
+                    <sunaba.ui.Button
+                            name="saveFile"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/disk.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    <sunaba.ui.Button
+                            name="reload"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/arrow-circle-315.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    <sunaba.ui.Button
+                            name="build"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/hammer.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                </sunaba.ui.VBoxContainer>
+                <sunaba.ui.HSplitContainer
+                        name="hsplit1"
+                        sizeFlagsHorizontal="3"
+                        splitOffset="200">
+                    <sunaba.ui.TabContainer
+                            name="leftSidebar"
+                            customMinimumSize="200, 0"/>
+                    <sunaba.ui.HSplitContainer
+                            name="hsplit2"
+                            sizeFlagsHorizontal="3"
+                            splitOffset="200">
+                        <sunaba.ui.TabContainer
+                                sizeFlagsHorizontal="3"
+                                name="container"/>
+                        <sunaba.ui.TabContainer
+                                name="righttSidebar"
+                                customMinimumSize="200, 0"/>
+                    </sunaba.ui.HSplitContainer>
+                </sunaba.ui.HSplitContainer>
+                <sunaba.ui.VBoxContainer
+                        name="rightTabBar">
+                    <sunaba.ui.Button
+                            name="saveFile"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/disk.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    <sunaba.ui.Button
+                            name="reload"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/arrow-circle-315.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                    <sunaba.ui.Button
+                            name="build"
+                            flat="true"
+                            icon="studio://icons/16_1-5x/hammer.png"
+                            iconAlignment="1"
+                            customMinimumSize="32,32"/>
+                </sunaba.ui.VBoxContainer>
+            </sunaba.ui.HBoxContainer>
+
+        </sunaba.ui.VBoxContainer>
     </body>
 </suml>

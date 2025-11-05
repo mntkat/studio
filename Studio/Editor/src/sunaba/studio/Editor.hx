@@ -2,9 +2,20 @@ package sunaba.studio;
 
 import sunaba.ui.Widget;
 import sunaba.ui.Panel;
+import sunaba.ui.VBoxContainer;
+import sunaba.ui.Label;
+import sunaba.ui.MenuBar;
+import sunaba.desktop.PopupMenu;
+import sunaba.ui.HBoxContainer;
+import sunaba.ui.Button;
 import sunaba.core.Vector2i;
+import sunaba.HorizontalAlignment;
+import sunaba.ui.HSplitContainer;
+import sunaba.ui.TabContainer;
 
 class Editor extends Widget {
+    var sProjPath = "";
+
     public override function init() {
         load("studio://Editor.suml");
     }
