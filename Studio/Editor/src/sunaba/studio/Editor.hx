@@ -21,6 +21,7 @@ import sunaba.core.Callable;
 import sunaba.PlatformService;
 import sunaba.PlatformDeviceType;
 import haxe.Exception;
+import sunaba.ui.ButtonGroup;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -65,8 +66,10 @@ class Editor extends Widget {
         rightTabBar = getNodeT(VBoxContainer, "vbox/hbox/rightTabBar");
 
         leftTabContainer = getNodeT(TabContainer, "vbox/hbox/hsplit1/leftSidebar");
+        leftTabContainer.hide();
         centerTabContainer = getNodeT(TabContainer, "vbox/hbox/hsplit1/hsplit2/workspace");
         rightTabContainer = getNodeT(TabContainer, "vbox/hbox/hsplit1/hsplit2/rightSidebar");
+        rightTabContainer.hide();
 
         saveFileButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/saveFile");
         reloadButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/reload");
@@ -218,6 +221,8 @@ class Editor extends Widget {
                 }
             }));
 
+            refreshLeftSidebar();
+            refreshRightSidebar();
             trace("Hello, World!");
         }
         catch(e: Exception) {
@@ -237,5 +242,111 @@ class Editor extends Widget {
     public override function onProcess(deltaTime: Float) {
         checkFocus();
 
+    }
+
+    private function checkLeftSideBar() {
+        if (leftTabContainer.currentTab == -1) {
+            leftTabContainer.hide();
+        }
+        else {
+            leftTabContainer.show();
+        }
+    }
+
+    private function checkRightSidebar() {
+        if (rightTabContainer.currentTab == -1) {
+            rightTabContainer.hide();
+        }
+        else {
+            rightTabContainer.show();
+        }
+    }
+
+    public function refreshLeftSidebar() {
+        for (i in 0...leftTabBar.getChildCount(false)) {
+            var button = leftTabBar.getChild(i);
+            if (!button.isNull()) {
+                button.queueFree();
+            }
+        }
+
+        if (leftSidebarChildren.length == 0) {
+            leftTabBar.hide();
+            leftTabContainer.currentTab = -1;
+            checkLeftSideBar();
+            return;
+        }
+
+        leftTabBar.show();
+        var tabButtonGroup = new ButtonGroup();
+
+        var tabContainerBar = leftTabContainer.getTabBar();
+        for (i in 0...leftSidebarChildren.length) {
+            var tabIcon = tabContainerBar.getTabIcon(i);
+            var tabTitle = tabContainerBar.getTabTitle(i);
+            var tabButton = new Button();
+            if (!tabIcon.isNull()) {
+                tabButton.icon = tabIcon;
+            }
+            else {
+
+            }
+            tabButton.tooltipText = tabTitle;
+            tabButton.toggled.connect(Callable.fromFunction(function(toggled: Bool) {
+                if (toggled == true) {
+                    leftTabContainer.currentTab = i;
+                }
+                else if (leftTabContainer.currentTab == i) {
+                    leftTabContainer.currentTab = -1;
+                }
+                checkLeftSideBar();
+            }));
+            tabButton.toggleMode = true;
+            tabButton.buttonGroup = tabButtonGroup;
+        }
+    }
+
+    public function refreshRightSidebar() {
+        for (i in 0...rightTabBar.getChildCount(false)) {
+            var button = rightTabBar.getChild(i);
+            if (!button.isNull()) {
+                button.queueFree();
+            }
+        }
+
+        if (rightSidebarChildren.length == 0) {
+            rightTabBar.hide();
+            rightTabContainer.currentTab = -1;
+            checkRightSidebar();
+            return;
+        }
+
+        rightTabBar.show();
+        var tabButtonGroup = new ButtonGroup();
+
+        var tabContainerBar = rightTabContainer.getTabBar();
+        for (i in 0...rightSidebarChildren.length) {
+            var tabIcon = tabContainerBar.getTabIcon(i);
+            var tabTitle = tabContainerBar.getTabTitle(i);
+            var tabButton = new Button();
+            if (!tabIcon.isNull()) {
+                tabButton.icon = tabIcon;
+            }
+            else {
+
+            }
+            tabButton.tooltipText = tabTitle;
+            tabButton.toggled.connect(Callable.fromFunction(function(toggled: Bool) {
+                if (toggled == true) {
+                    rightTabContainer.currentTab = i;
+                }
+                else if (rightTabContainer.currentTab == i) {
+                    rightTabContainer.currentTab = -1;
+                }
+                checkRightSidebar();
+            }));
+            tabButton.toggleMode = true;
+            tabButton.buttonGroup = tabButtonGroup;
+        }
     }
 }
