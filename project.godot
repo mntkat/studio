@@ -40,6 +40,10 @@ display_server/driver.linuxbsd="wayland"
 
 project/assembly_name="Sunaba.Studio"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/native_dialogs/plugin.cfg")
+
 [rendering]
 
 rendering_device/driver.windows="d3d12"
