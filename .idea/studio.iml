@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Studio/Splashscreen/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/Studio/Splashscreen/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/buildsystem" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Studio/common" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

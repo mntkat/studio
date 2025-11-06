@@ -11,6 +11,7 @@
     "luabin": "main",
     "libraries": [],
     "compilerFlags": [
-        "-D absolute-path"
+        "-D absolute-path",
+        "--macro addClassPath('../common')"
     ]
 }

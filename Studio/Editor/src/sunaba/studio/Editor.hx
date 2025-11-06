@@ -258,6 +258,26 @@ class Editor extends Widget {
 
             _projectFile = haxe.Json.parse(projJson);
 
+            var recentProjectsPath = "user://recentProjects.json";
+            if (io.fileExists(recentProjectsPath)) {
+                var recentProjectsStr = io.loadText(recentProjectsPath);
+                var recentProjects: RecentProjects = haxe.Json.parse(recentProjectsStr);
+
+                if (recentProjects.list.contains(sProjPath)) {
+                    recentProjects.list.remove(sProjPath);
+                }
+                var newProjList: Array<String> = [];
+                newProjList.push(sProjPath);
+                for (proj in recentProjects.list) {
+                    if (newProjList.length >= 10)
+                        break;
+                    newProjList.push(proj);
+                }
+                recentProjects.list = newProjList;
+                var recentProjJson = haxe.Json.stringify(recentProjects);
+                io.saveText("user://recentProjects.json", recentProjJson);
+            }
+
             explorer = new Explorer(this, EditorArea.leftSidebar);
         }
         catch(e: Exception) {
