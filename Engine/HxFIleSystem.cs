@@ -126,7 +126,7 @@ public partial class HxFIleSystem: RefCounted
 
 		foreach (var file in files)
 		{
-			dirArray.Add(file);
+			dirArray.Add(file.GetFile());
 		}
 
 		return dirArray.ToArray();
