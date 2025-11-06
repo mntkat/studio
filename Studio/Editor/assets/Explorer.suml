@@ -22,19 +22,19 @@
                         <sunaba.ui.TextureRect name="textureRect" customMinimumSize="16, 16"/>
                     </sunaba.ui.CenterContainer>
                     <sunaba.ui.Button
-                            name="reloadButton"
+                            name="reload"
                             flat="true"
                             icon="studio://icons/16/arrow-circle-315.png"
                             iconAlignment="1"
                             customMinimumSize="30,30"/>
                     <sunaba.ui.MenuButton
-                            name="newButton"
+                            name="new"
                             flat="true"
                             icon="studio://icons/16/plus-button.png"
                             iconAlignment="1"
                             customMinimumSize="30,30"/>
                     <sunaba.ui.MenuButton
-                            name="hamburgerMenuButton"
+                            name="hamburgerMenu"
                             flat="true"
                             icon="studio://icons/16/edit-list.png"
                             iconAlignment="1"
