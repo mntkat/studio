@@ -209,7 +209,7 @@ class Editor extends Widget {
             }
             helpMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
                 if (id == (helpMenu.itemCount - 1)) {
-                    Debug.error("'About' not implemented");
+                    showAboutDialog();
                 }
                 else if (id == 0) {
                     OSService.shellOpen("https://docs.sunaba.gg");
@@ -233,6 +233,31 @@ class Editor extends Widget {
         catch(e: Exception) {
             Debug.error(e.message);
         }
+    }
+
+    public function showAboutDialog() {
+        var aboutString = "Sunaba Studio\n";
+        aboutString += "Version 0.7.0\n";
+        aboutString += "(C) 2022-2025 mintkat\n";
+        aboutString += "\n";
+
+        var osname = OSService.getName();
+        aboutString += "OS: " + osname + "\n";
+        var deviceTypeStr = "Unknown";
+        if (PlatformService.deviceType == PlatformDeviceType.desktop) {
+            deviceTypeStr = "Desktop";
+        }
+        else if (PlatformService.deviceType == PlatformDeviceType.mobile) {
+            deviceTypeStr = "Mobile";
+        }
+        else if (PlatformService.deviceType == PlatformDeviceType.web) {
+            deviceTypeStr = "Web";
+        }
+        else if (PlatformService.deviceType == PlatformDeviceType.xr) {
+            deviceTypeStr = "XR";
+        }
+        aboutString += "Device Type: " + deviceTypeStr + "\n";
+        Debug.info(aboutString, "About Sunaba Studio");
     }
 
     // big dumb hack
