@@ -23,6 +23,7 @@ import sunaba.PlatformDeviceType;
 import haxe.Exception;
 import sunaba.ui.ButtonGroup;
 import sunaba.core.Vector2;
+import sys.io.File;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -59,6 +60,13 @@ class Editor extends Widget {
     public var subtitle:String = "";
 
     private var projectIo: FileSystemIo;
+
+    private var _projectFile: ProjectFile;
+    public var projectFile(get, default): ProjectFile;
+    function get_projectFile():ProjectFile {
+        return _projectFile;
+    }
+
 
     public override function init() {
         load("studio://Editor.suml");
@@ -227,6 +235,26 @@ class Editor extends Widget {
                     break;
                 }
             }
+
+            if (sProjPath == "") {
+                sProjPath = untyped __lua__("_G.projectPath");
+            }
+
+            trace(sProjPath);
+
+            var projJson: String = "";
+            if (sProjPath != "") {
+                projJson = File.getContent(sProjPath);
+            }
+
+            trace(sProjPath == "" );
+            trace(projJson == "");
+            if (sProjPath == "" || projJson == "") {
+                Debug.error("Project not found.");
+                return;
+            }
+
+            _projectFile = haxe.Json.parse(projJson);
 
             new Explorer(this, EditorArea.leftSidebar);
         }
