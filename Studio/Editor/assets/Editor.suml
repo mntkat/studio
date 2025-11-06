@@ -76,13 +76,13 @@
                         <sunaba.ui.Button
                             name="reload"
                             flat="true"
-                            icon="studio://icons/16_1-5x/arrow-circle-315.png"
+                            icon="studio://icons/16_1-5x/plug--reload.png"
                             iconAlignment="1"
                             customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="build"
                             flat="true"
-                            icon="studio://icons/16_1-5x/hammer.png"
+                            icon="studio://icons/16_1-5x/box--arrow.png"
                             iconAlignment="1"
                             customMinimumSize="40,40"/>
                     </sunaba.ui.HBoxContainer>
