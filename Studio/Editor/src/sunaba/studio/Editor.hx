@@ -59,6 +59,8 @@ class Editor extends Widget {
     public var windowTitle:Label;
     public var subtitle:String = "";
 
+    public var explorer: Explorer;
+
     private var projectIo: FileSystemIo;
 
     private var _projectFile: ProjectFile;
@@ -256,7 +258,7 @@ class Editor extends Widget {
 
             _projectFile = haxe.Json.parse(projJson);
 
-            new Explorer(this, EditorArea.leftSidebar);
+            explorer = new Explorer(this, EditorArea.leftSidebar);
         }
         catch(e: Exception) {
             Debug.error(e.message);
