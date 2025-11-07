@@ -503,6 +503,11 @@ class Editor extends Widget {
         centerTabContainer.setTabTitle(index, title);
     }
 
+    public function getWorkspaceTabTitle(widget: EditorWidget) {
+        var index = workspaceChildern.indexOf(widget);
+        return centerTabContainer.getTabTitle(index);
+    }
+
     public function addLeftSidebarChild(child: EditorWidget) {
         leftSidebarChildren.push(child);
         leftTabContainer.addChild(child);
