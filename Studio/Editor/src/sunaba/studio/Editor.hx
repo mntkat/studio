@@ -25,6 +25,7 @@ import sunaba.ui.ButtonGroup;
 import sunaba.core.Vector2;
 import sys.io.File;
 import sys.FileSystem;
+import sunaba.studio.fileHandlers.HxFileHandler;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -287,6 +288,9 @@ class Editor extends Widget {
             }
 
             explorer = new Explorer(this, EditorArea.leftSidebar);
+
+            explorer.fileHandlers.push(new HxFileHandler(explorer));
+
             explorer.startExplorer();
         }
         catch(e: Exception) {
