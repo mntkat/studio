@@ -77,16 +77,12 @@ public partial class AcceptDialogPlus : AcceptDialog
     public override void _Ready()
     {
         var displayScale = DisplayServer.ScreenGetScale(CurrentScreen);
-        if (OS.GetName() != "Linux")
+        if (OS.GetName() != "macOS")
         {
-            if (OS.GetName() == "Windows")
-            {
-                var dpi = DisplayServer.ScreenGetDpi(CurrentScreen);
-                displayScale = dpi * 0.01f;
-            }
-
-            ContentScaleFactor = displayScale;
+            var dpi = DisplayServer.ScreenGetDpi(CurrentScreen);
+            displayScale = dpi * 0.01f;
         }
+        ContentScaleFactor = displayScale;
         Size = new Vector2I((int)(Size.X * displayScale), (int)(Size.Y * displayScale));
         MinSize = new Vector2I((int)(MinSize.X * displayScale), (int)(MinSize.Y * displayScale));
     }
