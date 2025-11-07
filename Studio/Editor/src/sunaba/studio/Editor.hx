@@ -249,7 +249,7 @@ class Editor extends Widget {
                 sProjPath = untyped __lua__("_G.projectPath");
             }
 
-            sProjPath = FileSystem.absolutePath(sProjPath);
+            sProjPath = FileSystem.absolutePath(sProjPath).split("\\").join("/");
 
             trace(sProjPath);
 
