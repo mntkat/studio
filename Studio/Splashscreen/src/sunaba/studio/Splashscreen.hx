@@ -140,6 +140,8 @@ class Splashscreen extends Widget {
 
         window.popupCentered();
         reloadRecentProjects();
-        getWindow().mode = WindowMode.minimized;
+        if (OSService.getName() != "macOS") {
+            getWindow().mode = WindowMode.minimized;
+        }
     }
 }
