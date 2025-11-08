@@ -26,6 +26,8 @@ import sunaba.core.Vector2;
 import sys.io.File;
 import sys.FileSystem;
 import sunaba.studio.fileHandlers.HxFileHandler;
+import sunaba.input.InputEvent;
+import sunaba.GameEvent;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -76,6 +78,7 @@ class Editor extends Widget {
         return _projectFile;
     }
 
+    public var saveEvent: GameEvent<()->Void> = new GameEvent();
 
     public override function init() {
         load("studio://Editor.suml");
@@ -187,7 +190,7 @@ class Editor extends Widget {
                     Debug.error("'Open File' not implemented");
                 }
                 else if (id == 2) {
-                    Debug.error("'Save File' not implemented");
+                    save();
                 }
                 else if (id == 3) {
                     Debug.error("'Publish' not implemented");
@@ -198,6 +201,10 @@ class Editor extends Widget {
                 else if (id == 5) {
                     Debug.error("'Open Project in Visual Studio Code' not implemented");
                 }
+            }));
+
+            saveFileButton.pressed.connect(Callable.fromFunction(function() {
+                save();
             }));
 
             var editMenu: PopupMenu = getNodeT(PopupMenu, "vbox/menuBarControl/menuBar/Edit");
@@ -566,5 +573,32 @@ class Editor extends Widget {
     public function addWorkspaceChild(child: EditorWidget) {
         workspaceChildern.push(child);
         centerTabContainer.addChild(child);
+    }
+
+    var isSaveKeyPressed: Bool = false;
+
+    public override function onInput(event: InputEvent) {
+        if (isControlKeyPressed() && InputService.isKeyLabelPressed(Key.s)) {
+            if (!isSaveKeyPressed) {
+                isSaveKeyPressed = true;
+                save();
+            }
+        } else {
+            isSaveKeyPressed = false;
+        }
+    }
+
+    public function isControlKeyPressed(): Bool {
+        if (OSService.getName() == "macOS") {
+            return InputService.isKeyLabelPressed(Key.meta);
+        }
+        else {
+            return InputService.isKeyLabelPressed(Key.ctrl);
+        }
+    }
+
+    public function save() {
+        trace(saveEvent == null);
+        saveEvent.call();
     }
 }

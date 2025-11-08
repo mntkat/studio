@@ -33,6 +33,8 @@ class CodeEditor extends EditorWidget {
 
     public var plugin:CodeEditorPlugin;
 
+    private var savefunc: () -> Void;
+
     public override function init() {
         load("studio://CodeEditor.suml");
 
@@ -54,6 +56,11 @@ class CodeEditor extends EditorWidget {
                 getEditor().setWorkspaceTabTitle(this, StringTools.replace(tabTitle, "*", ""));
             }
         }));
+
+        savefunc = function() {
+            saveFile();
+        };
+        getEditor().saveEvent.add(savefunc);
     }
 
     public function openFile(path: String, pluginClass: Class<CodeEditorPlugin>) {
@@ -71,6 +78,15 @@ class CodeEditor extends EditorWidget {
         plugin.init();
     }
 
+    public function saveFile() {
+        if (code == savedCode)
+            return;
+        File.saveContent(path, code);
+        savedCode = code;
+        var tabTitle = getEditor().getWorkspaceTabTitle(this);
+        getEditor().setWorkspaceTabTitle(this, StringTools.replace(tabTitle, "*", ""));
+    }
+
     public override function onProcess(deltaTime: Float) {
         if (codeEdit == null)
             return;
@@ -81,5 +97,9 @@ class CodeEditor extends EditorWidget {
         if (lineAndColumnLabel.text != labelText) {
             lineAndColumnLabel.text = labelText;
         }
+    }
+
+    public override function onDestroy() {
+        getEditor().saveEvent.remove(savefunc);
     }
 }
