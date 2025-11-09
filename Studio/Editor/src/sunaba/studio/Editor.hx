@@ -111,7 +111,7 @@ class Editor extends Widget {
     }
 
     public override function onReady() {
-        var window = getWindow();
+        window = getWindow();
         var displayScale = DisplayService.screenGetScale(window.currentScreen);
         if (OSService.getName() != "macOS") {
             var dpi = DisplayService.screenGetDpi(window.currentScreen);
@@ -350,8 +350,6 @@ class Editor extends Widget {
 
     public override function onProcess(deltaTime: Float) {
         checkFocus();
-
-        var window = getWindow();
 
         if (PlatformService.osName == "macOS") {
             if (windowTitle.text != window.title)
