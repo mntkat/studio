@@ -89,6 +89,8 @@ class Editor extends Widget {
     private var playerSubViewportContainer: SubViewportContainer = null;
     private var playerAppView: DesktopAppView = null;
 
+    private var debugMenu: PopupMenu = null;
+
     public override function init() {
         load("studio://Editor.suml");
 
@@ -261,6 +263,20 @@ class Editor extends Widget {
             }));
             var toolsMenu: PopupMenu = getNodeT(PopupMenu, "vbox/menuBarControl/menuBar/Tools");
             toolsMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
+
+            }));
+            debugMenu = getNodeT(PopupMenu, "vbox/menuBarControl/menuBar/Debug");
+            debugMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
+                if (id == 0) {
+                    if (isGameRunning)
+                        unpause();
+                    else
+                        buildSnbForPlay();
+                }
+                else if (id == 1)
+                    pause();
+                else if (id == 2)
+                    stop();
 
             }));
             var helpMenu: PopupMenu = getNodeT(PopupMenu, "vbox/menuBarControl/menuBar/Help");
@@ -673,6 +689,7 @@ class Editor extends Widget {
         if (isGameRunning) return;
 
         playButton.disabled = true;
+        debugMenu.setItemDisabled(0, true);
         if (playBuildWindow != null) {
             var scaleFactor = window.contentScaleFactor;
 
@@ -691,6 +708,9 @@ class Editor extends Widget {
         playButton.disabled = true;
         pauseButton.disabled = false;
         stopButton.disabled = false;
+        debugMenu.setItemDisabled(0, true);
+        debugMenu.setItemDisabled(1, false);
+        debugMenu.setItemDisabled(2, false);
         isGamePaused = false;
 
         playerSubViewportContainer.processMode = CanvasItemProcessMode.inherit;
@@ -701,6 +721,9 @@ class Editor extends Widget {
         pauseButton.disabled = true;
         playButton.disabled = false;
         stopButton.disabled = false;
+        debugMenu.setItemDisabled(0, false);
+        debugMenu.setItemDisabled(1, true);
+        debugMenu.setItemDisabled(2, false);
         isGamePaused = true;
 
         playerSubViewportContainer.processMode = CanvasItemProcessMode.disabled;
@@ -711,6 +734,9 @@ class Editor extends Widget {
         playButton.disabled = false;
         pauseButton.disabled = true;
         stopButton.disabled = true;
+        debugMenu.setItemDisabled(0, false);
+        debugMenu.setItemDisabled(1, true);
+        debugMenu.setItemDisabled(2, true);
         isGameRunning = false;
         isGamePaused = false;
 
@@ -723,6 +749,9 @@ class Editor extends Widget {
         playButton.disabled = true;
         pauseButton.disabled = false;
         stopButton.disabled = false;
+        debugMenu.setItemDisabled(0, true);
+        debugMenu.setItemDisabled(1, false);
+        debugMenu.setItemDisabled(2, false);
         isGameRunning = true;
         isGamePaused = false;
 

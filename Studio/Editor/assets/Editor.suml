@@ -50,6 +50,12 @@
                         name="Tools">
                     </sunaba.desktop.PopupMenu>
                     <sunaba.desktop.PopupMenu
+                            name="Debug">
+                        <menuItem label="Play" icon="studio://icons/16/control.png"/>
+                        <menuItem label="Pause" icon="studio://icons/16/control-pause.png" disabled="true"/>
+                        <menuItem label="Stop" icon="studio://icons/16/control-stop-square.png" disabled="true"/>
+                    </sunaba.desktop.PopupMenu>
+                    <sunaba.desktop.PopupMenu
                             name="Help">
                         <menuItem label="Sunaba Docs" icon="studio://icons/16/book.png"/>
                         <menuItem label="About" icon="studio://icons/16/information-italic.png"/>
