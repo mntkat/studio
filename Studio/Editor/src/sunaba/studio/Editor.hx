@@ -636,6 +636,18 @@ class Editor extends Widget {
         } else {
             isSaveKeyPressed = false;
         }
+        if (isGameRunning) {
+            if (InputService.isKeyLabelPressed(Key.f6) && isGamePaused)
+                unpause();
+            else if (InputService.isKeyLabelPressed(Key.f7))
+                pause();
+            else if (InputService.isKeyLabelPressed(Key.f8))
+                stop();
+        }
+        else
+            if (InputService.isKeyLabelPressed(Key.f6))
+                buildSnbForPlay();
+
     }
 
     public function isControlKeyPressed(): Bool {
