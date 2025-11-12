@@ -210,7 +210,7 @@ class Editor extends Widget {
                     workspaceChildern.remove(widget);
                 }
             }));
-
+            centerTabContainer.dragToRearrangeEnabled = true;
             centerTabContainer.activeTabRearranged.connect(Callable.fromFunction(function(idxTo: Int) {
                 var newWorkspaceChildren: Array<EditorWidget> = new Array();
                 for (i in 0...centerTabContainer.getTabCount) {
