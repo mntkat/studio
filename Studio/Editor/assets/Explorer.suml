@@ -16,7 +16,8 @@
                     <sunaba.ui.Control
                         customMinimumSize="5, 5"/>
                     <sunaba.ui.Label
-                        text="Project"/>
+                        text="Project"
+                        verticalAlignment="1"/>
                     <sunaba.ui.Control name="separator" sizeFlagsHorizontal="3"/>
                     <sunaba.ui.CenterContainer name="throbber" customMinimumSize="30, 30">
                         <sunaba.ui.TextureRect name="textureRect" customMinimumSize="16, 16"/>
