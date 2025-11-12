@@ -32,6 +32,7 @@ import lua.Coroutine;
 import sunaba.ui.ProgressBar;
 import sunaba.ui.SubViewportContainer;
 import sunaba.SubViewport;
+import sunaba.core.ArrayList;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -208,6 +209,18 @@ class Editor extends Widget {
                     widget.destroy();
                     workspaceChildern.remove(widget);
                 }
+            }));
+
+            centerTabContainer.activeTabRearranged.connect(Callable.fromFunction(function(idxTo: Int) {
+                var newWorkspaceChildren: Array<EditorWidget> = new Array();
+                for (i in 0...centerTabContainer.getTabCount) {
+                    for (child in workspaceChildern) {
+                        if (child.getIndex() == i) {
+                            newWorkspaceChildren.push(child);
+                        }
+                    }
+                }
+                workspaceChildern = newWorkspaceChildren;
             }));
 
             var fileMenu: PopupMenu = getNodeT(PopupMenu, "vbox/menuBarControl/menuBar/File");
