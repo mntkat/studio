@@ -778,4 +778,10 @@ class Editor extends Widget {
         playerAppView.init(false);
         playerAppView.loadApp(snbPath);
     }
+
+    public override function onNotification(what: Int) {
+        if (what == 2011) {
+            showAboutDialog();
+        }
+    }
 }
