@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<suml fullscreen="true" name="explorer">
+    <head></head>
+    <body>
+        <sunaba.ui.VSplitContainer
+            name="vsplit"
+            fullRect="true">
+            <sunaba.ui.VBoxContainer
+                name="outliner"
+                customMinimumSize="0,200">
+                <sunaba.ui.Control
+                    name="toolbar"
+                    customMinimumSize="0,30">
+                    <sunaba.ui.HBoxContainer
+                        name="hbox"
+                        fullRect="true">
+                        <sunaba.ui.Control
+                            customMinimumSize="5, 5"/>
+                        <sunaba.ui.Label
+                            text="Inspector"
+                            sizeFlagsHorizontal="3"
+                            verticalAlignment="1"/>
+                        <sunaba.ui.Button
+                            name="load"
+                            text=" Load "
+                            customMinimumSize="30,30"/>
+                        <sunaba.ui.Button
+                            name="delete"
+                            iconAlignment="1"
+                            icon="studio://icons/16/cross-button.png"
+                            customMinimumSize="30,30"/>
+                        <sunaba.ui.MenuButton
+                                name="create"
+                                iconAlignment="1"
+                                icon="studio://icons/16/plus-button.png"
+                                customMinimumSize="30,30"
+                                flat="false"/>
+                    </sunaba.ui.HBoxContainer>
+                </sunaba.ui.Control>
+                <sunaba.ui.Tree
+                    name="tree"
+                    sizeFlagsVertical="3"/>
+            </sunaba.ui.VBoxContainer>
+            <sunaba.ui.VBoxContainer
+                name="entityInspector"
+                sizeFlagsVertical="3">
+                <sunaba.ui.Panel
+                        name="toolbar"
+                        customMinimumSize="0,45">
+                    <sunaba.ui.HBoxContainer
+                            name="hbox"
+                            fullRect="true"
+                            offsetBottom="-5"
+                            offsetTop="5"
+                            offsetLeft="5"
+                            offsetRight="-5">
+                        <sunaba.ui.CenterContainer name="entityIcon" customMinimumSize="35, 35">
+                            <sunaba.ui.TextureRect name="textureRect" texture="studio://icons/16_1-5x/question.png" customMinimumSize="24, 24"/>
+                        </sunaba.ui.CenterContainer>
+                        <sunaba.ui.Label
+                                text="Nothing Selected"
+                                sizeFlagsHorizontal="3"
+                                verticalAlignment="1"/>
+                        <sunaba.ui.MenuButton
+                            name="menuButton"
+                            iconAlignment="1"
+                            icon="studio://icons/16/chevron-expand.png"
+                            customMinimumSize="30,30"/>
+                    </sunaba.ui.HBoxContainer>
+                </sunaba.ui.Panel>
+            </sunaba.ui.VBoxContainer>
+        </sunaba.ui.VSplitContainer>
+    </body>
+</suml>

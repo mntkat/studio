@@ -76,6 +76,7 @@ class Editor extends Widget {
     private var playBuildWindow: Window;
 
     public var explorer: Explorer;
+    public var sceneInspector: SceneInspector;
 
     public var projectIo: FileSystemIo;
 
@@ -364,10 +365,10 @@ class Editor extends Widget {
             }
 
             explorer = new Explorer(this, EditorArea.leftSidebar);
-
             explorer.fileHandlers.push(new HxFileHandler(explorer));
-
             explorer.startExplorer();
+
+            sceneInspector = new SceneInspector(this, EditorArea.rightSidebar);
         }
         catch(e: Exception) {
             Debug.error(e.message);
