@@ -86,7 +86,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: sunabagg/libsunaba
-          path: ${{github.workspace}}/libsunaba
+          path: ${{github.workspace}}/../libsunaba
           #token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true`
 
@@ -94,7 +94,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: sunabagg/gamepak
-          path: ${{github.workspace}}/gamepak
+          path: ${{github.workspace}}/../gamepak
           #token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true
 
@@ -102,8 +102,8 @@ jobs:
         run: |
           haxelib install hxnodejs
           haxelib install codegen
-          haxelib dev gamepak ${{github.workspace}}/gamepak
-          haxelib dev libsunaba ${{github.workspace}}/libsunaba
+          haxelib dev gamepak ${{github.workspace}}/../gamepak
+          haxelib dev libsunaba ${{github.workspace}}/../libsunaba
 
       - name: Download Libraries
         uses: robinraju/release-downloader@v1
