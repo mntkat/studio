@@ -27,7 +27,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/gamepak" />
+          <root url="file://$USER_HOME$/gamepak/libsrc" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
