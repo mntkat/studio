@@ -216,6 +216,13 @@ class Main {
         }
     }
 
+    public static function checkDir(path:String) {
+		if (!FileSystem.exists(path)) {
+			Sys.println("Creating Directory: " + path);
+			FileSystem.createDirectory(path);
+		}
+	}
+
     public static function publish() {
         setupBin();
 
