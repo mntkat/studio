@@ -192,9 +192,6 @@ class Main {
             FileSystem.createDirectory(cwd + "/lib/");
         }
         for (entry in entries) {
-            if (!StringTools.startsWith(entry.fileName, "lib/")) {
-                continue;
-            }
             var entryPath = cwd + "/lib/" + entry.fileName;
             if (StringTools.contains(entryPath, "\\")) {
                 entryPath = StringTools.replace(entryPath, "\\", "/");
