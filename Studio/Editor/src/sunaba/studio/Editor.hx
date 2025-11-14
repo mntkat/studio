@@ -33,6 +33,8 @@ import sunaba.ui.ProgressBar;
 import sunaba.ui.SubViewportContainer;
 import sunaba.SubViewport;
 import sunaba.core.ArrayList;
+import sunaba.studio.fileHandlers.VpfbFileHandler;
+import sunaba.studio.fileHandlers.VscnFileHandler;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -364,6 +366,8 @@ class Editor extends Widget {
 
             explorer = new Explorer(this, EditorArea.leftSidebar);
             explorer.fileHandlers.push(new HxFileHandler(explorer));
+            explorer.fileHandlers.push(new VscnFileHandler(explorer));
+            explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.startExplorer();
 
             sceneInspector = new SceneInspector(this, EditorArea.rightSidebar);
