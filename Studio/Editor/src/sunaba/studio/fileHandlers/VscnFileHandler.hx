@@ -10,7 +10,11 @@ class VscnFileHandler extends FileHandler {
     }
 
     public override function openFile(path: String) {
+        var assetPath = StringTools.replace(path, explorer.assetsDirectory, editor.projectIo.pathUrl);
+
         var sceneEditor = new SceneEditor(editor, EditorArea.workspace);
         editor.setWorkspaceTabIcon(sceneEditor, explorer.loadIcon(iconPath));
+
+        sceneEditor.openScene(assetPath);
     }
 }

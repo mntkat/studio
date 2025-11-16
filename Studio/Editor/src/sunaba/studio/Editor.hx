@@ -35,6 +35,7 @@ import sunaba.SubViewport;
 import sunaba.core.ArrayList;
 import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
+import sunaba.io.IoManager;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -342,7 +343,20 @@ class Editor extends Widget {
                 return;
             }
 
+
+
             _projectFile = haxe.Json.parse(projJson);
+
+            var sprojPathArr = sProjPath.split("/");
+            sprojPathArr.slice(0, sprojPathArr.length - 1);
+            var dirPath = sprojPathArr.join("/");
+            dirPath += "/";
+            var assetPath = dirPath + _projectFile.assetsdir;
+            trace(_projectFile.assetsdir);
+            while (!StringTools.endsWith(assetPath, _projectFile.assetsdir)) {
+                assetPath += _projectFile.assetsdir;
+            }
+            trace(assetPath);
 
             var recentProjectsPath = "user://recentProjects.json";
             if (io.fileExists(recentProjectsPath)) {
@@ -369,6 +383,8 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.startExplorer();
+            var ioManager: IoManager = cast io;
+            ioManager.register(projectIo);
 
             sceneInspector = new SceneInspector(this, EditorArea.rightSidebar);
         }

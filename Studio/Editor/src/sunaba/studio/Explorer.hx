@@ -100,10 +100,6 @@ class Explorer extends EditorWidget {
 
             trace("ProjectTree initialized with directory: " + projectDirectory);
 
-            var projectIo = new FileSystemIo();
-            projectIo.open(projectDirectory, getEditor().projectFile.rootUrl);
-            getEditor().projectIo = projectIo;
-
             if (getEditor().projectFile.assetsdir != null
             && getEditor().projectFile.assetsdir != ""
             && !StringTools.contains(getEditor().projectFile.assetsdir, "null"))
@@ -115,6 +111,12 @@ class Explorer extends EditorWidget {
 
             trace("Assets Directory: " + assetsDirectory);
             trace("Source Directory: " + sourceDirectory);
+
+            if (assetsDirectory != "") {
+                var projectIo = new FileSystemIo();
+                projectIo.open(assetsDirectory, getEditor().projectFile.rootUrl);
+                getEditor().projectIo = projectIo;
+            }
 
             singleColumnTree.itemActivated.connect(Callable.fromFunction(function() {
                 var treeItem = singleColumnTree.getSelected();
