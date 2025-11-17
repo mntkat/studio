@@ -100,5 +100,9 @@ class SceneEditor extends EditorWidget {
 
         camera.current = true;
         freeLook3d.active = visible;
+
+        if (visible) {
+            getEditor().sceneInspector.openSceneEditor(this);
+        }
     }
 }

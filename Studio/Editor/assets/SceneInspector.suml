@@ -54,10 +54,11 @@
                             offsetTop="5"
                             offsetLeft="5"
                             offsetRight="-5">
-                        <sunaba.ui.CenterContainer name="entityIcon" customMinimumSize="35, 35">
-                            <sunaba.ui.TextureRect name="textureRect" texture="studio://icons/16_1-5x/question.png" customMinimumSize="24, 24"/>
+                        <sunaba.ui.CenterContainer name="container" customMinimumSize="35, 35">
+                            <sunaba.ui.TextureRect name="entityIcon" texture="studio://icons/16_1-5x/question.png" customMinimumSize="24, 24"/>
                         </sunaba.ui.CenterContainer>
                         <sunaba.ui.Label
+                                name="entityText"
                                 text="Nothing Selected"
                                 sizeFlagsHorizontal="3"
                                 verticalAlignment="1"/>
@@ -68,6 +69,12 @@
                             customMinimumSize="30,30"/>
                     </sunaba.ui.HBoxContainer>
                 </sunaba.ui.Panel>
+                <sunaba.ui.ScrollContainer
+                    name="scroll"
+                    sizeFlagsVertical="3">
+                    <sunaba.ui.VBoxContainer
+                        name="vbox"/>
+                </sunaba.ui.ScrollContainer>
             </sunaba.ui.VBoxContainer>
         </sunaba.ui.VSplitContainer>
     </body>
