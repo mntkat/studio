@@ -31,6 +31,7 @@ class SceneEditor extends EditorWidget {
     public var fileType: FileType;
 
     public var scene: SceneRoot;
+    public var prefab: Entity;
     public var editorScene: SceneRoot;
 
     public override function init() {
@@ -46,6 +47,9 @@ class SceneEditor extends EditorWidget {
 
     public function openScene(path: String) {
         fileType = FileType.SceneType;
+
+        var name: String = path.split("/").pop();
+        getEditor().setWorkspaceTabTitle(this, name);
 
         var sceneFile = new SceneFile();
         sceneFile.io = getEditor().projectIo;
