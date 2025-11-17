@@ -36,6 +36,7 @@ import sunaba.core.ArrayList;
 import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
 import sunaba.io.IoManager;
+import sunaba.studio.sceneEditor.SceneInspector;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -676,6 +677,18 @@ class Editor extends Widget {
         workspaceChildern.push(child);
         centerTabContainer.addChild(child);
         centerTabContainer.currentTab = centerTabContainer.getTabIdxFromControl(child);
+    }
+
+    public function getCurrentWorkspaceChild() {
+        return workspaceChildern[centerTabContainer.currentTab];
+    }
+
+    public function getCurrentLeftSidebarChild() {
+        return leftSidebarChildren[leftTabContainer.currentTab];
+    }
+
+    public function getCurrentRightSidebarChild() {
+        return rightSidebarChildren[rightTabContainer.currentTab];
     }
 
     var isSaveKeyPressed: Bool = false;
