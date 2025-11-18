@@ -26,6 +26,7 @@ import sunaba.core.Variant;
 import sunaba.core.Vector4;
 import sunaba.core.Vector3i;
 import sunaba.core.Vector4i;
+import sunaba.ui.CenterContainer;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -777,5 +778,16 @@ class SceneInspector extends EditorWidget {
                 propertyContainer.customMinimumSize = new Vector2(0.0, 20.0);
             }
         }
+
+        var centerContainer = new CenterContainer();
+        centerContainer.customMinimumSize = new Vector2(0.0, 50.0);
+
+        var button = new Button();
+        button.text = "Add Component";
+        button.customMinimumSize = new Vector2(200.0, 0.0);
+        button.alignment = HorizontalAlignment.center;
+
+        centerContainer.addChild(button);
+        entityVBox.addChild(centerContainer);
     }
 }
