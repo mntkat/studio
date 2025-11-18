@@ -265,13 +265,9 @@ class Main {
             cwd += "/";
         }
 
-        var nsisScript = cwd + "studio.x86_64.nsi.";
+        var nsisScript = cwd + "studio.x86_64.nsi";
         if (exportType == ExportType.debug) {
             nsisScript = cwd + "studio.x86_64.debug.nsi";
-        }
-        else {
-            trace(FileSystem.exists(nsisScript));
-            return;
         }
 
         if (Sys.systemName() == "Windows") {
