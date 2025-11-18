@@ -102,7 +102,10 @@ class SceneEditor extends EditorWidget {
         freeLook3d.active = visible;
 
         if (visible) {
-            getEditor().sceneInspector.openSceneEditor(this);
+            var sceneInspector = getEditor().sceneInspector;
+            if (sceneInspector.sceneEditor != this) {
+                sceneInspector.openSceneEditor(this);
+            }
         }
     }
 
