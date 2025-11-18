@@ -261,9 +261,17 @@ class Main {
 
         var cwd = Sys.getCwd();
 
-        var nsisScript = cwd + "/studio.x86_64.nsi.";
+        if (!StringTools.endsWith(cwd, "/") && !StringTools.endsWith(cwd, "\\")) {
+            cwd += "/";
+        }
+
+        var nsisScript = cwd + "studio.x86_64.nsi.";
         if (exportType == ExportType.debug) {
-            nsisScript = cwd + "/studio.x86_64.debug.nsi";
+            nsisScript = cwd + "studio.x86_64.debug.nsi";
+        }
+
+        if (Sys.systemName() == "Windows") {
+            cwd = StringTools.replace(cwd, "/", "\\");
         }
 
         var command = nsisCommand + " " + nsisScript;
