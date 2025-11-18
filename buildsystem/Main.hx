@@ -269,6 +269,9 @@ class Main {
         if (exportType == ExportType.debug) {
             nsisScript = cwd + "studio.x86_64.debug.nsi";
         }
+        else {
+            trace(FileSystem.exists(nsisScript));
+        }
 
         if (Sys.systemName() == "Windows") {
             cwd = StringTools.replace(cwd, "/", "\\");
