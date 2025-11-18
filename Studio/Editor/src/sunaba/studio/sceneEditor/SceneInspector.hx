@@ -24,6 +24,8 @@ import sunaba.core.Dictionary;
 import sunaba.core.Vector3;
 import sunaba.core.Variant;
 import sunaba.core.Vector4;
+import sunaba.core.Vector3i;
+import sunaba.core.Vector4i;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -532,6 +534,228 @@ class SceneInspector extends EditorWidget {
                                 var dataToEdit = component.getData();
                                 var vec4: Vector4 = DataUtils.dictToVar(dataToEdit.get(key));
                                 vec4.z = newValue;
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var wLabel = new Label();
+                            wLabel.text = "w";
+                            wLabel.horizontalAlignment = HorizontalAlignment.center;
+                            wLabel.verticalAlignment = VerticalAlignment.center;
+                            var wHBox = new HBoxContainer();
+                            wHBox.addChild(zLabel);
+                            wHBox.addChild(wSpinBox);
+                            vec3Vbox.addChild(wHBox);
+
+                            propertyContainer.addChild(vec3Vbox);
+                        }
+                        else if (dict.get("type").toInt() == VariantType.vector2i) {
+                            var vec2: Vector2i = DataUtils.dictToVar(dict);
+
+                            var vec2Vbox = new VBoxContainer();
+
+                            var xSpinBox = new SpinBox();
+                            xSpinBox.maxValue = 500;
+                            xSpinBox.minValue = -500;
+                            xSpinBox.step = 1;
+                            xSpinBox.value = vec2.x;
+                            xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            xSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec2: Vector2i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec2.x = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec2));
+                                component.setData(dataToEdit);
+                            }));
+                            var xLabel = new Label();
+                            xLabel.text = "x";
+                            xLabel.horizontalAlignment = HorizontalAlignment.center;
+                            xLabel.verticalAlignment = VerticalAlignment.center;
+                            var xHBox = new HBoxContainer();
+                            xHBox.addChild(xLabel);
+                            xHBox.addChild(xSpinBox);
+                            vec2Vbox.addChild(xHBox);
+
+
+                            var ySpinBox = new SpinBox();
+                            ySpinBox.maxValue = 500;
+                            ySpinBox.minValue = -500;
+                            ySpinBox.step = 1;
+                            ySpinBox.value = vec2.y;
+                            ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            ySpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec2: Vector2i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec2.y = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec2));
+                                component.setData(dataToEdit);
+                            }));
+                            var yLabel = new Label();
+                            yLabel.text = "y";
+                            yLabel.horizontalAlignment = HorizontalAlignment.center;
+                            yLabel.verticalAlignment = VerticalAlignment.center;
+                            var yHBox = new HBoxContainer();
+                            yHBox.addChild(yLabel);
+                            yHBox.addChild(ySpinBox);
+                            vec2Vbox.addChild(yHBox);
+
+                            propertyContainer.addChild(vec2Vbox);
+                        }
+                        else if (dict.get("type").toInt() == VariantType.vector3i) {
+                            var vec3: Vector3i = DataUtils.dictToVar(dict);
+
+                            var vec3Vbox = new VBoxContainer();
+
+                            var xSpinBox = new SpinBox();
+                            xSpinBox.maxValue = 500;
+                            xSpinBox.minValue = -500;
+                            xSpinBox.step = 1;
+                            xSpinBox.value = vec3.x;
+                            xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            xSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec3: Vector3i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec3.x = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var xLabel = new Label();
+                            xLabel.text = "x";
+                            xLabel.horizontalAlignment = HorizontalAlignment.center;
+                            xLabel.verticalAlignment = VerticalAlignment.center;
+                            var xHBox = new HBoxContainer();
+                            xHBox.addChild(xLabel);
+                            xHBox.addChild(xSpinBox);
+                            vec3Vbox.addChild(xHBox);
+
+
+                            var ySpinBox = new SpinBox();
+                            ySpinBox.maxValue = 500;
+                            ySpinBox.minValue = -500;
+                            ySpinBox.step = 1;
+                            ySpinBox.value = vec3.y;
+                            ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            ySpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec3: Vector3i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec3.y = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var yLabel = new Label();
+                            yLabel.text = "y";
+                            yLabel.horizontalAlignment = HorizontalAlignment.center;
+                            yLabel.verticalAlignment = VerticalAlignment.center;
+                            var yHBox = new HBoxContainer();
+                            yHBox.addChild(yLabel);
+                            yHBox.addChild(ySpinBox);
+                            vec3Vbox.addChild(yHBox);
+
+                            var zSpinBox = new SpinBox();
+                            zSpinBox.maxValue = 500;
+                            zSpinBox.minValue = -500;
+                            zSpinBox.step = 1;
+                            zSpinBox.value = vec3.z;
+                            zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            zSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec3: Vector3i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec3.z = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var zLabel = new Label();
+                            zLabel.text = "z";
+                            zLabel.horizontalAlignment = HorizontalAlignment.center;
+                            zLabel.verticalAlignment = VerticalAlignment.center;
+                            var zHBox = new HBoxContainer();
+                            zHBox.addChild(zLabel);
+                            zHBox.addChild(zSpinBox);
+                            vec3Vbox.addChild(zHBox);
+
+                            propertyContainer.addChild(vec3Vbox);
+                        }
+                        else if (dict.get("type").toInt() == VariantType.vector4i) {
+                            var vec4: Vector4i = DataUtils.dictToVar(dict);
+
+                            var vec3Vbox = new VBoxContainer();
+
+                            var xSpinBox = new SpinBox();
+                            xSpinBox.maxValue = 500;
+                            xSpinBox.minValue = -500;
+                            xSpinBox.step = 1;
+                            xSpinBox.value = vec4.x;
+                            xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            xSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec4: Vector4i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec4.x = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var xLabel = new Label();
+                            xLabel.text = "x";
+                            xLabel.horizontalAlignment = HorizontalAlignment.center;
+                            xLabel.verticalAlignment = VerticalAlignment.center;
+                            var xHBox = new HBoxContainer();
+                            xHBox.addChild(xLabel);
+                            xHBox.addChild(xSpinBox);
+                            vec3Vbox.addChild(xHBox);
+
+
+                            var ySpinBox = new SpinBox();
+                            ySpinBox.maxValue = 500;
+                            ySpinBox.minValue = -500;
+                            ySpinBox.step = 1;
+                            ySpinBox.value = vec4.y;
+                            ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            ySpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec4: Vector4i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec4.y = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var yLabel = new Label();
+                            yLabel.text = "y";
+                            yLabel.horizontalAlignment = HorizontalAlignment.center;
+                            yLabel.verticalAlignment = VerticalAlignment.center;
+                            var yHBox = new HBoxContainer();
+                            yHBox.addChild(yLabel);
+                            yHBox.addChild(ySpinBox);
+                            vec3Vbox.addChild(yHBox);
+
+                            var zSpinBox = new SpinBox();
+                            zSpinBox.maxValue = 500;
+                            zSpinBox.minValue = -500;
+                            zSpinBox.step = 1;
+                            zSpinBox.value = vec4.z;
+                            zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            zSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec4: Vector4i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec4.z = Std.int(newValue);
+                                dataToEdit.set(key, DataUtils.varToDict(vec3));
+                                component.setData(dataToEdit);
+                            }));
+                            var zLabel = new Label();
+                            zLabel.text = "z";
+                            zLabel.horizontalAlignment = HorizontalAlignment.center;
+                            zLabel.verticalAlignment = VerticalAlignment.center;
+                            var zHBox = new HBoxContainer();
+                            zHBox.addChild(zLabel);
+                            zHBox.addChild(zSpinBox);
+                            vec3Vbox.addChild(zHBox);
+
+                            var wSpinBox = new SpinBox();
+                            wSpinBox.maxValue = 500;
+                            wSpinBox.minValue = -500;
+                            wSpinBox.step = 1;
+                            wSpinBox.value = vec4.w;
+                            wSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            wSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec4: Vector4i = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec4.z = Std.int(newValue);
                                 dataToEdit.set(key, DataUtils.varToDict(vec3));
                                 component.setData(dataToEdit);
                             }));
