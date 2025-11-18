@@ -271,6 +271,7 @@ class Main {
         }
         else {
             trace(FileSystem.exists(nsisScript));
+            return;
         }
 
         if (Sys.systemName() == "Windows") {
