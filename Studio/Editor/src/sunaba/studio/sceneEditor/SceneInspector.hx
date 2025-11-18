@@ -455,7 +455,7 @@ class SceneInspector extends EditorWidget {
                         else if (dict.get("type").toInt() == VariantType.vector4) {
                             var vec4: Vector4 = DataUtils.dictToVar(dict);
 
-                            var vec3Vbox = new VBoxContainer();
+                            var vec4Vbox = new VBoxContainer();
 
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
@@ -477,7 +477,7 @@ class SceneInspector extends EditorWidget {
                             var xHBox = new HBoxContainer();
                             xHBox.addChild(xLabel);
                             xHBox.addChild(xSpinBox);
-                            vec3Vbox.addChild(xHBox);
+                            vec4Vbox.addChild(xHBox);
 
 
                             var ySpinBox = new SpinBox();
@@ -500,7 +500,7 @@ class SceneInspector extends EditorWidget {
                             var yHBox = new HBoxContainer();
                             yHBox.addChild(yLabel);
                             yHBox.addChild(ySpinBox);
-                            vec3Vbox.addChild(yHBox);
+                            vec4Vbox.addChild(yHBox);
 
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
@@ -522,7 +522,7 @@ class SceneInspector extends EditorWidget {
                             var zHBox = new HBoxContainer();
                             zHBox.addChild(zLabel);
                             zHBox.addChild(zSpinBox);
-                            vec3Vbox.addChild(zHBox);
+                            vec4Vbox.addChild(zHBox);
 
                             var wSpinBox = new SpinBox();
                             wSpinBox.maxValue = 500;
@@ -544,9 +544,9 @@ class SceneInspector extends EditorWidget {
                             var wHBox = new HBoxContainer();
                             wHBox.addChild(zLabel);
                             wHBox.addChild(wSpinBox);
-                            vec3Vbox.addChild(wHBox);
+                            vec4Vbox.addChild(wHBox);
 
-                            propertyContainer.addChild(vec3Vbox);
+                            propertyContainer.addChild(vec4Vbox);
                         }
                         else if (dict.get("type").toInt() == VariantType.vector2i) {
                             var vec2: Vector2i = DataUtils.dictToVar(dict);
@@ -677,7 +677,7 @@ class SceneInspector extends EditorWidget {
                         else if (dict.get("type").toInt() == VariantType.vector4i) {
                             var vec4: Vector4i = DataUtils.dictToVar(dict);
 
-                            var vec3Vbox = new VBoxContainer();
+                            var vec4Vbox = new VBoxContainer();
 
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
@@ -699,7 +699,7 @@ class SceneInspector extends EditorWidget {
                             var xHBox = new HBoxContainer();
                             xHBox.addChild(xLabel);
                             xHBox.addChild(xSpinBox);
-                            vec3Vbox.addChild(xHBox);
+                            vec4Vbox.addChild(xHBox);
 
 
                             var ySpinBox = new SpinBox();
@@ -722,7 +722,7 @@ class SceneInspector extends EditorWidget {
                             var yHBox = new HBoxContainer();
                             yHBox.addChild(yLabel);
                             yHBox.addChild(ySpinBox);
-                            vec3Vbox.addChild(yHBox);
+                            vec4Vbox.addChild(yHBox);
 
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
@@ -744,7 +744,7 @@ class SceneInspector extends EditorWidget {
                             var zHBox = new HBoxContainer();
                             zHBox.addChild(zLabel);
                             zHBox.addChild(zSpinBox);
-                            vec3Vbox.addChild(zHBox);
+                            vec4Vbox.addChild(zHBox);
 
                             var wSpinBox = new SpinBox();
                             wSpinBox.maxValue = 500;
@@ -766,9 +766,9 @@ class SceneInspector extends EditorWidget {
                             var wHBox = new HBoxContainer();
                             wHBox.addChild(zLabel);
                             wHBox.addChild(wSpinBox);
-                            vec3Vbox.addChild(wHBox);
+                            vec4Vbox.addChild(wHBox);
 
-                            propertyContainer.addChild(vec3Vbox);
+                            propertyContainer.addChild(vec4Vbox);
                         }
                     }
                 }
