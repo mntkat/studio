@@ -20,6 +20,7 @@ import sunaba.ui.LineEdit;
 import sunaba.ui.SpinBox;
 import sunaba.ui.CheckButton;
 import haxe.Int64;
+import sunaba.core.Dictionary;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -316,6 +317,44 @@ class SceneInspector extends EditorWidget {
                         component.setData(dataToEdit);
                     }));
                     propertyContainer.addChild(boolCheckButton);
+                }
+                else if (value.getType() == VariantType.dictionary) {
+                    var dict: Dictionary = value;
+                    if (dict.has("type") && dict.has("value")) {
+                        if (dict.get("type").toInt() == VariantType.vector2) {
+                            var vec2: Vector2 = DataUtils.dictToVar(dict);
+
+                            var vec2Vbox = new VBoxContainer();
+
+                            var xSpinBox = new SpinBox();
+                            xSpinBox.maxValue = 3.40282347e+38;
+                            xSpinBox.minValue = -3.40282347e+38;
+                            xSpinBox.step = 0.001;
+                            xSpinBox.value = value;
+                            xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            xSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec2: Vector2 = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec2.x = newValue;
+                                dataToEdit.set(key, DataUtils.varToDict(vec2));
+                                component.setData(dataToEdit);
+                            }));
+                            vec2Vbox.addChild(xSpinBox);
+                            var ySpinBox = new SpinBox();
+                            ySpinBox.maxValue = 3.40282347e+38;
+                            ySpinBox.minValue = -3.40282347e+38;
+                            ySpinBox.step = 0.001;
+                            ySpinBox.value = value;
+                            ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
+                            ySpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
+                                var dataToEdit = component.getData();
+                                var vec2: Vector2 = DataUtils.dictToVar(dataToEdit.get(key));
+                                vec2.y = newValue;
+                                dataToEdit.set(key, DataUtils.varToDict(vec2));
+                                component.setData(dataToEdit);
+                            }));
+                        }
+                    }
                 }
 
                 componentVbox.addChild(propertyContainer);
