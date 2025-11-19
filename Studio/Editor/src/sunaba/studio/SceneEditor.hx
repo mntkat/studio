@@ -63,6 +63,7 @@ class SceneEditor extends EditorWidget {
         var sceneData = JSON.parseString(sceneJson);
         sceneJson = JSON.stringify(sceneData);
         savedSceneJson = sceneJson;
+        savedSceneJsonInitialized = true;
 
         var sceneFile = new SceneFile();
         sceneFile.io = getEditor().projectIo;
@@ -81,6 +82,7 @@ class SceneEditor extends EditorWidget {
         worldEnv.native.set("environment", environment.native);
         viewport.addChild(worldEnv);
         initializeEditorScene();
+        checkScene();
     }
 
     public function openPrefab(path: String) {
