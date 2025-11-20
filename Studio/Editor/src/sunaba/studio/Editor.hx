@@ -40,6 +40,7 @@ import sunaba.studio.sceneEditor.SceneInspector;
 import lua.Table;
 import sunaba.core.StringArray;
 import sunaba.LibraryLoader.LibraryLoadResult;
+import Type;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -599,6 +600,8 @@ class Editor extends Widget {
         }
     }
 
+    var projectPlugin: Plugin = null;
+
     public inline function loadPlugin(path: String, name: String) {
         var loader = new LibraryLoader();
         loader.libraryName = name;
@@ -610,6 +613,11 @@ class Editor extends Widget {
 
         var plugin: Plugin = untyped __lua__("pluginEnv['plugin']");
         if (plugin != null) {
+            if (projectPlugin != null) {
+                projectPlugin.uninit();
+                plugins.remove(projectPlugin);
+            }
+            projectPlugin = plugin;
             plugins.push(plugin);
             plugin.init();
         }
