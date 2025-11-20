@@ -28,6 +28,10 @@ ResourcePathDB="*res://Engine/ResourcePathDB.gd"
 PlatformService="*res://Engine/PlatformService.cs"
 StudioUtils="*res://Studio/StudioUtils.cs"
 
+[debug_draw_3d]
+
+settings/addon_root_folder="res://addons/debug_draw_3d"
+
 [display]
 
 window/size/viewport_width=491
