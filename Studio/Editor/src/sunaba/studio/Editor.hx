@@ -623,6 +623,13 @@ class Editor extends Widget {
         }
     }
 
+    public function pushBehaviorClass(_class: Class<Behavior>) {
+        var className = Type.getClassName(_class);
+        untyped {
+            _hxClasses[className] = _class;
+        }
+    }
+
     inline function getExitCode():Null<Int> {
         var hiddenDir = explorer.projectDirectory + "/.studio";
         var logFilePath = hiddenDir + "/build.log";
