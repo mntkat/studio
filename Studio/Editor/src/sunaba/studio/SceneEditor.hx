@@ -136,9 +136,13 @@ class SceneEditor extends EditorWidget {
             if (!savedSceneJsonInitialized) {
                 savedSceneJson = sceneJson;
                 savedSceneJsonInitialized = true;
+                return;
             }
             if (savedSceneJson != sceneJson) {
                 getEditor().setWorkspaceTabTitle(this, sceneName + "*");
+            }
+            else {
+                getEditor().setWorkspaceTabTitle(this, sceneName);
             }
         }
     }
