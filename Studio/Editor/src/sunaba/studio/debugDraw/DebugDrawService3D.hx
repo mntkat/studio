@@ -10,7 +10,6 @@ import sunaba.core.Transform3D;
 import sunaba.core.Quaternion;
 import sunaba.spatial.Camera;
 import sunaba.core.Vector2i;
-import sunaba.core.Plane;
 import sunaba.Viewport;
 import sunaba.core.Variant;
 
