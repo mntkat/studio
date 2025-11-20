@@ -8,7 +8,7 @@
     "apisymbols": true,
     "sourcemap": true,
     "entrypoint": "EditorMain",
-    "luabin": "main",
+    "luabin": "main.lua",
     "libraries": [],
     "compilerFlags": [
         "-D absolute-path",
