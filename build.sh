@@ -1,3 +1,7 @@
 #!/bin/bash
 haxe buildsys.hxml
-node build "$@"
+
+if (($? == 0))
+then
+  node build "$@"
+fi
