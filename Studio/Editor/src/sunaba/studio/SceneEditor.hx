@@ -81,6 +81,25 @@ class SceneEditor extends EditorWidget {
             gizmoMode = GizmoToolMode.scale;
         }));
 
+        translateSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/translateSpinBox");
+        translateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.translateSnap = value;
+            }
+        }));
+        rotateSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/rotateSpinBox");
+        rotateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.rotateSnap = value;
+            }
+        }));
+        scaleSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/scaleSpinBox");
+        scaleSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.scaleSnap = value;
+            }
+        }));
+
         viewport = getNodeT(SubViewport, "vbox/container/viewport");
     }
 
@@ -171,6 +190,9 @@ class SceneEditor extends EditorWidget {
                 checkScene();
             }
         }));
+        translateSpinBox.value = gizmo.translateSnap;
+        rotateSpinBox.value = gizmo.rotateSnap;
+        scaleSpinBox.value = gizmo.scaleSnap;
     }
 
     public var cameraList: Array<Camera>;
