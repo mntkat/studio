@@ -18,6 +18,7 @@ import sunaba.core.Dictionary;
 import sunaba.studio.debugDraw.DebugDrawService3D;
 import sunaba.core.Vector2i;
 import sunaba.core.Color;
+import sunaba.core.Callable;
 
 class SceneEditor extends EditorWidget {
     private var filePath: String;
@@ -46,13 +47,39 @@ class SceneEditor extends EditorWidget {
     var largeGridTransform: SpatialTransform;
     var smallGridTransform: SpatialTransform;
 
+    public var gizmo: Gizmo3D;
+
+    private var _gizmoMode: GizmoToolMode = GizmoToolMode.all;
+    public var gizmoMode(get, set): GizmoToolMode;
+    function get_gizmoMode():GizmoToolMode {
+        return _gizmoMode;
+    }
+    function set_gizmoMode(value:GizmoToolMode):GizmoToolMode {
+        if (gizmo != null) {
+            gizmo.mode = value;
+        }
+        return this._gizmoMode = value;
+    }
+
     public override function editorInit() {
         load("studio://SceneEditor.suml");
 
         selectButton = getNodeT(Button, "vbox/toolbar/hbox/select");
+        selectButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.all;
+        }));
         moveButton = getNodeT(Button, "vbox/toolbar/hbox/move");
+        moveButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.move;
+        }));
         rotateButton = getNodeT(Button, "vbox/toolbar/hbox/rotate");
+        rotateButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.rotate;
+        }));
         scaleButton = getNodeT(Button, "vbox/toolbar/hbox/scale");
+        scaleButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.scale;
+        }));
 
         viewport = getNodeT(SubViewport, "vbox/container/viewport");
     }
@@ -114,6 +141,12 @@ class SceneEditor extends EditorWidget {
         camera.current = true;
         freeLook3d = cameraEntity.addComponent(FreeLook3D);
 
+        var gizmoEntity = new Entity();
+        gizmoEntity.name = "EditorGizmo";
+        var gizmoTransform = gizmoEntity.addComponent(SpatialTransform);
+        editorScene.addEntity(gizmoEntity);
+        gizmo = gizmoEntity.addComponent(Gizmo3D);
+
         viewport.addChild(editorScene);
         freeLook3d.onStart();
         freeLook3d.transform = cameraTransform;
@@ -129,6 +162,15 @@ class SceneEditor extends EditorWidget {
         smallGridTransform = smallGridEntity.addComponent(SpatialTransform);
         editorScene.addEntity(smallGridEntity);
         smallGridTransform.scale = new Vector3(10, 1, 10);
+
+        gizmoMode = GizmoToolMode.all;
+        gizmo.transformChanged.connect(Callable.fromFunction(function(mode: Int, value: Vector3) {
+            var sceneInspector = getEditor().sceneInspector;
+            if (sceneInspector.sceneEditor == this) {
+                sceneInspector.refreshInspector();
+                checkScene();
+            }
+        }));
     }
 
     public var cameraList: Array<Camera>;
