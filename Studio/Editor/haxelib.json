@@ -1,6 +1,6 @@
 {
   "name" : "sunaba-studio",
-  "classPath": ".",
+  "classPath": "src",
   "dependencies": {
   }
 }
