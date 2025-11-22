@@ -294,7 +294,7 @@ func _unhandled_input(event : InputEvent) -> void:
 	if !visible:
 		_editing = false
 	elif event is InputEventKey:
-		if event.keycode == KEY_CTRL:
+		if event.keycode == _get_ctrl_key():
 			_snapping = event.pressed
 		elif event.keycode == KEY_SHIFT:
 			_shift_snap = event.pressed
@@ -318,6 +318,12 @@ func _unhandled_input(event : InputEvent) -> void:
 		_hovering = _transform_gizmo_select(event.position, true)
 
 #region Selection
+
+func _get_ctrl_key():
+	if OS.get_name() == "macOS":
+		return KEY_META
+	else:
+		return KEY_CTRL
 
 ## Add a node to the list of nodes currently being edited.
 func select(target : Node3D) -> void:
