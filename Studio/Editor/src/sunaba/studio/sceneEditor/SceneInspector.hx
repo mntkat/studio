@@ -39,6 +39,7 @@ class SceneInspector extends EditorWidget {
     public var entityIcon : TextureRect;
     public var entityText: Label;
     public var entityMenuButton: MenuButton;
+    public var entityPrefabButton: Button;
     public var entityVBox: VBoxContainer;
 
     var sceneIcon: Texture2D;
@@ -84,8 +85,9 @@ class SceneInspector extends EditorWidget {
 
         entityIcon = getNodeT(TextureRect, "vsplit/entityInspector/toolbar/hbox/container/entityIcon");
         entityText = getNodeT(Label, "vsplit/entityInspector/toolbar/hbox/entityText");
-        entityMenuButton = getNodeT(MenuButton, "vsplit/entityInspector/toolbar/hbox/menuButton");
-        entityMenuButton.hide();
+        //entityMenuButton = getNodeT(MenuButton, "vsplit/entityInspector/toolbar/hbox/menuButton");
+        entityPrefabButton = getNodeT(Button, "vsplit/entityInspector/toolbar/hbox/prefab");
+        entityPrefabButton.hide();
 
         entityVBox = getNodeT(VBoxContainer, "vsplit/entityInspector/scroll/vbox");
 
@@ -221,7 +223,7 @@ class SceneInspector extends EditorWidget {
             sceneEditor.checkScene();
         }
 
-        entityMenuButton.hide();
+        entityPrefabButton.hide();
 
         if (nothingSelected == true || sceneEditor == null) {
             entityIcon.texture = nothingEntityIcon24;
@@ -236,7 +238,7 @@ class SceneInspector extends EditorWidget {
                 else {
                     entityIcon.texture = entityIcon24;
                     buildComponentTree(selectedEntity);
-                    entityMenuButton.show();
+                    entityPrefabButton.show();
                 }
             }
             else if (mode == FileType.SceneType) {
@@ -253,7 +255,6 @@ class SceneInspector extends EditorWidget {
                 entityText.text = prefab.name;
                 entityIcon.texture = prefabIcon24;
 
-                entityMenuButton.show();
                 buildComponentTree(prefab);
             }
         }

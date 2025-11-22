@@ -62,10 +62,16 @@
                                 text="Nothing Selected"
                                 sizeFlagsHorizontal="3"
                                 verticalAlignment="1"/>
-                        <sunaba.ui.MenuButton
+                        <!--sunaba.ui.MenuButton
                             name="menuButton"
                             iconAlignment="1"
                             icon="studio://icons/16/chevron-expand.png"
+                            customMinimumSize="30,30"/-->
+                        <sunaba.ui.Button
+                            name="prefab"
+                            iconAlignment="1"
+                            flat="true"
+                            icon="studio://icons/16/disk.png"
                             customMinimumSize="30,30"/>
                     </sunaba.ui.HBoxContainer>
                 </sunaba.ui.Panel>
