@@ -27,6 +27,7 @@ import sunaba.core.Vector4;
 import sunaba.core.Vector3i;
 import sunaba.core.Vector4i;
 import sunaba.ui.CenterContainer;
+import sunaba.spatial.SpatialTransform;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -101,9 +102,23 @@ class SceneInspector extends EditorWidget {
         entityIcon24 = getEditor().explorer.loadIcon("studio://icons/16_1-5x/layer.png");
 
         sceneTree.itemSelected.connect(Callable.fromFunction(function() {
+            selectedEntity = entityIndex[selectedEntityIndex];
+            if (selectedEntity != null) {
+                var transform: SpatialTransform = selectedEntity.getComponent(SpatialTransform);
+                if (transform != null) {
+                    sceneEditor.gizmo.deselect(transform);
+                }
+            }
             var selectedItem = sceneTree.getSelected();
             selectedEntityIndex = selectedItem.getMetadata(0);
             refreshInspector();
+            selectedEntity = entityIndex[selectedEntityIndex];
+            if (selectedEntity != null) {
+                var transform: SpatialTransform = selectedEntity.getComponent(SpatialTransform);
+                if (transform != null) {
+                    sceneEditor.gizmo.select(transform);
+                }
+            }
         }));
     }
 

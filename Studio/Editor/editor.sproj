@@ -7,13 +7,12 @@
     "scriptdir": "src",
     "apisymbols": true,
     "sourcemap": true,
-    "entrypoint": "Main",
-    "luabin": "main",
+    "entrypoint": "EditorMain",
+    "luabin": "main.lua",
     "libraries": [],
     "compilerFlags": [
         "-D absolute-path",
         "--library gamepak",
-        "-dce std",
-        "--macro addClassPath('../common')"
+        "-dce std"
     ]
 }

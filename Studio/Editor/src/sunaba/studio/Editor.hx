@@ -37,6 +37,10 @@ import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
 import sunaba.io.IoManager;
 import sunaba.studio.sceneEditor.SceneInspector;
+import lua.Table;
+import sunaba.core.StringArray;
+import sunaba.LibraryLoader.LibraryLoadResult;
+import Type;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -78,6 +82,7 @@ class Editor extends Widget {
     public var subtitle:String = "";
 
     private var playBuildWindow: Window;
+    private var pluginBuildWindow: Window;
 
     public var explorer: Explorer;
     public var sceneInspector: SceneInspector;
@@ -95,8 +100,13 @@ class Editor extends Widget {
 
     private var debugMenu: PopupMenu = null;
 
+    public var plugins: Array<Plugin> = new Array();
+
     public override function init() {
         load("studio://Editor.suml");
+
+        var __this__ = this;
+        untyped __lua__("_G['editor'] = __this__");
 
         leftTabBar = getNodeT(VBoxContainer, "vbox/hbox/leftTabBar");
         rightTabBar = getNodeT(VBoxContainer, "vbox/hbox/rightTabBar");
@@ -112,6 +122,9 @@ class Editor extends Widget {
 
         saveFileButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/saveFile");
         reloadButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/reload");
+        reloadButton.pressed.connect(Callable.fromFunction(function() {
+            buildPlugin();
+        }));
         buildButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/build");
 
         playButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/play");
@@ -141,12 +154,14 @@ class Editor extends Widget {
 
         playBuildWindow = getNodeT(Window, "playBuildWindow");
         playBuildWindow.hide();
+        pluginBuildWindow = getNodeT(Window, "pluginBuildWindow");
+        pluginBuildWindow.hide();
     }
 
     public override function onReady() {
         window = getWindow();
         var displayScale = DisplayService.screenGetScale(window.currentScreen);
-        if (OSService.getName() != "macOS") {
+        if (OSService.getName() == "Windows") {
             var dpi = DisplayService.screenGetDpi(window.currentScreen);
             displayScale = dpi * 0.01;
         }
@@ -384,15 +399,25 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.startExplorer();
+
+            var hiddenDir = explorer.projectDirectory + "/.studio";
+            localPluginIo = new FileSystemIo();
+            localPluginIo.open(hiddenDir, "plugin://");
+
             var ioManager: IoManager = cast io;
             ioManager.register(projectIo);
+            ioManager.register(localPluginIo);
 
             sceneInspector = new SceneInspector(this, EditorArea.rightSidebar);
+
+            //loadProjectPlugin();
         }
         catch(e: Exception) {
             Debug.error(e.message);
         }
     }
+
+    private var localPluginIo: FileSystemIo;
 
     public function showAboutDialog() {
         var aboutString = "Sunaba Studio\n";
@@ -472,6 +497,14 @@ class Editor extends Widget {
                 play();
             }
         }
+        if (buildTask != null) {
+            if (Coroutine.status(buildTask) != CoroutineState.Dead) {
+                Coroutine.resume(buildTask);
+            }
+            else {
+                buildTask = null;
+            }
+        }
 
         if (playerSubViewportContainer != null)
             if (centerTabContainer.currentTab == playerSubViewportContainer.getIndex())
@@ -480,6 +513,173 @@ class Editor extends Widget {
                 centerTabContainer.getTabBar().tabCloseDisplayPolicy = CloseButtonDisplayPolicy.showActiveOnly;
         else
             centerTabContainer.getTabBar().tabCloseDisplayPolicy = CloseButtonDisplayPolicy.showActiveOnly;
+    }
+
+    var buildTask:Coroutine<() -> Void> = null;
+
+    public function buildPlugin() {
+        if (projectFilePath == "") {
+            Debug.error("No project opened. Please open a project first.");
+            return;
+        }
+
+        if (projectFile.pluginEntrypoint == null || projectFile.pluginEntrypoint == "") {
+            Debug.error("No plugin entrypoint specified in the project file.");
+            return;
+        }
+
+        if (projectFile.scriptdir == null || projectFile.scriptdir == "") {
+            Debug.error("No script directory specified in the project file.");
+            return;
+        }
+
+        var command = generateHaxeBuildCommand();
+
+        buildTask = Coroutine.create(function() {
+            trace("Starting build task...");
+
+            if (pluginBuildWindow != null) {
+                var windowSize = pluginBuildWindow.size;
+                var scaleFactor = getWindow().contentScaleFactor;
+                pluginBuildWindow.minSize = new Vector2i(Std.int(windowSize.x * scaleFactor), Std.int(windowSize.y * scaleFactor));
+                pluginBuildWindow.contentScaleFactor = scaleFactor;
+                pluginBuildWindow.popupCentered();
+            }
+
+            Coroutine.yield();
+
+            var logFilePath = explorer.projectDirectory + "/.studio/build.log";
+            if (FileSystem.exists(logFilePath)) {
+                FileSystem.deleteFile(logFilePath);
+            }
+
+            Coroutine.yield();
+
+            trace("Build command: " + command);
+            var args = StringArray.create();
+            var cmdArr = command.split(" ");
+            var commandName = cmdArr[0];
+            //Sys.println("command name: " + commandName);
+            for (i in 1...cmdArr.length) {
+                var arg = cmdArr[i];
+                if (arg == "") continue;
+                //trace("Arg #" + i + ": " + arg);
+                args.add(arg);
+            }
+
+            Coroutine.yield();
+
+            var exitCode = Sys.command(commandName, args);
+
+            trace("Build command result: " + exitCode);
+
+            Coroutine.yield();
+
+            if (pluginBuildWindow != null) {
+                pluginBuildWindow.hide();
+            }
+
+            if (exitCode == 0) {
+                loadProjectPlugin();
+            }
+            else {
+                Debug.error("Plugin failed to build with exit code: " + exitCode);
+            }
+        });
+
+        Coroutine.resume(buildTask);
+    }
+
+    inline function loadProjectPlugin() {
+        var pluginName = projectFile.name;
+        var pluginPath = "plugin://plugin.lua";
+        if (!localPluginIo.fileExists(pluginPath)) {
+            return;
+        }
+
+        try {
+            loadPlugin(pluginPath, true);
+        }
+        catch(e: String) {
+            Debug.error(e.toString(), "Error loading project plugin");
+        }
+    }
+
+    var projectPlugin: Plugin = null;
+
+    public inline function loadPlugin(path: String, isProjectPlugin: Bool = false) {
+        var loader = new LibraryLoader();
+        loader.libraryName = name;
+
+        loader.loadLibrary(path);
+        loader.main();
+
+        var pluginEnv  = loader.env;
+
+        var plugin: Plugin = untyped __lua__("pluginEnv['plugin']");
+        if (plugin != null) {
+            if (isProjectPlugin == true) {
+                if (projectPlugin != null) {
+                    projectPlugin.uninit();
+                    plugins.remove(projectPlugin);
+                }
+                projectPlugin = plugin;
+            }
+            plugins.push(plugin);
+            plugin.init();
+        }
+    }
+
+    public function pushBehaviorClass(_class: Class<Behavior>) {
+        var className = Type.getClassName(_class);
+        untyped {
+            _hxClasses[className] = _class;
+        }
+    }
+
+    inline function getExitCode():Null<Int> {
+        var hiddenDir = explorer.projectDirectory + "/.studio";
+        var logFilePath = hiddenDir + "/build.log";
+        if (sys.FileSystem.exists(logFilePath)) {
+            var content = StringTools.trim(sys.io.File.getContent(logFilePath));
+            return Std.parseInt(content);
+        }
+        // trace("Build log not found or empty.");
+        return null;
+    }
+
+    private inline function generateHaxeBuildCommand():String {
+        var command = this.haxePath + " --class-path " + explorer.projectDirectory + "/" + this.projectFile.scriptdir + " -main "
+        + this.projectFile.pluginEntrypoint + " --library libsunaba --library gamepak --library sunaba-studio";
+        command += " -D source-map";
+        var hiddenDir = explorer.projectDirectory + "/.studio";
+        if (!FileSystem.exists(hiddenDir))
+            FileSystem.createDirectory(hiddenDir);
+        command += " -lua " + hiddenDir + "/plugin.lua -D lua-vanilla";
+
+        var librariesStr = "";
+        for (lib in this.projectFile.libraries)
+            librariesStr += " --library " + lib;
+        command += " " + this.projectFile.compilerFlags.join(" ");
+
+        if (Sys.systemName() != "Windows") {
+            command += '; echo $? > ' + hiddenDir + '/build.log &';
+            return command;
+        } else {
+            // Create wrapper batch file
+            /*var wrapper = hiddenDir + "/run_build.bat";
+            var batContent = '@echo off\r\n'
+            + command
+            + '\r\n'
+            + 'echo %ERRORLEVEL% > "'
+            + StringTools.replace(hiddenDir, "/", "\\")
+            + '\\build.log"\r\n';
+            sys.io.File.saveContent(wrapper, batContent);
+
+            var newcmd = 'start /B "" "' + wrapper + '"';
+            return StringTools.replace(wrapper, ".bat", "");*/
+            return command;
+        }
     }
 
     private function checkLeftSideBar() {

@@ -15,8 +15,13 @@ import sunaba.spatial.mesh.PrimitiveMesh;
 import sunaba.studio.sceneEditor.FreeLook3D;
 import sunaba.core.Vector3;
 import sunaba.core.Dictionary;
+import sunaba.studio.debugDraw.DebugDrawService3D;
+import sunaba.core.Vector2i;
+import sunaba.core.Color;
+import sunaba.core.Callable;
 
 class SceneEditor extends EditorWidget {
+    private var filePath: String;
 
     public var selectButton: Button;
     public var moveButton: Button;
@@ -39,32 +44,89 @@ class SceneEditor extends EditorWidget {
 
     var sceneName: String = "";
 
-    public override function init() {
+    var largeGridTransform: SpatialTransform;
+    var smallGridTransform: SpatialTransform;
+
+    public var gizmo: Gizmo3D;
+
+    private var _gizmoMode: GizmoToolMode = GizmoToolMode.all;
+    public var gizmoMode(get, set): GizmoToolMode;
+    function get_gizmoMode():GizmoToolMode {
+        return _gizmoMode;
+    }
+    function set_gizmoMode(value:GizmoToolMode):GizmoToolMode {
+        if (gizmo != null) {
+            gizmo.mode = value;
+        }
+        return this._gizmoMode = value;
+    }
+
+    public override function editorInit() {
         load("studio://SceneEditor.suml");
 
         selectButton = getNodeT(Button, "vbox/toolbar/hbox/select");
+        selectButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.all;
+        }));
         moveButton = getNodeT(Button, "vbox/toolbar/hbox/move");
+        moveButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.move;
+        }));
         rotateButton = getNodeT(Button, "vbox/toolbar/hbox/rotate");
+        rotateButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.rotate;
+        }));
         scaleButton = getNodeT(Button, "vbox/toolbar/hbox/scale");
+        scaleButton.pressed.connect(Callable.fromFunction(function() {
+            gizmoMode = GizmoToolMode.scale;
+        }));
+
+        translateSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/translateSpinBox");
+        translateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.translateSnap = value;
+            }
+        }));
+        rotateSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/rotateSpinBox");
+        rotateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.rotateSnap = value;
+            }
+        }));
+        scaleSpinBox = getNodeT(SpinBox, "vbox/toolbar2/hbox/scaleSpinBox");
+        scaleSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
+            if (gizmo != null) {
+                gizmo.scaleSnap = value;
+            }
+        }));
 
         viewport = getNodeT(SubViewport, "vbox/container/viewport");
     }
 
     public function openScene(path: String) {
         fileType = FileType.SceneType;
+        filePath = path;
 
         var name: String = path.split("/").pop();
         getEditor().setWorkspaceTabTitle(this, name);
         sceneName = name;
+
+        var sceneJson = io.loadText(path);
+        var sceneData = JSON.parseString(sceneJson);
+        sceneJson = JSON.stringify(sceneData);
+        savedSceneJson = sceneJson;
+        savedSceneJsonInitialized = true;
 
         var sceneFile = new SceneFile();
         sceneFile.io = getEditor().projectIo;
         sceneFile.load(path);
         Sys.println(sceneFile.getData());
 
+
         scene = sceneFile.instance();
         trace(scene.getEntityCount());
         scene.processMode = CanvasItemProcessMode.disabled;
+        processMode = CanvasItemProcessMode.always;
         viewport.addChild(scene);
 
         var envRes = ResourceLoaderService.load("res://Engine/Environments/new_environment.tres");
@@ -73,6 +135,8 @@ class SceneEditor extends EditorWidget {
         worldEnv.native.set("environment", environment.native);
         viewport.addChild(worldEnv);
         initializeEditorScene();
+        checkScene();
+        intializeCameraList();
     }
 
     public function openPrefab(path: String) {
@@ -96,9 +160,61 @@ class SceneEditor extends EditorWidget {
         camera.current = true;
         freeLook3d = cameraEntity.addComponent(FreeLook3D);
 
+        var gizmoEntity = new Entity();
+        gizmoEntity.name = "EditorGizmo";
+        var gizmoTransform = gizmoEntity.addComponent(SpatialTransform);
+        editorScene.addEntity(gizmoEntity);
+        gizmo = gizmoEntity.addComponent(Gizmo3D);
+
         viewport.addChild(editorScene);
         freeLook3d.onStart();
         freeLook3d.transform = cameraTransform;
+
+        var largeGridEntity = new Entity();
+        largeGridEntity.name = "LargeGrid";
+        largeGridTransform = largeGridEntity.addComponent(SpatialTransform);
+        editorScene.addEntity(largeGridEntity);
+        largeGridTransform.scale = new Vector3(1000, 1, 1000);
+
+        var smallGridEntity = new Entity();
+        smallGridEntity.name = "LargeGrid";
+        smallGridTransform = smallGridEntity.addComponent(SpatialTransform);
+        editorScene.addEntity(smallGridEntity);
+        smallGridTransform.scale = new Vector3(10, 1, 10);
+
+        gizmoMode = GizmoToolMode.all;
+        gizmo.transformChanged.connect(Callable.fromFunction(function(mode: Int, value: Vector3) {
+            var sceneInspector = getEditor().sceneInspector;
+            if (sceneInspector.sceneEditor == this) {
+                sceneInspector.refreshInspector();
+                checkScene();
+            }
+        }));
+        translateSpinBox.value = gizmo.translateSnap;
+        rotateSpinBox.value = gizmo.rotateSnap;
+        scaleSpinBox.value = gizmo.scaleSnap;
+    }
+
+    public var cameraList: Array<Camera>;
+
+    public function intializeCameraList(): Void {
+        cameraList = [];
+        if (scene != null) {
+            for (i in 0...scene.getEntityCount()) {
+                var entity = scene.getEntity(i);
+                checkCamera(entity);
+            }
+        }
+    }
+
+    private function checkCamera(entity: Entity) {
+        if (entity.getComponent(Camera) != null) {
+            cameraList.push(entity.getComponent(Camera));
+        }
+        for (i in 0...entity.getChildCount()) {
+            var child = entity.getChild(i);
+            checkCamera(child);
+        }
     }
 
     public override function onProcess(deltaTime: Float) {
@@ -113,6 +229,27 @@ class SceneEditor extends EditorWidget {
                 sceneInspector.openSceneEditor(this);
             }
         }
+
+        var scopeConfig = DebugDrawService3D.newScopedConfig().setViewport(viewport).setThickness(0.015);
+
+        var tg = largeGridTransform.globalTransform;
+        var tn = largeGridTransform.transform.origin;
+        DebugDrawService3D.drawGrid(tg.origin, tg.basis.x, tg.basis.z, new Vector2i(250, 250), Color.rgba(0.5, 0.5, 0.5, 1), true);
+        for (camera in cameraList) {
+            DebugDrawService3D.drawCameraFrustum(camera, Color.rgba(1, 1, 0, 1));
+        }
+
+        scopeConfig = scopeConfig.setThickness(0.005);
+        DebugDrawService3D.drawGrid(tg.origin, tg.basis.x, tg.basis.z, new Vector2i(1000, 1000), Color.rgba(0.5, 0.5, 0.5, 1), true);
+
+        scopeConfig = scopeConfig.setThickness(0.030);
+        DebugDrawService3D.drawLine(new Vector3(1000, 0.025, 0), new Vector3(-1000, 0.025, 0), Color.rgba(1, 0, 0, 1));
+        DebugDrawService3D.drawLine(new Vector3(0, 0.025, 1000), new Vector3(0, 0.025, -1000), Color.rgba(0, 0, 1, 1));
+        DebugDrawService3D.drawLine(new Vector3(0, -1000, 0), new Vector3(0, 1000, 0), Color.rgba(0, 1, 0, 1));
+
+        scopeConfig = null;
+
+        Gc.collect();
     }
 
     private var savedSceneJsonInitialized: Bool = false;
@@ -126,14 +263,25 @@ class SceneEditor extends EditorWidget {
             if (!savedSceneJsonInitialized) {
                 savedSceneJson = sceneJson;
                 savedSceneJsonInitialized = true;
+                return;
             }
-            Sys.println(sceneJson);
-            Sys.println(savedSceneJson);
-            trace(savedSceneJson != sceneJson);
             if (savedSceneJson != sceneJson) {
                 getEditor().setWorkspaceTabTitle(this, sceneName + "*");
             }
+            else {
+                getEditor().setWorkspaceTabTitle(this, sceneName);
+            }
         }
+    }
+
+    public override function onSave() {
+        var sceneFile = SceneFile.create(scene);
+        var sceneData = sceneFile.getData();
+        var sceneJson = JSON.stringify(sceneData);
+        if (savedSceneJson == sceneJson) return;
+        savedSceneJson = sceneJson;
+        sceneFile.save(filePath);
+        checkScene();
     }
 
     public override function onDestroy() {
