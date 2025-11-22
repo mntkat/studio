@@ -316,6 +316,7 @@ class Editor extends Widget {
             }
             if (OSService.getName() == "macOS") {
                 helpMenu.removeItem(helpMenu.itemCount - 1);
+                helpMenu.systemMenuId = 4;
             }
             helpMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
                 if (id == (helpMenu.itemCount - 1)) {
