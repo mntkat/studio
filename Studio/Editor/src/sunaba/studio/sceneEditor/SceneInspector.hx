@@ -28,6 +28,8 @@ import sunaba.core.Vector3i;
 import sunaba.core.Vector4i;
 import sunaba.ui.CenterContainer;
 import sunaba.spatial.SpatialTransform;
+import sunaba.desktop.FileDialog;
+import String;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -88,6 +90,7 @@ class SceneInspector extends EditorWidget {
         //entityMenuButton = getNodeT(MenuButton, "vsplit/entityInspector/toolbar/hbox/menuButton");
         entityPrefabButton = getNodeT(Button, "vsplit/entityInspector/toolbar/hbox/prefab");
         entityPrefabButton.hide();
+        entityPrefabButton.pressed.connect(Callable.fromFunction(()->openSaveAsPrefabDialog()));
 
         entityVBox = getNodeT(VBoxContainer, "vsplit/entityInspector/scroll/vbox");
 
@@ -132,6 +135,48 @@ class SceneInspector extends EditorWidget {
         }
         else {
         }
+    }
+
+    public function openSaveAsPrefabDialog() {
+        var dialog = new FileDialog();
+        dialog.fileMode = FileDialogMode.saveFile;
+        dialog.rootSubfolder = getEditor().explorer.assetsDirectory;
+        dialog.currentDir = getEditor().explorer.assetsDirectory;
+        dialog.currentFile = selectedEntity.name + ".vpfb";
+        dialog.access = 2;
+        dialog.title = "Save \"" + selectedEntity.name + "\" as prefab";
+        dialog.addFilter("*.vpfb", "Prefab");
+        addChild(dialog);
+        dialog.hide();
+
+        dialog.currentDir = getEditor().explorer.assetsDirectory;
+
+        var dialogScaleFactor = getWindow().contentScaleFactor;
+        dialog.contentScaleFactor = dialogScaleFactor;
+        var minSize = new Vector2i(580, 460);
+        minSize.x = Std.int(minSize.x * dialogScaleFactor);
+        minSize.y = Std.int(minSize.y * dialogScaleFactor);
+        dialog.minSize = minSize;
+
+        dialog.fileSelected.connect(Callable.fromFunction(function(path: String) {
+            var ioPath = StringTools.replace(path, getEditor().explorer.assetsDirectory, getEditor().projectIo.pathUrl);
+            dialog.hide();
+            dialog.queueFree();
+            if (ioPath == "" || ioPath == path) {
+                Debug.error("Invalid file path.", "Error saving prefab");
+                return;
+            }
+
+            var prefabFile = Prefab.create(selectedEntity, ioPath);
+            prefabFile.save();
+            var index = selectedEntityIndex;
+            refreshSceneTree();
+            selectedEntityIndex = index;
+            refreshInspector();
+            getEditor().explorer.buildTreeRoot();
+        }));
+
+        dialog.popupCentered();
     }
 
     public function openSceneEditor(_sceneEditor: SceneEditor) {
@@ -197,10 +242,10 @@ class SceneInspector extends EditorWidget {
         if (entity.isPrefab()) {
             item.setIcon(0, prefabIcon);
 
-            if (entity == selectedEntity) {
+            if (entity == prefab) {
                 for (i in 0...entity.getChildCount()) {
                     var child = entity.getChild(i);
-                    buildEntityTree(item, entity);
+                    buildEntityTree(item, child);
                 }
             }
         }
