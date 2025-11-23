@@ -84,5 +84,43 @@
                 </sunaba.ui.ScrollContainer>
             </sunaba.ui.VBoxContainer>
         </sunaba.ui.VSplitContainer>
+        <sunaba.desktop.AcceptDialog
+                name="addComponentDialog"
+                title="Add Component"
+                okButtonText="Add"
+                size="300,200"
+                popupWindow="true">
+            <sunaba.ui.VBoxContainer
+                    fullRect="true"
+                    name="vbox"
+                    offsetBottom="10"
+                    offsetTop="-10"
+                    offsetLeft="10"
+                    offsetRight="-10"
+                    separation="0">
+                <sunaba.ui.Tree
+                    name="tree"
+                    sizeFlagsVertical="3"/>
+            </sunaba.ui.VBoxContainer>
+        </sunaba.desktop.AcceptDialog>
+        <sunaba.desktop.AcceptDialog
+                name="addEntityDialog"
+                title="Add Entity"
+                okButtonText="Add"
+                size="300,200"
+                popupWindow="true">
+            <sunaba.ui.VBoxContainer
+                    fullRect="true"
+                    name="vbox"
+                    offsetBottom="10"
+                    offsetTop="-10"
+                    offsetLeft="10"
+                    offsetRight="-10"
+                    separation="0">
+                <sunaba.ui.Tree
+                        name="tree"
+                        sizeFlagsVertical="3"/>
+            </sunaba.ui.VBoxContainer>
+        </sunaba.desktop.AcceptDialog>
     </body>
 </suml>
