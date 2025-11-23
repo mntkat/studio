@@ -456,6 +456,11 @@ class Editor extends Widget {
     public override function onProcess(deltaTime: Float) {
         checkFocus();
 
+        if (showDialog == true) {
+            showDialog = false;
+            showAboutDialog();
+        }
+
         if (PlatformService.osName == "macOS") {
             if (windowTitle.text != window.title)
                 windowTitle.text = window.title;
@@ -1032,9 +1037,11 @@ class Editor extends Widget {
         playerAppView.loadApp(snbPath);
     }
 
+    private var showDialog = false;
+
     public override function onNotification(what: Int) {
         if (what == 2011) {
-            showAboutDialog();
+            showDialog = true;
         }
     }
 }
