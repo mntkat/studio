@@ -279,8 +279,12 @@ class SceneInspector extends EditorWidget {
             if (selectedEntityIndex != -1) {
                 var selectedEntity = entityIndex[selectedEntityIndex];
                 entityText.text = selectedEntity.name;
-                if (selectedEntity.isPrefab() && selectedEntity != prefab)
+                if (selectedEntity.isPrefab()) {
                     entityIcon.texture = prefabIcon24;
+                    if (selectedEntity == prefab) {
+                        buildComponentTree(selectedEntity);
+                    }
+                }
                 else {
                     entityIcon.texture = entityIcon24;
                     buildComponentTree(selectedEntity);
