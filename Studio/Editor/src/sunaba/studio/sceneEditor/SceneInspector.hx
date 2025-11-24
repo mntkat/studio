@@ -34,7 +34,7 @@ import String;
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
     public var deleteButton: Button;
-    public var createButton: MenuButton;
+    public var createButton: Button;
 
     public var sceneTree: Tree;
 
@@ -81,7 +81,7 @@ class SceneInspector extends EditorWidget {
 
         loadButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/load");
         deleteButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/delete");
-        createButton = getNodeT(MenuButton, "vsplit/outliner/toolbar/hbox/create");
+        createButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/create");
 
         sceneTree = getNodeT(Tree, "vsplit/outliner/tree");
 

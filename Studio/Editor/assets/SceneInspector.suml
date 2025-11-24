@@ -29,7 +29,7 @@
                             iconAlignment="1"
                             icon="studio://icons/16/cross-button.png"
                             customMinimumSize="30,30"/>
-                        <sunaba.ui.MenuButton
+                        <sunaba.ui.Button
                                 name="create"
                                 iconAlignment="1"
                                 icon="studio://icons/16/plus-button.png"
