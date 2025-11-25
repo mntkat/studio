@@ -139,11 +139,13 @@ class SceneInspector extends EditorWidget {
 
         addEntityDialog = getNodeT(AcceptDialog, "addEntityDialog");
         addEntityDialog.confirmed.connect(Callable.fromFunction(function() {
+            if (sceneEditor == null) return;
             createEntity();
         }));
         addEntityDialogTree = getNodeT(Tree, "addEntityDialog/vbox/tree");
         addEntityDialogTree.itemActivated.connect(Callable.fromFunction(function() {
             addEntityDialog.hide();
+            if (sceneEditor == null) return;
             createEntity();
         }));
 
