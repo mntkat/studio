@@ -138,6 +138,11 @@ class SceneInspector extends EditorWidget {
         }));
 
         addEntityDialog = getNodeT(AcceptDialog, "addEntityDialog");
+        addEntityDialog.contentScaleFactor = getWindow().contentScaleFactor;
+        var addEntityDialogSize = addEntityDialog.size;
+        addEntityDialogSize.x = Std.int(addEntityDialogSize.x * addEntityDialog.contentScaleFactor);
+        addEntityDialogSize.y = Std.int(addEntityDialogSize.y * addEntityDialog.contentScaleFactor);
+        addEntityDialog.size = addEntityDialogSize;
         addEntityDialog.confirmed.connect(Callable.fromFunction(function() {
             if (sceneEditor == null) return;
             createEntity();
