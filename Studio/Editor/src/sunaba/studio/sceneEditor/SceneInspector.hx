@@ -161,7 +161,7 @@ class SceneInspector extends EditorWidget {
         entityTemplates = new Map();
 
         entityTemplates["3D Entity"] = (entity: Entity) -> {
-            entity.name = "3D Entity";
+            entity.name = "Entity";
             entity.addComponent(SpatialTransform);
         };
 
