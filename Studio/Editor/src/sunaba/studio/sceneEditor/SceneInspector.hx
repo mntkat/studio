@@ -30,6 +30,7 @@ import sunaba.ui.CenterContainer;
 import sunaba.spatial.SpatialTransform;
 import sunaba.desktop.FileDialog;
 import String;
+import sunaba.desktop.AcceptDialog;
 
 class SceneInspector extends EditorWidget {
     public var loadButton: Button;
@@ -67,6 +68,12 @@ class SceneInspector extends EditorWidget {
     public var maxEntityIndex: Int = 0;
     public var entityIndex: Map<Int, Entity>;
 
+    public var addEntityDialog: AcceptDialog;
+    public var addEntityDialogTree: Tree;
+
+    public var addComponentDialog: AcceptDialog;
+    public var addComponentDialogTree: Tree;
+
     public override function editorInit() {
         getEditor().setRightSidebarTabTitle(this, "Scene Inspector");
 
@@ -82,6 +89,10 @@ class SceneInspector extends EditorWidget {
         loadButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/load");
         deleteButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/delete");
         createButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/create");
+        createButton.pressed.connect(Callable.fromFunction(function() {
+            if (sceneEditor == null) return;
+            showAddEntityTree();
+        }));
 
         sceneTree = getNodeT(Tree, "vsplit/outliner/tree");
 
@@ -125,6 +136,96 @@ class SceneInspector extends EditorWidget {
                 }
             }
         }));
+
+        addEntityDialog = getNodeT(AcceptDialog, "addEntityDialog");
+        addEntityDialog.confirmed.connect(Callable.fromFunction(function() {
+            createEntity();
+        }));
+        addEntityDialogTree = getNodeT(Tree, "addEntityDialog/vbox/tree");
+        addEntityDialogTree.itemActivated.connect(Callable.fromFunction(function() {
+            addEntityDialog.hide();
+            createEntity();
+        }));
+
+        addComponentDialog = getNodeT(AcceptDialog, "addComponentDialog");
+        addComponentDialogTree = getNodeT(Tree, "addEntityDialog/vbox/tree");
+
+
+        entityTemplates = new Map();
+
+        entityTemplates["3D Entity"] = (entity: Entity) -> {
+            entity.name = "3D Entity";
+            entity.addComponent(SpatialTransform);
+        };
+
+        entityTemplates["Empty Entity"] = (entity: Entity) -> {
+            entity.name = "Entity";
+            entity.addComponent(SpatialTransform);
+        };
+    }
+
+    public inline function showAddEntityTree() {
+        addEntityDialogTree.clear();
+        addEntityDialogTree.hideRoot = true;
+        var rootItem = addEntityDialogTree.createItem();
+
+        for (templateName in entityTemplates.keys()) {
+            var templateItem = addEntityDialogTree.createItem(rootItem);
+            templateItem.setText(0, templateName);
+            templateItem.setMetadata(0, templateName);
+        }
+
+        addEntityDialog.popupCentered();
+    }
+
+    public inline function createEntity() {
+        var selectedItem = addEntityDialogTree.getSelected();
+        if (selectedItem.isNull()) return;
+
+        var entity = new Entity();
+
+        var selectedItemText = selectedItem.getMetadata(0);
+        if (selectedItemText.getType() == VariantType.nil) return;
+
+        var selectedItemFunc = entityTemplates[selectedItemText];
+        if (selectedItemFunc == null) return;
+
+        selectedItemFunc(entity);
+
+        var entityIdx = 0;
+        var ogEntityName = entity.name;
+        if (selectedEntity != null) {
+            for (i in 0...selectedEntity.getChildCount()) {
+                var selectedEntityChild = selectedEntity.getChild(i);
+                if (selectedEntityChild.name == entity.name) {
+                    entityIdx++;
+                    entity.name = ogEntityName + " (" + Std.string(entityIdx) + ")";
+                }
+            }
+            selectedEntity.addChild(entity);
+        }
+        else {
+            for (i in 0...scene.getEntityCount()) {
+                var sceneEntity = scene.getEntity(i);
+                if (sceneEntity.name == entity.name) {
+                    entityIdx++;
+                    entity.name = ogEntityName + " (" + Std.string(entityIdx) + ")";
+                }
+            }
+            scene.addEntity(entity);
+        }
+
+        refreshSceneTree();
+
+        for (idx in entityIndex.keys()) {
+            if (entityIndex[idx] == entity) {
+                selectedEntityIndex = idx;
+                break;
+            }
+        }
+
+        refreshInspector();
+        sceneEditor.checkScene();
     }
 
     public override function onProcess(deltaTime: Float) {
@@ -136,6 +237,8 @@ class SceneInspector extends EditorWidget {
         else {
         }
     }
+
+    public var entityTemplates: Map<String, (Entity)->Void>;
 
     public function openSaveAsPrefabDialog() {
         var dialog = new FileDialog();
@@ -159,7 +262,6 @@ class SceneInspector extends EditorWidget {
         dialog.minSize = minSize;
 
         dialog.fileSelected.connect(Callable.fromFunction(function(path: String) {
-            var index = selectedEntityIndex;
             var ioPath = StringTools.replace(path, getEditor().explorer.assetsDirectory, getEditor().projectIo.pathUrl);
             dialog.hide();
             dialog.queueFree();
@@ -175,9 +277,15 @@ class SceneInspector extends EditorWidget {
             prefabFile.save();
 
             refreshSceneTree();
-            selectedEntityIndex = index;
+            for (idx in entityIndex.keys()) {
+                if (entityIndex[idx] == selectedEntity) {
+                    selectedEntityIndex = idx;
+                    break;
+                }
+            }
             refreshInspector();
             getEditor().explorer.buildTreeRoot();
+            sceneEditor.checkScene();
         }));
 
         dialog.popupCentered();
