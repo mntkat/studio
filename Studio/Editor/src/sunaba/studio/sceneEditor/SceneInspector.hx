@@ -126,6 +126,7 @@ class SceneInspector extends EditorWidget {
                 }
             }
             var selectedItem = sceneTree.getSelected();
+
             selectedEntityIndex = selectedItem.getMetadata(0);
             refreshInspector();
             selectedEntity = entityIndex[selectedEntityIndex];
@@ -135,6 +136,58 @@ class SceneInspector extends EditorWidget {
                     sceneEditor.gizmo.select(transform);
                 }
             }
+        }));
+        sceneTree.itemActivated.connect(Callable.fromFunction(function() {
+            var selectedItem = sceneTree.getSelected();
+            if (selectedItem.getMetadata(0).toInt() != -1) {
+                selectedItem.setEditable(0, true);
+            }
+
+        }));
+        sceneTree.itemEdited.connect(Callable.fromFunction(function() {
+            var selectedItem = sceneTree.getSelected();
+            selectedItem.setEditable(0, false);
+            selectedEntityIndex = selectedItem.getMetadata(0);
+            selectedEntity = entityIndex[selectedEntityIndex];
+            var newSelectedEntityName = selectedItem.getText(0);
+            selectedEntity.name = newSelectedEntityName;
+            var entityParent = getParentEntity(selectedEntity, null);
+            var entIdx = 0;
+            if (!scene.hasEntity(selectedEntity)) {
+                for (i in 0...entityParent.getChildCount()) {
+                    var entityParentChild = entityParent.getChild(i);
+                    if (entityParentChild == selectedEntity) continue;
+                    else {
+                        if (entityParentChild.name == selectedEntity.name) {
+                            entIdx++;
+                            selectedEntity.name = newSelectedEntityName + " (" + Std.string(entIdx) + ")";
+                        }
+                    }
+                }
+            }
+            else {
+                for (i in 0...scene.getEntityCount()) {
+                    var sceneEntity = scene.getEntity(i);
+                    if (sceneEntity != selectedEntity) {
+                        if (sceneEntity.name == selectedEntity.name) {
+                            entIdx++;
+                            selectedEntity.name = newSelectedEntityName + " (" + Std.string(entIdx) + ")";
+                        }
+                    }
+                }
+            }
+
+            refreshSceneTree();
+
+            for (idx in entityIndex.keys()) {
+                if (entityIndex[idx] == selectedEntity) {
+                    selectedEntityIndex = idx;
+                    break;
+                }
+            }
+
+            refreshInspector();
+            sceneEditor.checkScene();
         }));
 
         addEntityDialog = getNodeT(AcceptDialog, "addEntityDialog");
@@ -168,6 +221,36 @@ class SceneInspector extends EditorWidget {
         entityTemplates["Empty Entity"] = (entity: Entity) -> {
             entity.name = "Entity";
         };
+    }
+
+    public function getParentEntity(child: Entity, ?parent: Entity): Null<Entity> {
+        if (parent == null) {
+            for (i in 0...scene.getEntityCount()) {
+                var entity = scene.getEntity(i);
+                if (entity == child)
+                    return null;
+                else {
+                    var result = getParentEntity(child, entity);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+        else {
+            for (i in 0...parent.getChildCount()) {
+                var childOfParent = parent.getChild(i);
+                if (childOfParent == child)
+                    return parent;
+                else {
+                    var result = getParentEntity(child, childOfParent);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public inline function showAddEntityTree() {
