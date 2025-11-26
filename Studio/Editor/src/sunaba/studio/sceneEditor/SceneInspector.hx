@@ -293,6 +293,16 @@ class SceneInspector extends EditorWidget {
             }
             selectedEntity.addChild(entity);
         }
+        else if (prefab != null) {
+            for (i in 0...prefab.getChildCount()) {
+                var prefabChild = prefab.getChild(i);
+                if (prefabChild.name == entity.name) {
+                    entityIdx++;
+                    entity.name = ogEntityName + " (" + Std.string(entityIdx) + ")";
+                }
+            }
+            prefab.addChild(entity);
+        }
         else {
             for (i in 0...scene.getEntityCount()) {
                 var sceneEntity = scene.getEntity(i);
