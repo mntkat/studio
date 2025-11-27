@@ -304,6 +304,10 @@ class SceneInspector extends EditorWidget {
             return;
         }
         else {
+            if (currentTab != sceneEditor) {
+                openSceneEditor(null);
+                return;
+            }
         }
     }
 
