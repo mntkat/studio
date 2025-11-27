@@ -151,7 +151,7 @@ class SceneInspector extends EditorWidget {
             selectedEntity = entityIndex[selectedEntityIndex];
             var newSelectedEntityName = selectedItem.getText(0);
             selectedEntity.name = newSelectedEntityName;
-            var entityParent = getParentEntity(selectedEntity, null);
+            var entityParent = selectedEntity.parent;
             var entIdx = 0;
             if (!scene.hasEntity(selectedEntity)) {
                 for (i in 0...entityParent.getChildCount()) {
@@ -221,36 +221,6 @@ class SceneInspector extends EditorWidget {
         entityTemplates["Empty Entity"] = (entity: Entity) -> {
             entity.name = "Entity";
         };
-    }
-
-    public function getParentEntity(child: Entity, ?parent: Entity): Null<Entity> {
-        if (parent == null) {
-            for (i in 0...scene.getEntityCount()) {
-                var entity = scene.getEntity(i);
-                if (entity == child)
-                    return null;
-                else {
-                    var result = getParentEntity(child, entity);
-                    if (result != null) {
-                        return result;
-                    }
-                }
-            }
-        }
-        else {
-            for (i in 0...parent.getChildCount()) {
-                var childOfParent = parent.getChild(i);
-                if (childOfParent == child)
-                    return parent;
-                else {
-                    var result = getParentEntity(child, childOfParent);
-                    if (result != null) {
-                        return result;
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     public inline function showAddEntityTree() {
