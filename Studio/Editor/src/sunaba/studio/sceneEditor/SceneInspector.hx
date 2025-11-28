@@ -507,7 +507,14 @@ class SceneInspector extends EditorWidget {
             foldableContainer.title = compName;
             var componentVbox = new VBoxContainer();
             foldableContainer.addChild(componentVbox);
+            foldableContainer.titleAlignment = HorizontalAlignment.center;
             entityVBox.addChild(foldableContainer);
+
+            var iconTextureRect = new TextureRect();
+            var iconPath = component.editorIconPath;
+            var icon = getEditor().explorer.loadIcon(iconPath);
+            iconTextureRect.texture = icon;
+            foldableContainer.addTitleBarControl(iconTextureRect);
 
             var data = component.getData();
             var dataKeys = data.keys();
