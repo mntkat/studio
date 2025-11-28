@@ -92,6 +92,7 @@ jobs:
         with:
           repository: sunabagg/libsunaba
           path: ${{github.workspace}}/libsunaba
+          token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true`
 
       - name: Checkout Gamepak
@@ -99,6 +100,7 @@ jobs:
         with:
           repository: sunabagg/gamepak
           path: ${{github.workspace}}/gamepak
+          token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true
 
       - name: Install Haxelib Dependencies
