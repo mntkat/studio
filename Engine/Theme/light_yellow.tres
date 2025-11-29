@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=61 format=3 uid="uid://8ifbxyyprfit"]
+[gd_resource type="Theme" load_steps=63 format=3 uid="uid://8ifbxyyprfit"]
 
 [ext_resource type="Texture2D" uid="uid://buvjxrl4hhhaw" path="res://Engine/Theme/grey_button11.png" id="1_0kq5y"]
 [ext_resource type="StyleBox" uid="uid://dpmofa7nf6jja" path="res://Engine/Theme/button_focus_yellow.tres" id="2_agrb1"]
@@ -38,6 +38,7 @@
 [ext_resource type="StyleBox" uid="uid://de1k7xu0s8ba2" path="res://Engine/Theme/tab_fg.tres" id="36_4gwbw"]
 [ext_resource type="StyleBox" uid="uid://vsre08ftarbp" path="res://Engine/Theme/tab_bg.tres" id="37_hebap"]
 [ext_resource type="Texture2D" uid="uid://bq7dmaso520uq" path="res://Engine/Theme/category.png" id="38_o3d8p"]
+[ext_resource type="Texture2D" uid="uid://bt6jroscnl1la" path="res://Engine/Theme/focus_button13_yellow.png" id="39_agrb1"]
 [ext_resource type="Texture2D" uid="uid://bk4ihku1m6le5" path="res://Engine/Theme/window.png" id="39_sngtg"]
 [ext_resource type="FontFile" uid="uid://8snxwxvq708x" path="res://Engine/Theme/fonts/Inter-Regular.ttf" id="40_qlugj"]
 
@@ -142,6 +143,13 @@ content_margin_left = 10.0
 content_margin_top = 5.0
 content_margin_right = 10.0
 content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_420pd"]
+texture = ExtResource("39_agrb1")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k4sy3"]
 texture = ExtResource("1_0kq5y")
@@ -420,7 +428,7 @@ Tree/styles/button_pressed = ExtResource("4_fo6qg")
 Tree/styles/custom_button = ExtResource("5_jyin7")
 Tree/styles/custom_button_hover = ExtResource("27_t46dn")
 Tree/styles/custom_button_pressed = ExtResource("4_fo6qg")
-Tree/styles/focus = ExtResource("26_n2krx")
+Tree/styles/focus = SubResource("StyleBoxTexture_420pd")
 Tree/styles/hovered = ExtResource("27_t46dn")
 Tree/styles/hovered_dimmed = ExtResource("27_t46dn")
 Tree/styles/hovered_selected = ExtResource("4_fo6qg")

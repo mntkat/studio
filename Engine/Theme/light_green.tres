@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=61 format=3 uid="uid://b5u6s6jfk35cc"]
+[gd_resource type="Theme" load_steps=63 format=3 uid="uid://b5u6s6jfk35cc"]
 
 [ext_resource type="Texture2D" uid="uid://buvjxrl4hhhaw" path="res://Engine/Theme/grey_button11.png" id="1_cgxk6"]
 [ext_resource type="StyleBox" uid="uid://c6qed0xso3cpc" path="res://Engine/Theme/button_focus_lightgreen.tres" id="2_ob58k"]
@@ -39,6 +39,7 @@
 [ext_resource type="StyleBox" uid="uid://vsre08ftarbp" path="res://Engine/Theme/tab_bg.tres" id="37_0hhvq"]
 [ext_resource type="Texture2D" uid="uid://bq7dmaso520uq" path="res://Engine/Theme/category.png" id="38_bpoq7"]
 [ext_resource type="Texture2D" uid="uid://bk4ihku1m6le5" path="res://Engine/Theme/window.png" id="39_gnixu"]
+[ext_resource type="Texture2D" uid="uid://c7b21dpkj16jr" path="res://Engine/Theme/focus_button13_green.png" id="39_ob58k"]
 [ext_resource type="FontFile" uid="uid://8snxwxvq708x" path="res://Engine/Theme/fonts/Inter-Regular.ttf" id="40_h7us2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ufuef"]
@@ -142,6 +143,13 @@ content_margin_left = 10.0
 content_margin_top = 5.0
 content_margin_right = 10.0
 content_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8tkix"]
+texture = ExtResource("39_ob58k")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k4sy3"]
 texture = ExtResource("1_cgxk6")
@@ -420,7 +428,7 @@ Tree/styles/button_pressed = ExtResource("4_qrf2j")
 Tree/styles/custom_button = ExtResource("5_8rtvg")
 Tree/styles/custom_button_hover = ExtResource("27_xai3w")
 Tree/styles/custom_button_pressed = ExtResource("4_qrf2j")
-Tree/styles/focus = ExtResource("26_vxjy1")
+Tree/styles/focus = SubResource("StyleBoxTexture_8tkix")
 Tree/styles/hovered = ExtResource("27_xai3w")
 Tree/styles/hovered_dimmed = ExtResource("27_xai3w")
 Tree/styles/hovered_selected = ExtResource("4_qrf2j")
