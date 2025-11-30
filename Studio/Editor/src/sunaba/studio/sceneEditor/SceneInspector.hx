@@ -88,6 +88,17 @@ class SceneInspector extends EditorWidget {
 
         loadButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/load");
         deleteButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/delete");
+        deleteButton.pressed.connect(Callable.fromFunction(function() {
+            selectedEntity.destroy();
+            selectedEntity = null;
+
+            refreshSceneTree();
+
+            selectedEntityIndex = -1;
+
+            refreshInspector();
+            sceneEditor.checkScene();
+        }));
         createButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/create");
         createButton.pressed.connect(Callable.fromFunction(function() {
             if (sceneEditor == null) return;
