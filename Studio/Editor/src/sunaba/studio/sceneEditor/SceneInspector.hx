@@ -87,17 +87,10 @@ class SceneInspector extends EditorWidget {
         load("studio://SceneInspector.suml");
 
         loadButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/load");
+
         deleteButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/delete");
         deleteButton.pressed.connect(Callable.fromFunction(function() {
-            selectedEntity.destroy();
-            selectedEntity = null;
-
-            refreshSceneTree();
-
-            selectedEntityIndex = -1;
-
-            refreshInspector();
-            sceneEditor.checkScene();
+            deleteEntity();
         }));
         createButton = getNodeT(Button, "vsplit/outliner/toolbar/hbox/create");
         createButton.pressed.connect(Callable.fromFunction(function() {
@@ -232,6 +225,18 @@ class SceneInspector extends EditorWidget {
         entityTemplates["Empty Entity"] = (entity: Entity) -> {
             entity.name = "Entity";
         };
+    }
+
+    public inline function deleteEntity() {
+        selectedEntity.destroy();
+        selectedEntity = null;
+
+        refreshSceneTree();
+
+        selectedEntityIndex = -1;
+
+        refreshInspector();
+        sceneEditor.checkScene();
     }
 
     public inline function showAddEntityTree() {
