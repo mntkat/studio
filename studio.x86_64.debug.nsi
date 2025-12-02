@@ -60,6 +60,14 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR\data_Sunaba.Studio_windows_x86_64"
   SetOverwrite try
   File /r "bin\windows-x86_64-debug\data_Sunaba.Studio_windows_x86_64\*.*"
+
+  File "Studio\project.ico" 
+
+  WriteRegStr HKLM "Software\Classes\.sproj" "" "Sunaba.Project"
+  WriteRegStr HKLM "Software\Classes\Sunaba.Project" "" "Sunaba Project"
+  WriteRegStr HKLM "Software\Classes\Sunaba.Project\DefaultIcon" "" "$INSTDIR\project.ico,0"
+  WriteRegStr HKLM "Software\Classes\Sunaba.Project\shell" "" "open"
+  WriteRegStr HKLM "Software\Classes\Sunaba.Project\shell\open\command" "" '"$INSTDIR\Sunaba.Studio.exe" "%1"'
 SectionEnd
 
 Section -AdditionalIcons
@@ -95,6 +103,7 @@ Section Uninstall
   Delete "$INSTDIR\libdd3d.windows.editor.x86_64.dll"
   Delete "$INSTDIR\sunaba.windows.template_debug.x86_64.dll"
   Delete "$INSTDIR\Sunaba.Studio.exe"
+  Delete "$INSTDIR\project.ico"
 
   Delete "$SMPROGRAMS\Sunaba\Studio\Uninstall.lnk"
   Delete "$DESKTOP\Sunaba Studio.lnk"
@@ -103,6 +112,9 @@ Section Uninstall
   RMDir "$SMPROGRAMS\Sunaba\Studio"
   RMDir "$INSTDIR\data_Sunaba.Studio_windows_x86_64"
   RMDir "$INSTDIR"
+
+  DeleteRegKey HKCR "Software\Classes\.sproj"
+  DeleteRegKey HKCR "Software\Classes\Sunaba.Project"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
