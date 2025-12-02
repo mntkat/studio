@@ -57,11 +57,10 @@ Section "MainSection" SEC01
   CreateShortCut "$DESKTOP\Sunaba Studio.lnk" "$INSTDIR\Sunaba.Studio.exe"
   File "bin\windows-x86_64-release\sunaba.windows.template_release.x86_64.dll"
   File "bin\windows-x86_64-release\libdd3d.windows.template_release.x86_64.enabled.dll"
+  File "Studio\project.ico" 
   SetOutPath "$INSTDIR\data_Sunaba.Studio_windows_x86_64"
   SetOverwrite try
   File /r "bin\windows-x86_64-release\data_Sunaba.Studio_windows_x86_64\*.*"
-
-  File "Studio\project.ico" 
 
   WriteRegStr HKLM "Software\Classes\.sproj" "" "Sunaba.Project"
   WriteRegStr HKLM "Software\Classes\Sunaba.Project" "" "Sunaba Project"
