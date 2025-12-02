@@ -16,6 +16,9 @@
       <Content Include="editor.snb">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    <Content Include="toolchain/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
       <Compile Remove="bin\**\*.cs" />
       <Compile Remove="libsunaba\**\*.cs" />
   </ItemGroup>
