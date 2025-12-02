@@ -228,6 +228,8 @@ class SceneInspector extends EditorWidget {
     }
 
     public inline function deleteEntity() {
+        if (sceneEditor == null) return;
+        if (selectedEntity == null) return;
         selectedEntity.destroy();
         selectedEntity = null;
 
