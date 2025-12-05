@@ -494,7 +494,7 @@ class Editor extends Widget {
             if (!StringTools.endsWith(asmDir, "/")) {
                 asmDir += "/";
             }
-            var shContent = "PATH=" + toolchaindir + ":$PATH";
+            var shContent = "PATH=" + toolchaindir;
             var haxelibPath = toolchaindir +  "haxelib";
             shContent += "; " + haxelibPath + " newrepo";
             shContent += "; " + haxelibPath + " install " + asmDir + "libsunaba.zip";
