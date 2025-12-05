@@ -41,16 +41,29 @@ public partial class HxSys: RefCounted
     	}
     	else
     	{
-        	startInfo.FileName = cmdName;
+		    if (!cmdName.IsAbsolutePath() && !cmdName.IsRelativePath() && cmdName.Contains(' '))
+		    {
+			    var cmdarr = cmdName.Split(' ');
+			    startInfo.FileName = cmdarr[0];
+			    for (int i = 1; i < cmdarr.Length; i++)
+			    {
+				    var arg = cmdarr[i];
+				    startInfo.ArgumentList.Add(arg);
+			    }
+		    }
+		    else
+		    {
+			    startInfo.FileName = cmdName;
         	
-        	if (args != null)
-        	{
-				// Pass arguments directly without shell interpretation
-            	foreach (var arg in args)
-            	{
-                	startInfo.ArgumentList.Add(arg);
-            	}
-        	}
+			    if (args != null)
+			    {
+				    // Pass arguments directly without shell interpretation
+				    foreach (var arg in args)
+				    {
+					    startInfo.ArgumentList.Add(arg);
+				    }
+			    }
+		    }
     	}
 	
     	process.StartInfo = startInfo;
@@ -59,3 +72,11 @@ public partial class HxSys: RefCounted
     	return process.ExitCode;
 	}
 }
+
+
+
+
+
+
+
+
