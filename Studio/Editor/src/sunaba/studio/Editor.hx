@@ -1070,6 +1070,10 @@ class Editor extends Widget {
 
         buildSystem.haxePath = haxePath;
 
+        buildSystem.chmodder = (shpath: String) -> {
+            OSService.execute("chmod", StringArray.fromArray(["+x", shpath]));
+        }
+
         gamepakBuildCoroutine = buildSystem.buildCoroutine(projectFilePath);
 
         Coroutine.resume(gamepakBuildCoroutine);
