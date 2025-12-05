@@ -1,5 +1,5 @@
 --class-path Studio/Editor/src
---main Main
+--main EditorMain
 --library libsunaba
 --library gamepak
 --lua bin/Main.lua

@@ -18,7 +18,7 @@ class EditorMain extends App {
     public function onReady() {
         StudioUtils.singleTonNative = rootNode.getNode("/root/StudioUtils").native;
 
-        if (!OSService.hasFeature("editor")) {
+        /*if (!OSService.hasFeature("editor")) {
             var haxelibPath = StudioUtils.singleton.getToolchainDirectory() + "/haxelib";
             if (Sys.systemName() == "Windows") {
                 haxelibPath += ".exe";
@@ -30,6 +30,6 @@ class EditorMain extends App {
             //Sys.command(haxelibPath, ["install", StudioUtils.singleton.getBaseDirectory() + "/gamepak.zip"]);
             //Sys.command(haxelibPath, ["install", StudioUtils.singleton.getBaseDirectory() + "/sunaba-studio-api.zip"]);
             
-        }
+        }*/
     }
 }

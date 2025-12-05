@@ -18,7 +18,7 @@ class Main extends App {
     public function onReady() {
         StudioUtils.singleTonNative = rootNode.getNode("/root/StudioUtils").native;
 
-        if (!OSService.hasFeature("editor")) {
+        /*if (!OSService.hasFeature("editor")) {
             var haxelibPath = StudioUtils.singleton.getToolchainDirectory() + "/haxelib";
             if (Sys.systemName() == "Windows") {
                 haxelibPath += ".exe";
@@ -26,6 +26,6 @@ class Main extends App {
             if (!FileSystem.exists(Sys.getCwd() + "/.haxelib")) {    
                 Sys.command(haxelibPath, ["newrepo"]);
             }
-        }
+        }*/
     }
 }

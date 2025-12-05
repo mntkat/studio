@@ -43,6 +43,7 @@ import sunaba.LibraryLoader.LibraryLoadResult;
 import Type;
 import sunaba.desktop.NativeMenuService;
 import sunaba.core.VariantNative;
+import sunaba.OSService;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -201,11 +202,9 @@ class Editor extends Widget {
         window.moveToCenter();
         window.extendToTitle = true;
         window.mode = WindowMode.maximized;
-        if (!OSService.hasFeature("editor")) {
-            haxePath = StudioUtils.singleton.getToolchainDirectory() + "/haxe";
-            if (Sys.systemName() == "Windows") {
-                haxePath += ".exe";
-            }
+        haxePath = StudioUtils.singleton.getToolchainDirectory() + "/haxe";
+        if (Sys.systemName() == "Windows") {
+            haxePath += ".exe";
         }
         
 
@@ -494,16 +493,25 @@ class Editor extends Widget {
             if (!StringTools.endsWith(asmDir, "/")) {
                 asmDir += "/";
             }
-            var shContent = "PATH=" + toolchaindir;
+            var shContent = "#!/bin/sh\n";
             var haxelibPath = toolchaindir +  "haxelib";
-            shContent += "; " + haxelibPath + " newrepo";
-            shContent += "; " + haxelibPath + " install " + asmDir + "libsunaba.zip";
-            shContent += "; " + haxelibPath + " install " + asmDir + "gamepak.zip";
-            shContent += "; " + haxelibPath + " install " + asmDir + "sunaba-studio-api.zip";
-            shContent += "; " + haxePath + " \"$@\"";
+            shContent += "chmod +x " + haxePath;
+            shContent += "\nchmod +x " + haxelibPath;
+            shContent += "\nchmod +x " + toolchaindir + "neko";
+            shContent += "\nexport PATH=" + toolchaindir + ":$PATH";
+            shContent += "\n" + haxelibPath + " newrepo";
+            shContent += "\n" + haxelibPath + " install " + asmDir + "libsunaba.zip";
+            shContent += "\n" + haxelibPath + " install " + asmDir + "gamepak.zip";
+            shContent += "\n" + haxelibPath + " install " + asmDir + "sunaba-studio-api.zip";
+            shContent += "\n" + haxePath + " \"$@\" ";
             sys.io.File.saveContent(wrapper, shContent);
 
-            haxePath = wrapper
+
+            trace(FileSystem.exists(wrapper));
+            //Sys.command("/bin/chmod", ["+x", wrapper]);
+            OSService.execute("chmod", StringArray.fromArray(["+x", wrapper]));
+
+            haxePath = wrapper;
         }
     }
 
@@ -763,11 +771,12 @@ class Editor extends Widget {
             librariesStr += " --library " + lib;
         command += " " + this.projectFile.compilerFlags.join(" ");
 
-        if (Sys.systemName() != "Windows") {
+        return command;
+        //if (Sys.systemName() != "Windows") {
             //command += '; echo $? > ' + hiddenDir + '/build.log &';
             
-            return command;
-        } else {
+            //return command;
+        //} else {
             // Create wrapper batch file
             //var wrapper = hiddenDir + "/run_build.bat";
             //var toolchaindir = StudioUtils.singleton.getToolchainDirectory();
@@ -785,8 +794,8 @@ class Editor extends Widget {
 
             //var newcmd = wrapper;
             //return StringTools.replace(wrapper, ".bat", "");
-            return command;
-        }
+            //return command;
+        //}
     }
 
     private function checkLeftSideBar() {
