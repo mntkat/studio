@@ -489,16 +489,33 @@ class Editor extends Widget {
             if (!StringTools.endsWith(toolchaindir, "/")) {
                 toolchaindir += "/";
             }
+            if (StringTools.contains(toolchaindir, "//")) {
+                toolchaindir = StringTools.replace(toolchaindir, "//", "/");
+            }
             var asmDir = StudioUtils.singleton.getBaseDirectory();
             if (!StringTools.endsWith(asmDir, "/")) {
                 asmDir += "/";
             }
+            if (StringTools.contains(asmDir, "//")) {
+                asmDir = StringTools.replace(asmDir, "//", "/");
+            }
+            if (StringTools.contains(haxePath, "//")) {
+                haxePath = StringTools.replace(haxePath, "//", "/");
+            }
             var shContent = "#!/bin/sh\n";
             var haxelibPath = toolchaindir +  "haxelib";
+            
             shContent += "chmod +x \"" + haxePath + "\"";
             shContent += "\nchmod +x \"" + haxelibPath + "\"";
             shContent += "\nchmod +x \"" + toolchaindir + "neko\"";
             shContent += "\nexport PATH=\"" + toolchaindir + "\":$PATH";
+            if (OSService.getName() == "macOS") {
+                shContent += "\nexport DYLD_LIBRARY_PATH=\"" + toolchaindir + "\":$DYLD_LIBRARY_PATH";
+                shContent += "\nexport DYLD_FALLBACK_LIBRARY_PATH=\"" + toolchaindir + "\":$DYLD_FALLBACK_LIBRARY_PATH";
+                shContent += "\ninstall_name_tool -add_rpath \"" + toolchaindir + "\" \"" + haxelibPath + "\" 2>/dev/null || true";
+                shContent += "\ninstall_name_tool -add_rpath \"" + toolchaindir + "\" \"" + haxePath + "\" 2>/dev/null || true";
+                shContent += "\ninstall_name_tool -add_rpath \"" + toolchaindir + "\" \"" + toolchaindir + "neko\" 2>/dev/null || true";
+            }
             shContent += "\n\"" + haxelibPath + "\" newrepo";
             shContent += "\n\"" + haxelibPath + "\" install \"" + asmDir + "libsunaba.zip\"";
             shContent += "\n\"" + haxelibPath + "\" install \"" + asmDir + "gamepak.zip\"";
