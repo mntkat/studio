@@ -111,3 +111,4 @@ http-client.private.env.json
 /sunaba-studio-api.zip
 gamepak.zip
 /.haxelib
+/.debian

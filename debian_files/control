@@ -1,0 +1,15 @@
+Package: sunaba-studio
+Version: 0.7.0
+Architecture: amd64
+Essential: no
+Priority: optional
+Depends: 
+Maintainer: mintkat (sunaba.gg)
+Description: A IDE for creating cross-platform games using Haxe.
+ Sunaba Studio is a cross-platform IDE for creating games using Haxe.
+ It provides a user-friendly interface and tools to help developers
+ create, test, and deploy their games efficiently.
+ This package includes the main application and necessary libraries.
+Source: sunaba-studio
+Section: games
+Homepage: https://sunaba.gg
