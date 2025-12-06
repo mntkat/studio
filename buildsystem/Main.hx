@@ -449,6 +449,11 @@ class Main {
 
         dclone(binPath, studioBinPath);
 
+        var toolchainPath = studioBinPath + "data_Sunaba.Studio_linuxbsd_x86_64/toolchain/linux-x86_64/";
+        Sys.command("chmod +x " + toolchainPath + "haxe");
+        Sys.command("chmod +x " + toolchainPath + "haxelib");
+        Sys.command("chmod +x " + toolchainPath + "neko");
+
         var usrPath = debPackagePath + "usr/";
         if (!FileSystem.exists(usrPath)) {
             FileSystem.createDirectory(usrPath);
