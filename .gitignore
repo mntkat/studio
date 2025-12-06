@@ -112,3 +112,5 @@ http-client.private.env.json
 gamepak.zip
 /.haxelib
 /.debian
+/flatpak/gg.sunaba.studio/app
+/.flatpak-builder
