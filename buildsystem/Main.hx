@@ -24,6 +24,8 @@ class Main {
 
     static var targetName:String = "";
 
+    static var installFlatpak = false;
+
     public static function main() {
         var args = Sys.args();
 
@@ -80,6 +82,9 @@ class Main {
                 packageFormat = StringTools.replace(arg, "--pkgformat=", "");
                 trace(packageFormat);
             }
+            else if (packageFormat == PackageFormat.flatpak && arg == "--install") {
+                installFlatpak = true;
+            } 
         }
 
         var currentDir = Sys.getCwd();
@@ -388,7 +393,12 @@ class Main {
 
         dclone(binPath, flatpakAppPath);
 
-        Sys.command("flatpak-builder --force-clean bin/flatpakBuild " + flatpakBasePath + "/gg.sunaba.studio.json");
+        var additionalOptions = "";
+        if (installFlatpak == true) {
+            additionalOptions = "--user --install-deps-from=flathub --repo=repo --install";
+        }
+
+        Sys.command("flatpak-builder --force-clean " + additionalOptions +  " bin/flatpakBuild " + flatpakBasePath + "/gg.sunaba.studio.json");
     }
 
     public static function exportDeb() {
