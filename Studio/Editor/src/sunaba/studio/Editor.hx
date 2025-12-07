@@ -154,9 +154,10 @@ class Editor extends Widget {
         stopButton.disabled = true;
 
         windowTitle = getNodeT(Label, "vbox/menuBarControl/windowTitle");
-        if (OSService.getName() != "macOS") {
+        windowTitle.show();
+        /*if (OSService.getName() != "macOS") {
             windowTitle.hide();
-        }
+        }*/
 
         playBuildWindow = getNodeT(Window, "playBuildWindow");
         playBuildWindow.hide();
@@ -189,6 +190,8 @@ class Editor extends Widget {
         }
     }
 
+    var lastWindowMode : WindowMode = WindowMode.maximized;
+
     public override function onReady() {
         window = getWindow();
         var displayScale = DisplayService.screenGetScale(window.currentScreen);
@@ -200,7 +203,7 @@ class Editor extends Widget {
         var windowSize = new Vector2i(cast 1152 * displayScale, cast 648 * displayScale);
         window.size = windowSize;
         window.minSize = windowSize;
-        window.borderless = false;
+        window.borderless = true;
         window.alwaysOnTop = false;
         window.moveToCenter();
         window.extendToTitle = true;
@@ -214,48 +217,45 @@ class Editor extends Widget {
         try {
             trace("hi!");
             var menuBarControl: Control = getNodeT(Control, "vbox/menuBarControl/hbox/spacer");
-            trace("");
-            if (OSService.getName() == "macOS") {
-                trace("");
-                var windowSize = null;
-                trace("");
-                var eventFunc = function(eventN: NativeReference) {
-                    if (window == null)
-                        return;
+            var windowSize = null;
+            var eventFunc = function(eventN: NativeReference) {
+                if (window == null)
+                    return;
 
-                    if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed && window.mode == WindowMode.windowed) {
-                        titlebarLmbPressed = true;
-                        window.startDrag();
-                        clickcount++;
-                    }
-                    else if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed) {
-                        titlebarLmbPressed = true;
-                        clickcount++;
-                    }
-                    else if (!InputService.isMouseButtonPressed(MouseButton.left) && titlebarLmbPressed) {
-                        titlebarLmbPressed = false;
-                    }
+                if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed && window.mode == WindowMode.windowed) {
+                    titlebarLmbPressed = true;
+                    window.startDrag();
+                    clickcount++;
+                }
+                else if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed) {
+                    titlebarLmbPressed = true;
+                    clickcount++;
+                }
+                else if (!InputService.isMouseButtonPressed(MouseButton.left) && titlebarLmbPressed) {
+                    titlebarLmbPressed = false;
+                }
 
-                    if (clickcount == 2) {
-                        trace(clickcount);
-                        clickcount = 0;
-                        if (window.mode == WindowMode.maximized) {
-                            window.mode = WindowMode.windowed;
-                        }
-                        else if (window.mode == WindowMode.windowed) {
-                            windowSize = window.size;
-                            window.mode = WindowMode.maximized;
-                        }
+                if (clickcount == 2) {
+                    trace(clickcount);
+                    clickcount = 0;
+                    var maximizeButton = getNodeT(Button, "vbox/menuBarControl/hbox/maximizeButton");
+                    if (window.mode == WindowMode.maximized) {
+                        window.mode = WindowMode.windowed;
+                        maximizeButton.text = "🗖";
                     }
-                };
-                trace("");
+                    else if (window.mode == WindowMode.windowed) {
+                        windowSize = window.size;
+                        window.mode = WindowMode.maximized;
+                        maximizeButton.text = "🗗";
+                    }
+                }
+            };
 
-                var menuBar: Control = getNodeT(Control, "vbox/menuBarControl/hbox/menuBar");
-                var toolBarSpacer: Control = getNodeT(Control, "vbox/toolbar/hbox/spacer");
-                menuBar.guiInput.connect(eventFunc);
-                menuBarControl.guiInput.connect(eventFunc);
-                toolBarSpacer.guiInput.connect(eventFunc);
-            }
+            var menuBar: Control = getNodeT(Control, "vbox/menuBarControl/hbox/menuBar");
+            var toolBarSpacer: Control = getNodeT(Control, "vbox/toolbar/hbox/spacer");
+            menuBar.guiInput.connect(eventFunc);
+            menuBarControl.guiInput.connect(eventFunc);
+            toolBarSpacer.guiInput.connect(eventFunc);
 
             centerTabContainer.getTabBar().tabClosePressed.connect(Callable.fromFunction(function(tab: Int) {
                 var widget = workspaceChildern[tab];
@@ -368,6 +368,7 @@ class Editor extends Widget {
             }
             else if (OSService.getName() == "Linux") {
                 var fontNames = buttonFont.fontNames;
+                fontNames.add("Noto Sans Symbols2");
                 fontNames.add("DejaVu Sans");
                 buttonFont.fontNames = fontNames;
                 trace(fontNames.toArray().toString());
@@ -379,18 +380,53 @@ class Editor extends Widget {
             minimizeButton.focusMode = FocusModeEnum.none;
             minimizeButton.addThemeFontOverride("font", buttonFont);
             minimizeButton.text = "🗕";
+            var isMaximized = true;
+            minimizeButton.pressed.add(() -> {
+                if (window.mode != WindowMode.minimized) {
+                    isMaximized = window.mode == WindowMode.maximized;
+                    window.mode = WindowMode.minimized;
+                }
+                else {
+                    if (isMaximized == true) {
+                        window.mode = WindowMode.maximized;
+                    }
+                    else {
+                        window.mode = WindowMode.windowed;
+                    }
+                }
+            });
 
             var maximizeButton = getNodeT(Button, "vbox/menuBarControl/hbox/maximizeButton");
             maximizeButton.addThemeStyleboxOverride("normal", styleBoxEmpty);
             maximizeButton.focusMode = FocusModeEnum.none;
             maximizeButton.addThemeFontOverride("font", buttonFont);
-            maximizeButton.text = "🗖";
+            maximizeButton.text = "🗗";
+            if (window.mode == WindowMode.maximized) {
+                maximizeButton.text = "🗗";
+            }
+            else {
+                maximizeButton.text = "🗖";
+            }
+            maximizeButton.pressed.add(() -> {
+                if (window.mode == WindowMode.maximized) {
+                    maximizeButton.text = "🗖";
+                    window.mode = WindowMode.windowed;
+                }
+                else if (window.mode == WindowMode.windowed) {
+                    maximizeButton.text = "🗗";
+                    windowSize = window.size;
+                    window.mode = WindowMode.maximized;
+                }
+            });
 
             var closeButton = getNodeT(Button, "vbox/menuBarControl/hbox/closeButton");
             closeButton.addThemeStyleboxOverride("normal", styleBoxEmpty);
             closeButton.focusMode = FocusModeEnum.none;
             closeButton.addThemeFontOverride("font", buttonFont);
             closeButton.text = "🗙";
+            closeButton.pressed.add(() -> {
+                App.exit(0);
+            });
 
             refreshLeftSidebar();
             refreshRightSidebar();
@@ -618,12 +654,8 @@ class Editor extends Widget {
             showAboutDialog();
         }
 
-        if (PlatformService.osName == "macOS") {
-            if (windowTitle.text != window.title)
-                windowTitle.text = window.title;
-        } else {
-            windowTitle.text = "";
-        }
+        if (windowTitle.text != window.title)
+            windowTitle.text = window.title;
 
         var windowTitle = window.title;
         if (projectFile != null) {
