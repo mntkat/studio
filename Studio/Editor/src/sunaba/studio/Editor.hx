@@ -248,7 +248,7 @@ class Editor extends Widget {
                         }
                         // Top Right
                         if (
-                        eventMouseButton.position.x > window.size.x - resizeThreshold &&
+                        eventMouseButton.position.x > window.getVisibleRect().size.x - resizeThreshold &&
                         eventMouseButton.position.y < resizeThreshold
                         ) {
                             DisplayService.cursorSetShape(CursorShape.bdiagsize);
@@ -756,7 +756,7 @@ class Editor extends Widget {
             if (window != null) {
                 if (window.mode != WindowMode.windowed) return;
 
-                var windowsize = window.size;
+                var windowsize = window.getVisibleRect().size;
 
                 var mousePosition = window.getMousePosition();
                 if (mousePosition.x < resizeThreshold && mousePosition.y < resizeThreshold) { // Top left
@@ -1230,7 +1230,7 @@ class Editor extends Widget {
                     }
                     // Top Right
                     if (
-                    localX > window.size.x - resizeThreshold &&
+                    localX > window.getVisibleRect().size.x - resizeThreshold &&
                     localY < resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.bdiagsize);
@@ -1240,7 +1240,7 @@ class Editor extends Widget {
                     // Bottom left
                     if (
                     localX < resizeThreshold &&
-                    localY > window.size.y - resizeThreshold
+                    localY > window.getVisibleRect().size.y - resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.bdiagsize);
                         window.startResize(WindowResizeEdge.bottomLeft);
@@ -1248,8 +1248,8 @@ class Editor extends Widget {
                     }
                     // Bottom Right
                     if (
-                    localX > window.size.x - resizeThreshold &&
-                    localY > window.size.y - resizeThreshold
+                    localX > window.getVisibleRect().size.x - resizeThreshold &&
+                    localY > window.getVisibleRect().size.y - resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.fdiagsize);
                         window.startResize(WindowResizeEdge.bottomRight);
@@ -1262,7 +1262,7 @@ class Editor extends Widget {
                         return;
                     }
                     // Right
-                    if (localX > window.size.x - resizeThreshold) {
+                    if (localX > window.getVisibleRect().size.x - resizeThreshold) {
                         DisplayService.cursorSetShape(CursorShape.hsize);
                         window.startResize(WindowResizeEdge.right);
                         return;
@@ -1274,7 +1274,7 @@ class Editor extends Widget {
                         return;
                     }
                     // Bottom
-                    if (localY > window.size.y - resizeThreshold) {
+                    if (localY > window.getVisibleRect().size.y - resizeThreshold) {
                         DisplayService.cursorSetShape(CursorShape.vsize);
                         window.startResize(WindowResizeEdge.bottom);
                         return;
