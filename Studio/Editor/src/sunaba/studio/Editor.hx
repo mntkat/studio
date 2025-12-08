@@ -774,7 +774,6 @@ class Editor extends Widget {
             centerTabContainer.getTabBar().tabCloseDisplayPolicy = CloseButtonDisplayPolicy.showActiveOnly;
 
         if (OSService.getName() != "macOS") {
-            var window = getWindow();
             if (window != null) {
                 if (window.mode != WindowMode.windowed) return;
 
