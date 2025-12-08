@@ -107,7 +107,7 @@ texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 region_rect = Rect2(0, 0, 49, 45)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghsb1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vib3r"]
 texture = ExtResource("7_vs6dx")
 texture_margin_left = 10.0
 texture_margin_top = 10.0
@@ -353,7 +353,7 @@ MenuButton/colors/font_color_pressed = Color(1, 1, 1, 1)
 MenuButton/colors/font_focus_color = Color(1, 1, 1, 1)
 MenuButton/colors/font_hover_color = Color(1, 1, 1, 1)
 MenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
-Panel/styles/panel = SubResource("StyleBoxTexture_ghsb1")
+Panel/styles/panel = SubResource("StyleBoxTexture_vib3r")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_c4270")
 Popup/styles/panel = SubResource("StyleBoxTexture_16jl1")
 PopupMenu/colors/font_accelerator_color = Color(1, 1, 1, 0.8)

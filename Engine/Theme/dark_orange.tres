@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=55 format=3 uid="uid://dmru57v777cx8"]
+[gd_resource type="Theme" load_steps=56 format=3 uid="uid://dmru57v777cx8"]
 
 [ext_resource type="Texture2D" uid="uid://bqgdxuc66ewbe" path="res://Engine/Theme/dark/grey_button11.png" id="1_ixx4j"]
 [ext_resource type="StyleBox" uid="uid://dumk38imcauiq" path="res://Engine/Theme/button_focus_orange.tres" id="2_3f20s"]
@@ -22,6 +22,14 @@
 [ext_resource type="Texture2D" uid="uid://byb3sj4xvhp6y" path="res://Engine/Theme/expand.png" id="20_pldhu"]
 [ext_resource type="Texture2D" uid="uid://cqe50bdau567b" path="res://Engine/Theme/dark/window.png" id="21_2e476"]
 [ext_resource type="FontFile" uid="uid://8snxwxvq708x" path="res://Engine/Theme/fonts/Inter-Regular.ttf" id="22_ex6rk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3f20s"]
+texture = ExtResource("7_yij57")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+region_rect = Rect2(0, 0, 100, 100)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ufuef"]
 texture = ExtResource("1_ixx4j")
@@ -268,6 +276,7 @@ region_rect = Rect2(0, 0, 100, 100)
 [resource]
 default_font = ExtResource("22_ex6rk")
 default_font_size = 13
+AcceptDialog/styles/panel = SubResource("StyleBoxTexture_3f20s")
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_color_disabled = Color(1, 1, 1, 0.486275)
 Button/colors/font_disabled_color = Color(1, 1, 1, 0.486275)

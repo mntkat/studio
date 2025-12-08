@@ -23,6 +23,14 @@
 [ext_resource type="FontFile" uid="uid://wgmjhpg8t35s" path="res://Engine/Theme/fonts/Oxygen-Regular.ttf" id="21_unv6f"]
 [ext_resource type="FontFile" uid="uid://8snxwxvq708x" path="res://Engine/Theme/fonts/Inter-Regular.ttf" id="22_8cu2s"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghsb1"]
+texture = ExtResource("6_hwutb")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+region_rect = Rect2(0, 0, 100, 100)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ufuef"]
 texture = ExtResource("1_ove3i")
 texture_margin_left = 5.0
@@ -106,14 +114,6 @@ texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 region_rect = Rect2(0, 0, 49, 45)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ghsb1"]
-texture = ExtResource("6_hwutb")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-region_rect = Rect2(0, 0, 100, 100)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c4270"]
 texture = ExtResource("18_c2xtr")
@@ -261,6 +261,7 @@ region_rect = Rect2(0, 0, 100, 100)
 [resource]
 default_font = ExtResource("22_8cu2s")
 default_font_size = 13
+AcceptDialog/styles/panel = SubResource("StyleBoxTexture_ghsb1")
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_color_disabled = Color(1, 1, 1, 0.486275)
 Button/colors/font_disabled_color = Color(1, 1, 1, 0.486275)
