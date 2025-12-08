@@ -2,15 +2,14 @@
 <suml fullscreen="true" name="splashscreen">
     <head></head>
     <body>
-        <sunaba.ui.Panel
-                fullRect="true"
-                offsetBottom="10"
-                offsetTop="-10"
-                offsetLeft="-10"
-                offsetRight="10"/>
+        <sunaba.ui.Panel fullRect="true"/>
         <sunaba.ui.VBoxContainer
             fullRect="true"
-            name="vbox">
+            name="vbox"
+            offsetBottom="-5"
+            offsetTop="5"
+            offsetLeft="5"
+            offsetRight="-5">
             <sunaba.ui.Control
                 name="topbar"
                 customMinimumSize="0, 50">
