@@ -190,13 +190,10 @@
                 name="pluginBuildWindow"
                 title="Building project"
                 size="270,80"
+                borderless="true"
                 popupWindow="true">
             <sunaba.ui.Panel
-                    fullRect="true"
-                    offsetBottom="10"
-                    offsetTop="-10"
-                    offsetLeft="-10"
-                    offsetRight="10"/>
+                    fullRect="true"/>
             <sunaba.ui.VBoxContainer
                     fullRect="true"
                     name="vbox"
@@ -219,14 +216,11 @@
         <sunaba.desktop.Window
             name="playBuildWindow"
             title="Building project"
+            borderless="true"
             size="270,80"
             popupWindow="true">
             <sunaba.ui.Panel
-                fullRect="true"
-                offsetBottom="10"
-                offsetTop="-10"
-                offsetLeft="-10"
-                offsetRight="10"/>
+                fullRect="true"/>
             <sunaba.ui.VBoxContainer
                 fullRect="true"
                 name="vbox"
