@@ -1210,13 +1210,13 @@ class Editor extends Widget {
                 eventMouseButton.pressed
                 ) {
                     var windowPosition = window.position;
-                    var localX = eventMouseButton.position.x - windowPosition.x;
-                    var localY = eventMouseButton.position.y - windowPosition.y;
+                    var localX = eventMouseButton.position.x;
+                    var localY = eventMouseButton.position.y;
 
-                    if (OSService.getName() == "Linux") {
+                    /*if (OSService.getName() == "Linux") {
                         localX = eventMouseButton.position.x;
                         localY = eventMouseButton.position.y;
-                    }
+                    }*/
 
                     // Top left
                     if (localX < resizeThreshold && localY < resizeThreshold) {
