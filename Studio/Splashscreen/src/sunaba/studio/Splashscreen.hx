@@ -428,23 +428,14 @@ class Splashscreen extends Widget {
     }
 
     public function onRecentProjectSelected() {
-        trace("");
         var selected = splashRecentProjects.getSelected();
-        trace("");
         if (selected != null) {
-            trace("");
             var metadata: String = selected.getMetadata(0);
-            trace("");
             trace(metadata);
-            trace("");
             if (StringTools.endsWith(metadata, ".sproj")) {
-                trace("");
                 openProject(metadata);
-                trace("");
             }
-            trace("");
         }
-        trace("");
     }
 
     public function openProject(path: String) {
