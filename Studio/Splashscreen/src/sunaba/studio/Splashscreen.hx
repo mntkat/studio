@@ -93,6 +93,7 @@ class Splashscreen extends Widget {
         window.moveToCenter();
         window.extendToTitle = true;
         window.mode = WindowMode.windowed;
+        window.unresizable = false;
         if (OSService.getName() == "macOS") {
             window.borderless = false;
         }
@@ -266,7 +267,7 @@ class Splashscreen extends Widget {
         }
 
         if (OSService.getName() != "macOS") {
-            var window = getWindow();
+            window = getWindow();
             if (window != null) {
                 if (window.mode != WindowMode.windowed) return;
 
@@ -293,7 +294,6 @@ class Splashscreen extends Widget {
                     DisplayService.cursorSetShape(CursorShape.hsize);
                     return;
                 }
-                trace(mousePosition.x > windowsize.x + 50.0);
                 if (mousePosition.x > windowsize.x - resizeThreshold) { // Right
                     DisplayService.cursorSetShape(CursorShape.hsize);
                     return;
@@ -311,22 +311,21 @@ class Splashscreen extends Widget {
     }
 
     public override function onInput(event:InputEvent) {
+        trace("");
         if (OSService.getName() != "macOS") {
+            trace("");
             if (event.native.isClass("InputEventMouseButton")) {
+                trace("");
                 var eventMouseButton = Reference.castTo(event, InputEventMouseButton);
+                window = getWindow();
                 if (window.mode != WindowMode.windowed) return;
+                trace("");
                 if (
-                eventMouseButton.buttonIndex == MouseButton.left &&
-                eventMouseButton.pressed
+                    eventMouseButton.buttonIndex == MouseButton.left &&
+                    eventMouseButton.pressed
                 ) {
-                    var windowPosition = window.position;
                     var localX = eventMouseButton.position.x;
                     var localY = eventMouseButton.position.y;
-
-                    /*if (OSService.getName() == "Linux") {
-                        localX = eventMouseButton.position.x;
-                        localY = eventMouseButton.position.y;
-                    }*/
 
                     // Top left
                     if (localX < resizeThreshold && localY < resizeThreshold) {
@@ -336,8 +335,8 @@ class Splashscreen extends Widget {
                     }
                     // Top Right
                     if (
-                    localX > window.getVisibleRect().size.x - resizeThreshold &&
-                    localY < resizeThreshold
+                        localX > window.getVisibleRect().size.x - resizeThreshold &&
+                        localY < resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.bdiagsize);
                         window.startResize(WindowResizeEdge.topRight);
@@ -345,8 +344,8 @@ class Splashscreen extends Widget {
                     }
                     // Bottom left
                     if (
-                    localX < resizeThreshold &&
-                    localY > window.getVisibleRect().size.y - resizeThreshold
+                        localX < resizeThreshold &&
+                        localY > window.getVisibleRect().size.y - resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.bdiagsize);
                         window.startResize(WindowResizeEdge.bottomLeft);
@@ -354,8 +353,8 @@ class Splashscreen extends Widget {
                     }
                     // Bottom Right
                     if (
-                    localX > window.getVisibleRect().size.x - resizeThreshold &&
-                    localY > window.getVisibleRect().size.y - resizeThreshold
+                        localX > window.getVisibleRect().size.x - resizeThreshold &&
+                        localY > window.getVisibleRect().size.y - resizeThreshold
                     ) {
                         DisplayService.cursorSetShape(CursorShape.fdiagsize);
                         window.startResize(WindowResizeEdge.bottomRight);
