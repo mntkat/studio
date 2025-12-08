@@ -493,6 +493,13 @@ class Editor extends Widget {
                 App.exit(0);
             });
 
+            if (OSService.getName() == "macOS") {
+                iconContainer.hide();
+                minimizeButton.hide();
+                maximizeButton.hide();
+                closeButton.hide();
+            }
+
             refreshLeftSidebar();
             refreshRightSidebar();
             trace("Hello, World!");

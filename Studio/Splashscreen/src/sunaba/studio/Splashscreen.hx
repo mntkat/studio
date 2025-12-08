@@ -255,6 +255,13 @@ class Splashscreen extends Widget {
         closeButton.pressed.add(() -> {
             App.exit(0);
         });
+
+        if (OSService.getName() == "macOS") {
+            iconContainer.hide();
+            minimizeButton.hide();
+            maximizeButton.hide();
+            closeButton.hide();
+        }
     }
 
     public override function onProcess(delta:Float) {
