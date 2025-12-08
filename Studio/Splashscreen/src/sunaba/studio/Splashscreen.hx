@@ -166,6 +166,9 @@ class Splashscreen extends Widget {
             }
         };
 
+        var windowTitle = getNodeT(Label, "vbox/titlebar/windowTitle");
+        window.title = windowTitle.text;
+
         var titlebarSpacer: Control = getNodeT(Control, "vbox/titlebar/hbox/spacer");
         var iconContainer = getNodeT(Control, "vbox/titlebar/hbox/iconContainer");
         var iconRect = getNodeT(Control, "vbox/titlebar/hbox/iconContainer/icon");
