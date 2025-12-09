@@ -169,11 +169,7 @@ class Splashscreen extends Widget {
 
         var windowTitle = getNodeT(Label, "vbox/titlebar/windowTitle");
         window.title = windowTitle.text;
-        var labelSetting = new LabelSettings();
-        labelSetting.font = Reference.castTo(ResourceLoaderService.load("res://Engine/Theme/fonts/Inter-Medium.ttf"), Font);
-        labelSetting.fontColor = Color.html("#000000");
-        labelSetting.fontSize = theme.defaultFontSize;
-        windowTitle.labelSettings = labelSetting;
+        windowTitle.addThemeFontOverride("font", Reference.castTo(ResourceLoaderService.load("res://Engine/Theme/fonts/Inter-Medium.ttf"), Font));
 
         var titlebarSpacer: Control = getNodeT(Control, "vbox/titlebar/hbox/spacer");
         var iconContainer = getNodeT(Control, "vbox/titlebar/hbox/iconContainer");
