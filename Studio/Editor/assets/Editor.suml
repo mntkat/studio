@@ -205,7 +205,7 @@
                     separation="0">
                 <sunaba.ui.Label
                         name="buildLabel"
-                        text="Building project..."/>
+                        text="Building project plugin..."/>
                 <sunaba.ui.Control
                         customMinimumSize="0,10"/>
                 <sunaba.ui.ProgressBar
