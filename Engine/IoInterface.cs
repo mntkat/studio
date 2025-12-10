@@ -122,5 +122,30 @@ namespace Sunaba.Engine
 
             return null;
         }
+        
+        public void SaveData(string path, Godot.Collections.Dictionary data, int fileType = 0)
+        {
+            if (fileType == 1 || path.EndsWith(".msgpack"))
+            {
+                var msgpackPath = path;
+                if (!path.EndsWith(".msgpack"))
+                {
+                    msgpackPath = path + ".msgpack";
+                }
+                
+                var sysDictionary = VariantUtils.GdDictToScgDict(data);
+
+                var msgpackOptions = MessagePackSerializerOptions.Standard.WithResolver(ContractlessStandardResolver.Instance);
+
+                var msgpack = MessagePackSerializer.Serialize(sysDictionary, msgpackOptions);
+                
+                SaveBytes(msgpackPath, msgpack);
+            }
+            else
+            {
+                var json = Json.Stringify(data);
+                SaveText(path, json);
+            }
+        }
     }
 }
