@@ -95,57 +95,5 @@ namespace Sunaba.Engine
         {
             return PathUrl + Path.GetTempFileName();
         }
-
-        public Godot.Collections.Dictionary LoadData(string path)
-        {
-            var msgpackPath = path + ".msgpack";
-            if (path.EndsWith(".msgpack"))
-            {
-                msgpackPath = path;
-            }
-            if (FileExists(msgpackPath))
-            {
-                var msgpack = LoadBytes(msgpackPath);
-                
-                var msgpackOptions = MessagePackSerializerOptions.Standard.WithResolver(ContractlessStandardResolver.Instance);
-
-                var sysDictionary = MessagePackSerializer.Deserialize<System.Collections.Generic.Dictionary<string, object>>(msgpack, msgpackOptions);
-
-                return VariantUtils.ScgDictToGdDict(sysDictionary);
-            }
-            else if (FileExists(path))
-            {
-                var text = LoadText(path);
-                var json = Json.ParseString(text).AsGodotDictionary();
-                return json;
-            }
-
-            return null;
-        }
-        
-        public void SaveData(string path, Godot.Collections.Dictionary data, int fileType = 0)
-        {
-            if (fileType == 1 || path.EndsWith(".msgpack"))
-            {
-                var msgpackPath = path;
-                if (!path.EndsWith(".msgpack"))
-                {
-                    msgpackPath = path + ".msgpack";
-                }
-                
-                var sysDictionary = VariantUtils.GdDictToScgDict(data);
-
-                var msgpackOptions = MessagePackSerializerOptions.Standard.WithResolver(ContractlessStandardResolver.Instance);
-
-                var msgpack = MessagePackSerializer.Serialize(sysDictionary, msgpackOptions);
-                
-                SaveBytes(msgpackPath, msgpack);
-            }
-            else
-            {
-                var json = Json.Stringify(data);
-                SaveText(path, json);
-            }
-        }
     }
 }
