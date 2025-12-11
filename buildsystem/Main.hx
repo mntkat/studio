@@ -105,6 +105,7 @@ class Main {
             buildSunabaLibZip();
             buildSunabaStudioLibZip();
             buildGamepakLibZip();
+            buildMsgpackLibZip();
 
             var dotnetRestore = Sys.command("dotnet restore Sunaba.Studio.sln");
             if (dotnetRestore != 0) {
@@ -808,6 +809,88 @@ class Main {
 
         } catch (e:Dynamic) {
             Sys.println("Failed to create gamepak library zip: " + e);
+            Sys.exit(-1);
+        }
+    }
+
+    public static function buildMsgpackLibZip() {
+        var child_process = js.node.ChildProcess;
+        var fs = js.node.Fs;
+
+        try {
+            // Use Node's child_process.execSync
+            var output = child_process.execSync('haxelib path msgpack-haxe', {
+                encoding: 'utf8'
+            });
+
+            // First line of output contains the library path
+            var libpath = StringTools.trim((output:String).split("\n")[0]);
+            if (libpath == "") {
+                Sys.println("Could not find msgpack-haxe library path");
+                Sys.exit(-1);
+            }
+
+            if (!fs.existsSync(libpath)) {
+                Sys.println("Library path does not exist: " + libpath);
+                Sys.exit(-1);
+            }
+
+            if (!StringTools.endsWith(libpath, "/")) {
+                libpath += "/";
+            }
+
+            trace("msgpack-haxe lib path: " + libpath);
+
+            // Create zip file of the lib directory
+            var zipOutput = new haxe.io.BytesOutput();
+            var zipWriter = new haxe.zip.Writer(zipOutput);
+            var entries = new List<haxe.zip.Entry>();
+
+            function addFilesToZip(dir:String) {
+                var files = fs.readdirSync(dir);
+                for (file in files) {
+                    var fullPath = dir + file;
+                    var stats = fs.statSync(fullPath);
+
+                    if (stats.isDirectory()) {
+                        addFilesToZip(fullPath + "/");
+                    } else {
+                        if (StringTools.endsWith(fullPath, ".zip")) continue;
+                        var fileBytes = File.getBytes(fullPath);
+
+                        var relativePath = StringTools.replace(fullPath, libpath, "");
+
+                        var entry:Entry = {
+                            fileName: relativePath,
+                            fileSize: fileBytes.length,
+                            fileTime: Date.fromTime(stats.mtime.getTime()),
+                            dataSize: fileBytes.length,
+                            data: fileBytes,
+                            crc32: null,  // Proper CRC32 calculation
+                            compressed: false,
+                            extraFields: null
+                        };
+                        entries.add(entry);
+                    }
+                }
+            }
+
+            addFilesToZip(libpath);
+            zipWriter.write(entries);
+
+            var zipBytes = zipOutput.getBytes();
+            var cwd = js.Node.process.cwd();
+            if (!StringTools.endsWith(cwd, "/")) {
+                cwd += "/";
+            }
+
+            var zipPath = cwd + "msgpack-haxe.zip";
+            File.saveBytes(zipPath, zipBytes);
+
+            Sys.println("Created msgpack-haxe library zip at: " + zipPath);
+
+        } catch (e:Dynamic) {
+            Sys.println("Failed to create msgpack-haxe library zip: " + e);
             Sys.exit(-1);
         }
     }
