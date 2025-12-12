@@ -105,6 +105,7 @@ jobs:
       - name: Install Haxelib Dependencies
         run: |
           haxelib install hxnodejs
+          haxelib install msgpack-haxe
           haxelib dev gamepak ${{github.workspace}}/gamepak
           haxelib dev libsunaba ${{github.workspace}}/libsunaba
 
