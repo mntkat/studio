@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.studio.explorer.PathType;
 import sunaba.ui.CenterContainer;
 import sunaba.ui.MenuButton;
 import sunaba.ui.TextureRect;
@@ -117,11 +118,11 @@ class Explorer extends EditorWidget {
             if (getEditor().projectFile.assetsdir != null
             && getEditor().projectFile.assetsdir != ""
             && !StringTools.contains(getEditor().projectFile.assetsdir, "null"))
-                assetsDirectory = projectDirectory + "/" + getEditor().projectFile.assetsdir;
+                assetsDirectory = projectDirectory + "/" + getEditor().projectFile.assetsdir + "/";
             else
                 assetsDirectory = "";
 
-            sourceDirectory = projectDirectory + "/" + getEditor().projectFile.scriptdir;
+            sourceDirectory = projectDirectory + "/" + getEditor().projectFile.scriptdir + "/";
 
             trace("Assets Directory: " + assetsDirectory);
             trace("Source Directory: " + sourceDirectory);
@@ -136,6 +137,44 @@ class Explorer extends EditorWidget {
                 var treeItem = singleColumnTree.getSelected();
                 onTreeItemActivated(treeItem);
             }));
+
+            var newMenu = newButton.getPopup();
+        
+            newMenu.addIconItem(loadIcon("stduio://icons/16/blue-folder.png"), "Folder");
+            newMenu.addIconItem(loadIcon("stduio://icons/16/document.png"), "File");
+
+            newMenu.idPressed.add((id: Int) -> {
+                trace(id);
+                if (id == 0) {
+                    Debug.error("Folder creation not implemented.");
+                }
+                else if (id == 1) {
+                    var selectedItem = singleColumnTree.getSelected();
+                    if (selectedItem != null) {
+                        var dirPath: String = selectedItem.getMetadata(0);
+                        if (dirPath == "Root")
+                            return;
+                        if (!StringTools.endsWith(dirPath, "/")) {
+                            var dirPathArray = dirPath.split("/");
+                            dirPathArray = dirPathArray.slice(dirPathArray.length);
+                            dirPath = dirPathArray.join("/");
+                        }
+                        var pathType: PathType = -1;
+                        trace(dirPath);
+                        trace(StringTools.startsWith(dirPath, assetsDirectory));
+                        trace(StringTools.startsWith(dirPath, sourceDirectory));
+                        if (StringTools.startsWith(dirPath, assetsDirectory))
+                            pathType = PathType.assetFile;
+                        else if (StringTools.startsWith(dirPath, sourceDirectory))
+                            pathType = PathType.scriptFile;
+
+                        if (pathType != -1) {
+                            newFileWidget.open(pathType, dirPath);
+                            newFileDialog.popupCentered();
+                        }
+                    }
+                }
+            });
 
             buildTreeRoot();
         }
@@ -163,6 +202,10 @@ class Explorer extends EditorWidget {
     var dirIconTexture: ImageTexture = null;
     var fileIconTexture: ImageTexture = null;
 
+    public inline function refresh() {
+        buildTreeRoot();
+    }
+
     public function buildTreeRoot() {
         var projectName = getEditor().projectFile.name;
 
@@ -172,6 +215,7 @@ class Explorer extends EditorWidget {
 
         rootTreeItem = singleColumnTree.createItem();
         rootTreeItem.setText(0, projectName);
+        rootTreeItem.setMetadata(0, "Root");
 
         var projectIconBytes = io.loadBytes("studio://icons/16/application-blue-studio.png");
         var projectIconImage = new Image();
@@ -194,11 +238,13 @@ class Explorer extends EditorWidget {
             assetsItem = singleColumnTree.createItem(rootTreeItem);
             assetsItem.setText(0, "Assets");
             assetsItem.setIcon(0, dirIconTexture);
+            assetsItem.setMetadata(0, assetsDirectory);
         }
 
         var sourceItem = singleColumnTree.createItem(rootTreeItem);
         sourceItem.setText(0, "Scripts");
         sourceItem.setIcon(0, dirIconTexture);
+        sourceItem.setMetadata(0, sourceDirectory);
 
         if (assetsDirectory != "")
             buildDirTree(assetsDirectory, assetsItem);
@@ -253,6 +299,7 @@ class Explorer extends EditorWidget {
                     dirItem.setIcon(0, dirIconTexture);
 
                     buildDirTree(dirPath + entry, dirItem);
+                    dirItem.setMetadata(0, dirPath + entry + "/");
                     dirItem.collapsed = true;
                 } else {
                     var fileItem = singleColumnTree.createItem(parentItem);

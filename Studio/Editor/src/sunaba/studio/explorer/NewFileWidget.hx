@@ -43,20 +43,27 @@ class NewFileWidget extends Widget {
 
         browseButton.pressed.add(() -> {
             var fileDialog = new FileDialog();
-            fileDialog.mode = FileDialogMode.saveFile;
+            fileDialog.fileMode = FileDialogMode.saveFile;
+            fileDialog.access = 2;
             var realBasePath = "";
             if (pathType == PathType.assetFile) {
                 realBasePath = _explorer.getEditor().projectIo.getFilePath(baseDir);
                 fileDialog.rootSubfolder = _explorer.assetsDirectory;
-                fileDialog.currentFile = StringTools.replace(assetFilePath, baseDir, "");
+                if (assetFileName == "") {
+                    assetFileName = assetFilePath.split("/").pop().split(".")[0];
+                }
+                fileDialog.currentFile = assetFileName + assetLastSelected.fileExtension;
             }
             else if (pathType == PathType.scriptFile) {
                 realBasePath = StringTools.replace(baseDir, "src://", _explorer.sourceDirectory);
                 fileDialog.rootSubfolder = _explorer.sourceDirectory;
-                fileDialog.currentFile = StringTools.replace(scriptFilePath, baseDir, "");
+                if (scriptFileName == "") {
+                    scriptFileName = scriptFilePath.split("/").pop().split(".")[0];
+                }
+                fileDialog.currentFile = scriptFileName + scriptLastSelected.fileExtension;
             }
             fileDialog.currentDir = realBasePath;
-            fileDialog.access = 2;
+            
             if (pathType == PathType.assetFile) {
                 fileDialog.addFilter("*" + assetLastSelected.fileExtension, assetLastSelected.name);
                 fileDialog.title = "Set Asset File Path";
@@ -67,6 +74,8 @@ class NewFileWidget extends Widget {
             }
             addChild(fileDialog);
             fileDialog.hide();
+            fileDialog.contentScaleFactor = getWindow().contentScaleFactor;
+            fileDialog.minSize = getWindow().minSize;
 
             fileDialog.fileSelected.add((path: String) -> {
                 var filePath = path;
@@ -88,6 +97,17 @@ class NewFileWidget extends Widget {
             });
 
             fileDialog.popupCentered();
+        });
+
+        _explorer.newFileDialog.confirmed.add(() -> {
+            if (pathType == PathType.assetFile) {
+                trace(assetFilePath);
+                assetLastSelected.createFile(assetFilePath);
+            }
+            else if (pathType == PathType.scriptFile) {
+                trace(scriptFilePath);
+            }
+            _explorer.refresh();
         });
     }
 
@@ -171,6 +191,10 @@ class NewFileWidget extends Widget {
     }
 
     private function assetSelect(index: Int) {
+        if (assetLastSelected == null) {
+            assetLastSelected = assetFileTemplates[0];
+        }
+
         var fileName = "";
         var oldFileName = assetLastSelected.name;
         if (StringTools.contains(oldFileName, " "))
@@ -193,6 +217,10 @@ class NewFileWidget extends Widget {
     }
 
     private function scriptSelect(index: Int) {
+        if (scriptLastSelected == null) {
+            scriptLastSelected = scriptFileTemplates[0];
+        }
+
         var fileName = "";
         var oldFileName = scriptLastSelected.name;
         if (StringTools.contains(oldFileName, " "))
