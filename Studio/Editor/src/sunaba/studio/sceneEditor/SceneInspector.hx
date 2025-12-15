@@ -1,9 +1,12 @@
 package sunaba.studio.sceneEditor;
 
 import sunaba.spatial.mesh.BoxMesh;
+import sunaba.spatial.mesh.CapsuleMesh;
+import sunaba.spatial.mesh.CylinderMesh;
+import sunaba.spatial.mesh.SphereMesh;
+import sunaba.spatial.mesh.PlaneMesh;
+import sunaba.spatial.mesh.QuadMesh;
 import sunaba.spatial.mesh.MeshDisplay;
-import sunaba.spatial.IGeometryInstance;
-import sunaba.spatial.IVisualInstance;
 import sunaba.spatial.Camera;
 import sunaba.spatial.lighting.OmniLight;
 import sunaba.spatial.lighting.SpotLight;
@@ -97,6 +100,11 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(Camera);
         componentClasses.push(MeshDisplay);
         componentClasses.push(BoxMesh);
+        componentClasses.push(CapsuleMesh);
+        componentClasses.push(CylinderMesh);
+        componentClasses.push(SphereMesh);
+        componentClasses.push(PlaneMesh);
+        componentClasses.push(QuadMesh);
         componentClasses.push(OmniLight);
         componentClasses.push(SpotLight);
         componentClasses.push(DirectionalLight);
