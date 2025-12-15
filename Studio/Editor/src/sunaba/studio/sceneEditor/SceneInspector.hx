@@ -8,6 +8,10 @@ import sunaba.spatial.Camera;
 import sunaba.spatial.lighting.OmniLight;
 import sunaba.spatial.lighting.SpotLight;
 import sunaba.spatial.lighting.DirectionalLight;
+import sunaba.spatial.physics.CharacterBody;
+import sunaba.spatial.physics.AnimatableBody;
+import sunaba.spatial.physics.RigidBody;
+import sunaba.spatial.physics.StaticBody;
 import sunaba.ui.VSplitContainer;
 import sunaba.SizeFlags;
 import sunaba.core.Vector2i;
@@ -92,6 +96,10 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(OmniLight);
         componentClasses.push(SpotLight);
         componentClasses.push(DirectionalLight);
+        componentClasses.push(CharacterBody);
+        componentClasses.push(RigidBody);
+        componentClasses.push(StaticBody);
+        componentClasses.push(AnimatableBody);
 
         var iconBin = io.loadBytes("studio://icons/16_1-5x/clapperboard--pencil.png");
         var iconImage = new Image();
