@@ -99,12 +99,29 @@ class NewFileWidget extends Widget {
             fileDialog.popupCentered();
         });
 
+        lineEdit.textChanged.add((path: String) -> {
+            var filePath = path;
+            var fileName = filePath.split("/").pop().split(".")[0];
+            if (pathType == PathType.assetFile) {
+                filePath = _explorer.getEditor().projectIo.getFileUrl(path);
+                assetFilePath = filePath;
+                assetFileName = fileName;
+            }
+            else if (pathType == PathType.scriptFile) {
+                filePath = StringTools.replace(path, _explorer.sourceDirectory, "src://");
+                scriptFilePath = filePath;
+                scriptFileName = fileName;
+            }
+            var filePathArray = filePath.split("/");
+            baseDir = filePathArray.slice(filePathArray.length).join("/");
+        });
+
         _explorer.newFileDialog.confirmed.add(() -> {
             if (pathType == PathType.assetFile) {
                 assetLastSelected.createFile(assetFilePath);
             }
             else if (pathType == PathType.scriptFile) {
-                scriptLastSelected.createFile(sceneFilePath);
+                scriptLastSelected.createFile(scriptFilePath);
             }
             _explorer.refresh();
         });
