@@ -102,6 +102,7 @@ class Editor extends Widget {
     public var sceneInspector: SceneInspector;
 
     public var projectIo: FileSystemIo;
+    public var sourceIo: FileSystemIo;
 
     private var resizePreview: Bool = true;
     private var resizeThreshold: Float = 10.0;

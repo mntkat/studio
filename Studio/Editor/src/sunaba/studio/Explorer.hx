@@ -133,6 +133,10 @@ class Explorer extends EditorWidget {
                 getEditor().projectIo = projectIo;
             }
 
+            var sourceIo = new FileSystemIo();
+            sourceIo.open(sourceDirectory, "src://");
+            getEditor().sourceIo = sourceIo;
+
             singleColumnTree.itemActivated.connect(Callable.fromFunction(function() {
                 var treeItem = singleColumnTree.getSelected();
                 onTreeItemActivated(treeItem);
