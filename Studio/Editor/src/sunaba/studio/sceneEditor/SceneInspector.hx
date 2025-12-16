@@ -775,8 +775,10 @@ class SceneInspector extends EditorWidget {
                 }
                 else if (value.getType() == VariantType.float) {
                     var floatSpinBox = new SpinBox();
-                    floatSpinBox.maxValue = 3.40282347e+38;
-                    floatSpinBox.minValue = -3.40282347e+38;
+                    floatSpinBox.maxValue = 500;
+                    floatSpinBox.minValue = -500;
+                    floatSpinBox.allowGreater = true;
+                    floatSpinBox.allowLesser = true;
                     floatSpinBox.step = 0.001;
                     floatSpinBox.value = value;
                     floatSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -792,6 +794,8 @@ class SceneInspector extends EditorWidget {
                     var intSpinBox = new SpinBox();
                     intSpinBox.maxValue = 2147483648;
                     intSpinBox.minValue = -2147483648;
+                    intSpinBox.allowGreater = true;
+                    intSpinBox.allowLesser = true;
                     intSpinBox.step = 1;
                     intSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
                     intSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
@@ -827,6 +831,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 0.001;
                             xSpinBox.value = vec2.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -851,6 +857,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 0.001;
                             ySpinBox.value = vec2.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -881,6 +889,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 0.001;
                             xSpinBox.value = vec3.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -905,6 +915,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 0.001;
                             ySpinBox.value = vec3.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -928,6 +940,8 @@ class SceneInspector extends EditorWidget {
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
                             zSpinBox.minValue = -500;
+                            zSpinBox.allowGreater = true;
+                            zSpinBox.allowLesser = true;
                             zSpinBox.step = 0.001;
                             zSpinBox.value = vec3.z;
                             zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -958,6 +972,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 0.001;
                             xSpinBox.value = vec4.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -982,6 +998,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 0.001;
                             ySpinBox.value = vec4.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1005,6 +1023,8 @@ class SceneInspector extends EditorWidget {
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
                             zSpinBox.minValue = -500;
+                            zSpinBox.allowGreater = true;
+                            zSpinBox.allowLesser = true;
                             zSpinBox.step = 0.001;
                             zSpinBox.value = vec4.z;
                             zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1028,6 +1048,8 @@ class SceneInspector extends EditorWidget {
                             var wSpinBox = new SpinBox();
                             wSpinBox.maxValue = 500;
                             wSpinBox.minValue = -500;
+                            wSpinBox.allowGreater = true;
+                            wSpinBox.allowLesser = true;
                             wSpinBox.step = 0.001;
                             wSpinBox.value = vec4.w;
                             wSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1058,6 +1080,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 1;
                             xSpinBox.value = vec2.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1082,6 +1106,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 1;
                             ySpinBox.value = vec2.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1112,6 +1138,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 1;
                             xSpinBox.value = vec3.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1136,6 +1164,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 1;
                             ySpinBox.value = vec3.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1159,6 +1189,8 @@ class SceneInspector extends EditorWidget {
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
                             zSpinBox.minValue = -500;
+                            zSpinBox.allowGreater = true;
+                            zSpinBox.allowLesser = true;
                             zSpinBox.step = 1;
                             zSpinBox.value = vec3.z;
                             zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1189,6 +1221,8 @@ class SceneInspector extends EditorWidget {
                             var xSpinBox = new SpinBox();
                             xSpinBox.maxValue = 500;
                             xSpinBox.minValue = -500;
+                            xSpinBox.allowGreater = true;
+                            xSpinBox.allowLesser = true;
                             xSpinBox.step = 1;
                             xSpinBox.value = vec4.x;
                             xSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1213,6 +1247,8 @@ class SceneInspector extends EditorWidget {
                             var ySpinBox = new SpinBox();
                             ySpinBox.maxValue = 500;
                             ySpinBox.minValue = -500;
+                            ySpinBox.allowGreater = true;
+                            ySpinBox.allowLesser = true;
                             ySpinBox.step = 1;
                             ySpinBox.value = vec4.y;
                             ySpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1236,6 +1272,8 @@ class SceneInspector extends EditorWidget {
                             var zSpinBox = new SpinBox();
                             zSpinBox.maxValue = 500;
                             zSpinBox.minValue = -500;
+                            zSpinBox.allowGreater = true;
+                            zSpinBox.allowLesser = true;
                             zSpinBox.step = 1;
                             zSpinBox.value = vec4.z;
                             zSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
@@ -1259,6 +1297,8 @@ class SceneInspector extends EditorWidget {
                             var wSpinBox = new SpinBox();
                             wSpinBox.maxValue = 500;
                             wSpinBox.minValue = -500;
+                            wSpinBox.allowGreater = true;
+                            wSpinBox.allowLesser = true;
                             wSpinBox.step = 1;
                             wSpinBox.value = vec4.w;
                             wSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
