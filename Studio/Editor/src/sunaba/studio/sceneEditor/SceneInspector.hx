@@ -656,6 +656,12 @@ class SceneInspector extends EditorWidget {
         if (sceneEditor != null) {
             sceneEditor.checkScene();
         }
+        if (selectedEntity != null) {
+            var transform: SpatialTransform = selectedEntity.getComponent(SpatialTransform);
+            if (transform != null) {
+                sceneEditor.gizmo.deselect(transform);
+            }
+        }
 
         entityPrefabButton.hide();
 
@@ -677,6 +683,10 @@ class SceneInspector extends EditorWidget {
                     entityIcon.texture = entityIcon24;
                     buildComponentTree(selectedEntity);
                     entityPrefabButton.show();
+                }
+                var transform: SpatialTransform = entityIndex[selectedEntityIndex].getComponent(SpatialTransform);
+                if (transform != null) {
+                    sceneEditor.gizmo.select(transform);
                 }
             }
             else if (mode == FileType.SceneType) {
