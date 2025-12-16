@@ -172,7 +172,7 @@ class Editor extends Widget {
 
         windowTitle = getNodeT(Label, "vbox/menuBarControl/windowTitle");
         windowTitle.show();
-        windowTitle.addThemeFontOverride("font", Reference.castTo(ResourceLoaderService.load("res://Engine/Theme/fonts/Inter-Medium.ttf"), Font));
+        windowTitle.addThemeFontOverride("font", Reference.castTo(ResourceLoaderService.load("res://Engine/Theme/fonts/NunitoSans-Medium.ttf"), Font));
         /*if (OSService.getName() != "macOS") {
             windowTitle.hide();
         }*/
