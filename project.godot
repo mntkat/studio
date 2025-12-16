@@ -51,6 +51,10 @@ project/assembly_name="Sunaba.Studio"
 
 enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg")
 
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
 [rendering]
 
 rendering_device/driver.windows="d3d12"
