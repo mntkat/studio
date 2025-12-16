@@ -8,6 +8,7 @@
     <FileVersion>0.7.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Mono.Posix.NETStandard" Version="5.20.1-preview" />
     <PackageReference Include="MoonSharp" Version="2.0.0" />
       <Content Include="splashscreen.snb">
@@ -33,5 +34,6 @@
     </Content>
       <Compile Remove="bin\**\*.cs" />
       <Compile Remove="libsunaba\**\*.cs" />
+      <PackageReference Include="OmniSharp.Extensions.LanguageClient" Version="0.19.9" />
   </ItemGroup>
 </Project>
