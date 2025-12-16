@@ -48,7 +48,7 @@ class NewFileWidget extends Widget {
             var realBasePath = "";
             if (pathType == PathType.assetFile) {
                 realBasePath = _explorer.getEditor().projectIo.getFilePath(baseDir);
-                fileDialog.rootSubfolder = _explorer.assetsDirectory;
+                //fileDialog.rootSubfolder = _explorer.assetsDirectory;
                 if (assetFileName == "") {
                     assetFileName = assetFilePath.split("/").pop().split(".")[0];
                 }
@@ -56,7 +56,7 @@ class NewFileWidget extends Widget {
             }
             else if (pathType == PathType.scriptFile) {
                 realBasePath = StringTools.replace(baseDir, "src://", _explorer.sourceDirectory);
-                fileDialog.rootSubfolder = _explorer.sourceDirectory;
+                //fileDialog.rootSubfolder = _explorer.sourceDirectory;
                 if (scriptFileName == "") {
                     scriptFileName = scriptFilePath.split("/").pop().split(".")[0];
                 }
@@ -168,6 +168,7 @@ class NewFileWidget extends Widget {
     public function open(pType: PathType, pBaseDir: String) {
         pathType = pType;
         baseDir = pBaseDir;
+        trace(baseDir);
 
         if (!StringTools.endsWith(baseDir, "/")) {
             baseDir += "/";
