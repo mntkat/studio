@@ -1408,23 +1408,16 @@ class Editor extends Widget {
         }
 
         buildSystem.jsonToMsgpackConverter = (json: String) -> {
-            trace("");
             var data : Dictionary = JSON.parseString(json);
             trace(data.keys().size());
-            trace("");
 
             var script = new NativeReference("res://Engine/MessagePack.gd", new ArrayList(), ScriptType.gdscript);
-            trace("");
 			var args = new ArrayList();
-            trace("");
 			args.append(data);
-            trace("");
 			var res: Dictionary = script.call("encode", args);
 
             var bytes : ByteArray = res.get("value"); 
-            trace(bytes.size());
-            var haxeBytes = sunaba.core.ByteArray.BinaryDataToBytes(bytes);
-            trace(haxeBytes.length == bytes.size());
+            var haxeBytes = ByteArrayUtils.binaryDataToBytes(bytes);
             return haxeBytes;
         };
 
