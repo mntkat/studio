@@ -16,7 +16,7 @@ func printMsg(msgarr: PackedStringArray):
 	var final_msg = ""
 	for msg in msgarr:
 		final_msg += msg
-		if (msg != msgarr.get(msgarr.size())):
+		if (msg != msgarr.get(msgarr.size()-1)):
 			final_msg += " "
 	output.append(final_msg)
 	on_print.emit(final_msg)
