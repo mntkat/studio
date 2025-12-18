@@ -77,6 +77,7 @@ class Console extends EditorWidget {
         });
 
         getEditor().setDockTabTitle(this, "Console");
+        getEditor().setDockTabIcon(this, getEditor().loadIcon("studio://icons/16/terminal.png"));
     }
 
     public function log(...messages: String) {
