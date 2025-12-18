@@ -1221,9 +1221,19 @@ class Editor extends Widget {
         return centerTabContainer.getTabTitle(index);
     }
 
+    public function setDockTabIcon(widget: EditorWidget, icon: Texture2D) {
+        var index = dockChildren.indexOf(widget);
+        bottomCenterTabContainer.setTabIcon(index, icon);
+    }
+
     public function getDockTabIcon(widget: EditorWidget, icon: Texture2D) {
         var index = dockChildren.indexOf(widget);
         return bottomCenterTabContainer.getTabIcon(index);
+    }
+
+    public function getDockTabTitle(widget: EditorWidget) {
+        var index = dockChildren.indexOf(widget);
+        return bottomCenterTabContainer.getTabTitle(index);
     }
 
     public function setDockTabTitle(widget: EditorWidget, title: String) {
