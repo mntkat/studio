@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.core.Signal;
+import sunaba.core.native.NativeObject;
 import sunaba.core.Dictionary;
 import sunaba.core.ByteArray;
 import sunaba.core.Color;
@@ -1488,10 +1490,17 @@ class Editor extends Widget {
         isGameRunning = false;
         isGamePaused = false;
 
+        playerOnPrint.remove(playerPrintCallable);
+        playerPrintCallable = null;
+        playerOnPrint = null;
+
         playerSubViewportContainer.queueFree();
         playerSubViewportContainer = null;
         playerAppView = null;
     }
+
+    var playerPrintCallable: Callable;
+    var playerOnPrint: Signal;
 
     function play() {
         playButton.disabled = true;
@@ -1521,7 +1530,11 @@ class Editor extends Widget {
 
         var snbPath = buildSystem.zipOutputPath;
 
-        playerAppView = new DesktopAppView();
+        playerAppView = new DesktopAppView(new NativeObject("res://Studio/game_view.gd", new ArrayList(), ScriptType.gdscript));
+        playerOnPrint = Signal.createFromObject(playerAppView.native, "on_print");
+        playerPrintCallable = playerOnPrint.add((line: String) -> {
+            console.log(line);
+        });
         subViewport.addChild(playerAppView);
         playerAppView.init(false);
         playerAppView.loadApp(snbPath);
