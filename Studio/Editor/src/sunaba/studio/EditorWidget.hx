@@ -18,6 +18,9 @@ class EditorWidget extends Widget {
         else if (area == EditorArea.workspace) {
             parent.addWorkspaceChild(this);
         }
+        else if (area == EditorArea.dock) {
+            parent.addDockChild(this);
+        }
         editorInit();
     }
 
