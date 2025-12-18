@@ -29,8 +29,8 @@ public partial class HxSys: RefCounted
     	var startInfo = new ProcessStartInfo
     	{
         	WindowStyle = ProcessWindowStyle.Hidden,
-        	RedirectStandardOutput = false,
-        	RedirectStandardError = false,
+        	RedirectStandardOutput = true,
+        	RedirectStandardError = true,
         	UseShellExecute = false
     	};
 
@@ -68,7 +68,12 @@ public partial class HxSys: RefCounted
 	
     	process.StartInfo = startInfo;
     	process.Start();
-    	process.WaitForExit();
+	    while (!process.StandardOutput.EndOfStream)
+	    {
+		    string line = process.StandardOutput.ReadLine();
+		    Console.WriteLine(line);
+	    }
+    	//process.WaitForExit();
     	return process.ExitCode;
 	}
 }
