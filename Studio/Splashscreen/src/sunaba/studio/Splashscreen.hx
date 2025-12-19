@@ -78,6 +78,24 @@ class Splashscreen extends Widget {
     private var resizeThreshold: Float = 10.0;
     private var resizeThresholdBottomRight: Float = 0.25;
 
+    public var customTitlebar(get, set): Bool;
+    function get_customTitlebar() {
+        return window.borderless;
+    }
+    function set_customTitlebar(value: Bool): Bool {
+        var minimizeButton = getNodeT(Button, "vbox/titlebar/hbox/minimizeButton");
+        minimizeButton.visible = value;
+        var maximizeButton = getNodeT(Button, "vbox/titlebar/hbox/maximizeButton");
+        maximizeButton.visible = value;
+        var closeButton = getNodeT(Button, "vbox/titlebar/hbox/closeButton");
+        closeButton.visible = value;
+        var iconContainer = getNodeT(Control, "vbox/titlebar/hbox/iconContainer");
+        iconContainer.visible = value;
+        var windowTitle = getNodeT(Label, "vbox/titlebar/windowTitle");
+        windowTitle.visible = value;
+        return window.borderless = value;
+    }
+
     public override function onReady() {
         window = getWindow();
         var displayScale = DisplayService.screenGetScale(window.currentScreen);
@@ -104,6 +122,9 @@ class Splashscreen extends Widget {
 
         var eventFunc = function(eventN: NativeReference) {
             if (window == null)
+                return;
+
+            if (customTitlebar == false)
                 return;
 
             if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed && window.mode == WindowMode.windowed && clickcount == 0) {
@@ -267,6 +288,15 @@ class Splashscreen extends Widget {
             maximizeButton.hide();
             closeButton.hide();
         }
+        else {
+            var osArgs = OSService.getCmdlineArgs();
+            for (i in 0...osArgs.size()) {
+                var arg = osArgs.get(i);
+                if (arg == "--no-custom-titlebar") {
+                    customTitlebar = false;
+                }
+            }
+        }
     }
 
     public override function onProcess(delta:Float) {
@@ -278,7 +308,7 @@ class Splashscreen extends Widget {
             }
         }
 
-        if (OSService.getName() != "macOS") {
+        if (OSService.getName() != "macOS" && customTitlebar == true) {
             window = getWindow();
             if (window != null) {
                 if (window.mode != WindowMode.windowed) return;
@@ -323,7 +353,7 @@ class Splashscreen extends Widget {
     }
 
     public override function onInput(event:InputEvent) {
-        if (OSService.getName() != "macOS") {
+        if (OSService.getName() != "macOS" && customTitlebar == true) {
             if (event.native.isClass("InputEventMouseButton")) {
                 var eventMouseButton = Reference.castTo(event, InputEventMouseButton);
                 window = getWindow();
