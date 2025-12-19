@@ -121,6 +121,23 @@ class Editor extends Widget {
         return _projectFile;
     }
 
+    public var customTitlebar(get, set): Bool;
+    function get_customTitlebar() {
+        return window.borderless;
+    }
+    function set_customTitlebar(value: Bool): Bool {
+        var minimizeButton = getNodeT(Button, "vbox/menuBarControl/hbox/minimizeButton");
+        minimizeButton.visible = value;
+        var maximizeButton = getNodeT(Button, "vbox/menuBarControl/hbox/maximizeButton");
+        maximizeButton.visible = value;
+        var closeButton = getNodeT(Button, "vbox/menuBarControl/hbox/closeButton");
+        closeButton.visible = value;
+        var iconContainer = getNodeT(Control, "vbox/menuBarControl/hbox/iconContainer");
+        iconContainer.visible = value;
+        windowTitle.visible = value;
+        return window.borderless = value;
+    }
+
     private var playerSubViewportContainer: SubViewportContainer = null;
     private var playerAppView: DesktopAppView = null;
 
@@ -258,6 +275,9 @@ class Editor extends Widget {
             var menuBarControl: Control = getNodeT(Control, "vbox/menuBarControl/hbox/spacer");
             var eventFunc = function(eventN: NativeReference) {
                 if (window == null)
+                    return;
+
+                if (customTitlebar == false)
                     return;
 
                 if (InputService.isMouseButtonPressed(MouseButton.left) && !titlebarLmbPressed && window.mode == WindowMode.windowed && clickcount == 0) {
@@ -617,6 +637,15 @@ class Editor extends Widget {
 
             console = new Console(this, EditorArea.dock);
 
+            console.addCommand("toggle-custom-titlebar", (args) -> {
+                if (OSService.getName() == "macOS") {
+                    console.log("The custom titlebar cannot be disabled on macOS");
+                    return -1;
+                }
+                customTitlebar = !customTitlebar;
+                return 0;
+            });
+
             //loadProjectPlugin();
         }
         catch(e: Exception) {
@@ -832,7 +861,7 @@ class Editor extends Widget {
         else
             centerTabContainer.getTabBar().tabCloseDisplayPolicy = CloseButtonDisplayPolicy.showActiveOnly;
 
-        if (OSService.getName() != "macOS") {
+        if (OSService.getName() != "macOS" && customTitlebar) {
             if (window != null) {
                 if (window.mode != WindowMode.windowed) return;
 
@@ -1316,7 +1345,7 @@ class Editor extends Widget {
                 buildSnbForPlay();
 
 
-        if (OSService.getName() != "macOS") {
+        if (OSService.getName() != "macOS" && customTitlebar) {
             if (event.native.isClass("InputEventMouseButton")) {
                 var eventMouseButton = Reference.castTo(event, InputEventMouseButton);
                 if (window.mode != WindowMode.windowed) return;
