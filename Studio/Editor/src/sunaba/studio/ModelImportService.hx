@@ -105,6 +105,7 @@ class ModelImportService {
             var modelTextures = modelState.getTextures();
             var modelImages = modelState.getImages();
             var lossyQuality = modelDocument.lossyQuality;
+            yeild();
             if (imageFormat != "None") {
                 for (i in 0...modelTextures.size()) {
                     var modelTexture = new ImageTexture(modelTextures.get(i));
@@ -150,30 +151,43 @@ class ModelImportService {
             var scene = new SceneRoot();
             var nodes = modelState.getNodes();
             var rootNodes = modelState.rootNodes;
+            yeild();
 
             var rootEntity: Entity = null;
             if (rootNodes.size() > 1) {
                 rootEntity = new Entity();
                 rootEntity.name = modelName;
                 rootEntity.addComponent(SpatialTransform);
+                yeild();
             }
             for (i in 0...rootNodes.size()) {
                 var nodeIdx = rootNodes.get(i);
                 var node = new GLTFNode(nodes.get(nodeIdx));
+                yeild();
 
                 var entity = createEntity(modelDocument, modelState, node);
+                yeild();
                 if (rootEntity != null) {
                     rootEntity.addChild(entity);
+                    yeild();
                 }
                 else {
                     scene.addEntity(entity);
+                    yeild();
                     rootEntity = entity;
                 }
             }
+            yeild();
 
             if (rootEntity != null) {
                 var prefab = Prefab.create(rootEntity, destPath);
-                prefab.save(DataFileType.msgPack);
+                yeild();
+                var fileType = DataFileType.json;
+                if (binaryFile == true) {
+                    fileType = DataFileType.msgPack;
+                }
+                prefab.save(destPath, fileType);
+                yeild();
             }
         }
     }
@@ -193,26 +207,42 @@ class ModelImportService {
         }
         
         var entity = new Entity();
+        yeild();
         entity.name = node.originalName;
+        yeild();
         var transform = entity.addComponent(SpatialTransform);
+        yeild();
         transform.position = node.position;
+        yeild();
         transform.quaternion = node.rotation;
+        yeild();
         transform.scale = node.scale;
+        yeild();
 
         if (node.camera != -1) {
             var cameras = state.getCameras();
+            yeild();
             var modelCamera: GLTFCamera = new GLTFCamera(cameras.get(node.camera));
+            yeild();
             var camera = entity.addComponent(Camera);
+            yeild();
             camera.node = modelCamera.toNode();
+            yeild();
         }
         
         var children = node.children.toArray();
+        yeild();
         var nodes = state.getNodes();
+        yeild();
         for (childIdx in children) {
             var childNode = new GLTFNode(nodes.get(childIdx));
+            yeild();
             var child = createEntity(document, state, childNode);
+            yeild();
             entity.addChild(child);
+            yeild();
         }
+        yeild();
 
         return entity;
     }
