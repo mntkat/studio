@@ -194,6 +194,7 @@ class ModelImportService {
             yeild();
 
             if (rootEntity != null) {
+                var prefab = Prefab.create(rootEntity, destPath);
                 yeild();
                 var fileType = DataFileType.json;
                 if (binaryFile == true) {
