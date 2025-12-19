@@ -154,39 +154,52 @@ class ModelImportService {
             yeild();
 
             var rootEntity: Entity = null;
-            if (rootNodes.size() > 1) {
-                rootEntity = new Entity();
-                rootEntity.name = modelName;
-                rootEntity.addComponent(SpatialTransform);
-                yeild();
-            }
-            for (i in 0...rootNodes.size()) {
-                var nodeIdx = rootNodes.get(i);
-                var node = new GLTFNode(nodes.get(nodeIdx));
+            
+            trace("");
+            trace(rootNodes.size());
+            trace(nodes.size());
+            if (rootNodes.size() == 0 && nodes.size() != 0) {
+                var node = new GLTFNode(nodes.get(0));
                 yeild();
 
-                var entity = createEntity(modelDocument, modelState, node);
+                rootEntity = createEntity(modelDocument, modelState, node);
                 yeild();
-                if (rootEntity != null) {
-                    rootEntity.addChild(entity);
+                scene.addEntity(rootEntity);
+            }
+            else if (rootNodes.size() > 0) {
+                if (rootNodes.size() != 1) {
+                    rootEntity = new Entity();
+                    rootEntity.name = modelName;
+                    rootEntity.addComponent(SpatialTransform);
                     yeild();
                 }
-                else {
-                    scene.addEntity(entity);
+                for (i in 0...rootNodes.size()) {
+                    var nodeIdx = rootNodes.get(i);
+                    var node = new GLTFNode(nodes.get(nodeIdx));
                     yeild();
-                    rootEntity = entity;
+
+                    var entity = createEntity(modelDocument, modelState, node);
+                    yeild();
+                    if (rootEntity != null) {
+                        rootEntity.addChild(entity);
+                        yeild();
+                    }
+                    else {
+                        scene.addEntity(entity);
+                        yeild();
+                        rootEntity = entity;
+                    }
                 }
             }
             yeild();
 
             if (rootEntity != null) {
-                var prefab = Prefab.create(rootEntity, destPath);
                 yeild();
                 var fileType = DataFileType.json;
                 if (binaryFile == true) {
                     fileType = DataFileType.msgPack;
                 }
-                prefab.save(destPath, fileType);
+                prefab.save(null, fileType);
                 yeild();
             }
         }
