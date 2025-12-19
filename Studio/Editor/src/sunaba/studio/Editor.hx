@@ -657,12 +657,12 @@ class Editor extends Widget {
                 return 0;
             });
 
-            console.addCommand("import_model", (args) -> {
+            console.addCommand("import-model", (args) -> {
                 var srcPath = args[0];
                 var destPath = args[1];
                 ModelImportService.isRunningCoroutine = false;
 
-                ModelImportService.inport(srcPath, destPath);
+                ModelImportService.import(srcPath, destPath);
                 return 0;
             });
 

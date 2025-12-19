@@ -24,7 +24,7 @@ class ModelImportService {
        } 
     }
 
-    public static function inport(srcPath: String, destPath: String, binaryFile: Bool = false, ?io: IoInterface): Void {
+    public static function import(srcPath: String, destPath: String, binaryFile: Bool = false, ?io: IoInterface): Void {
         if (io == null) {
             var ioNative: NativeReference = untyped __lua__("_G.__ioManager");
             io = new IoManager(ioNative);
