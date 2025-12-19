@@ -41,6 +41,7 @@ import sunaba.ui.ProgressBar;
 import sunaba.ui.SubViewportContainer;
 import sunaba.SubViewport;
 import sunaba.core.ArrayList;
+import sunaba.studio.fileHandlers.SmdlFileHander;
 import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
 import sunaba.io.IoManager;
@@ -622,6 +623,7 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new HxFileHandler(explorer));
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
+            explorer.fileHandlers.push(new SmdlFileHandler(explorer));
             explorer.newFileWidget.addAssetFileTemplate("Empty Scene", ".vscn", explorer.loadIcon("studio://icons/16_2x/clapperboard.png"), (path: String) -> {
                 var sceneRoot = new SceneRoot();
                 var sceneFile = SceneFile.create(sceneRoot);
@@ -651,6 +653,16 @@ class Editor extends Widget {
                     return -1;
                 }
                 customTitlebar = !customTitlebar;
+                explorer.refresh();
+                return 0;
+            });
+
+            console.addCommand("import_model", (args) -> {
+                var srcPath = args[0];
+                var destPath = args[1];
+                ModelImportService.isRunningCoroutine = false;
+
+                ModelImportService.inport(srcPath, destPath);
                 return 0;
             });
 
