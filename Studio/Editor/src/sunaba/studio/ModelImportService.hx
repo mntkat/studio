@@ -1,6 +1,10 @@
 package sunaba.studio;
 
+import sunaba.spatial.mesh.MeshLoader;
+import sunaba.spatial.mesh.MeshDisplay;
+import sunaba.spatial.mesh.MeshData;
 import sunaba.io.DataFileType;
+import sunaba.spatial.models.gltf.GLTFMesh;
 import sunaba.spatial.models.gltf.GLTFCamera;
 import sunaba.spatial.Camera;
 import sunaba.spatial.SpatialTransform;
@@ -242,6 +246,18 @@ class ModelImportService {
             yeild();
             camera.node = modelCamera.toNode();
             yeild();
+        }
+
+        if (node.mesh  != -1) {
+            var meshes = state.getMeshes();
+            var mesh = new GLTFMesh(meshes.get(node.mesh));
+
+            var meshData = MeshData.fromImporterMesh(mesh.mesh);
+
+            entity.addComponent(MeshDisplay);
+
+            var meshLoader = entity.addComponent(MeshLoader);
+            meshLoader.meshData = meshData;
         }
         
         var children = node.children.toArray();
