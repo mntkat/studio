@@ -112,6 +112,8 @@ Section Uninstall
   RMDir /r "$INSTDIR\data_Sunaba.Studio_windows_x86_64"
   Delete "$INSTDIR\libdd3d.windows.editor.x86_64.dll"
   Delete "$INSTDIR\sunaba.windows.template_debug.x86_64.dll"
+  Delete "$INSTDIR\libgodotsteam.windows.template_debug.x86_64.dll"
+  Delete "$INSTDIR\steam_api64.dll"
   Delete "$INSTDIR\Sunaba.Studio.exe"
   Delete "$INSTDIR\project.ico"
 
