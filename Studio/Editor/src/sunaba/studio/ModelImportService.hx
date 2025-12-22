@@ -219,6 +219,9 @@ class ModelImportService {
                 prefab.save(null, fileType);
                 yeild();
             }
+
+            scene.destroy();
+            yeild();
         }
     }
 
