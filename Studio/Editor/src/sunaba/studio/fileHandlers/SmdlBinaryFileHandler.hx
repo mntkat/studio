@@ -14,6 +14,6 @@ class SmdlBinaryFileHandler extends FileHandler {
         var sceneEditor = new SceneEditor(editor, EditorArea.workspace);
         editor.setWorkspaceTabIcon(sceneEditor, explorer.loadIcon(iconPath));
 
-        sceneEditor.openPrefab(assetPath.substr(0, assetPath.length - 4));
+        sceneEditor.openPrefab(assetPath);
     }
 }

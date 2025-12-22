@@ -112,8 +112,8 @@ class SceneEditor extends EditorWidget {
         getEditor().setWorkspaceTabTitle(this, name);
         sceneName = name;
 
-        var sceneJson = io.loadText(path);
-        var sceneData = JSON.parseString(sceneJson);
+        var sceneJson = "";
+        var sceneData = io.loadData(path);
         sceneJson = JSON.stringify(sceneData);
         savedSceneJson = sceneJson;
         savedSceneJsonInitialized = true;
@@ -146,8 +146,8 @@ class SceneEditor extends EditorWidget {
         getEditor().setWorkspaceTabTitle(this, name);
         sceneName = name;
 
-        var sceneJson = io.loadText(path);
-        var sceneData = JSON.parseString(sceneJson);
+        var sceneJson = "";
+        var sceneData = io.loadData(path);
         sceneJson = JSON.stringify(sceneData);
         savedSceneJson = sceneJson;
         savedSceneJsonInitialized = true;
