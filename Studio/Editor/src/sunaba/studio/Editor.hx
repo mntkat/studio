@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.studio.fileHandlers.SmdlBinaryFileHandler;
 import sunaba.core.Signal;
 import sunaba.core.native.NativeObject;
 import sunaba.core.Dictionary;
@@ -624,6 +625,7 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.fileHandlers.push(new SmdlFileHandler(explorer));
+            explorer.fileHandlers.push(new SmdlBinaryFileHandler(explorer));
             explorer.newFileWidget.addAssetFileTemplate("Empty Scene", ".vscn", explorer.loadIcon("studio://icons/16_2x/clapperboard.png"), (path: String) -> {
                 var sceneRoot = new SceneRoot();
                 var sceneFile = SceneFile.create(sceneRoot);
@@ -663,6 +665,14 @@ class Editor extends Widget {
                 ModelImportService.isRunningCoroutine = false;
 
                 ModelImportService.inport(srcPath, destPath);
+                return 0;
+            });
+            console.addCommand("import-model-binary", (args) -> {
+                var srcPath = args[0];
+                var destPath = args[1];
+                ModelImportService.isRunningCoroutine = false;
+
+                ModelImportService.inport(srcPath, destPath, true);
                 return 0;
             });
 
