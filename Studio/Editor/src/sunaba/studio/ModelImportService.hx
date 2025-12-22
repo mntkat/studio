@@ -38,8 +38,14 @@ class ModelImportService {
             return;
         }
 
-        if (!StringTools.endsWith(destPath, ".smdl"))
+        if (!StringTools.endsWith(destPath, ".smdl") && binaryFile == false)
             destPath += ".smdl";
+        if (!StringTools.endsWith(destPath, ".smdl.dat") && binaryFile == true) {
+            if (StringTools.endsWith(destPath, ".smdl"))
+                destPath += ".dat";
+            else 
+                destPath += ".smdl.dat";
+        }
 
         var destPathArray = destPath.split("\\").join("/").split("/");
         var modelName = destPathArray[destPathArray.length - 1].split(".")[0];
