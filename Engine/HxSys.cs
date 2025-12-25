@@ -73,6 +73,12 @@ public partial class HxSys: RefCounted
 		    string line = process.StandardOutput.ReadLine();
 		    Console.WriteLine(line);
 	    }
+
+	    while (!process.StandardError.EndOfStream)
+	    {
+		    string line = process.StandardError.ReadLine();
+		    Console.WriteLine(line);
+	    }
     	//process.WaitForExit();
     	return process.ExitCode;
 	}
