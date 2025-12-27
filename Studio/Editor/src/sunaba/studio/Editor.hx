@@ -668,10 +668,10 @@ class Editor extends Widget {
                     ModelImportService.inport(srcPath, destPath);
                 }
                 catch(e) {
-                    Debug.error(e.message);
+                    console.error(e.message);
                     return -1;
                 }
-                
+
                 return 0;
             });
             console.addCommand("import-model-binary", (args) -> {
@@ -683,7 +683,7 @@ class Editor extends Widget {
                     ModelImportService.inport(srcPath, destPath, true);
                 }
                 catch(e) {
-                    Debug.error(e.message);
+                    console.error(e.message);
                     return -1;
                 }
                 
