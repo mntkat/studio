@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.spatial.Skeleton;
+import sunaba.spatial.Skin;
 import sunaba.core.Variant;
 import sunaba.animation.AnimationLibrary;
 import sunaba.core.ArrayList;
@@ -28,6 +30,7 @@ import sunaba.spatial.models.fbx.FBXDocument;
 import sunaba.core.native.NativeReference;
 import sunaba.io.IoManager;
 import sunaba.io.IoInterface;
+import sunaba.core.VariantType;
 
 class ModelImportService {
     public static var isRunningCoroutine: Bool = false;
@@ -333,6 +336,18 @@ class ModelImportService {
 
             var meshDisplay = entity.addComponent(MeshDisplay);
             yeild();
+            meshDisplay.skeleton = node.native.get("skeleton");
+            yeild();
+            if (gdnode.native.get("skin").getType() == VariantType.object) {
+                yeild();
+                if (gdnode.native.get("skin").toNativeReference().isValid()) {
+                    yeild();
+                    meshDisplay.skin = new Skin(gdnode.native.get("skin"));
+                    yeild();
+                }
+                yeild();
+            }
+            yeild();
 
             var meshLoader = entity.addComponent(MeshLoader);
             yeild();
@@ -352,12 +367,16 @@ class ModelImportService {
                 yeild();
                 var directionalLight = entity.addComponent(DirectionalLight);
                 yeild();
+                directionalLight.node.queueFree();
+                yeild();
                 directionalLight.node = lightNode;
                 yeild();
             }
             else if (lightNode.native.getClass() == "OmniLight3D") {
                 yeild();
                 var omniLight = entity.addComponent(OmniLight);
+                yeild();
+                omniLight.node.queueFree();
                 yeild();
                 omniLight.node = lightNode;
                 yeild();
@@ -366,13 +385,31 @@ class ModelImportService {
                 yeild();
                 var spotLight = entity.addComponent(SpotLight);
                 yeild();
+                spotLight.node.queueFree();
+                yeild();
                 spotLight.node = lightNode;
                 yeild();
             }
             yeild();
         }
         yeild();
-        
+
+        if (node.skeleton != -1) {
+            var skeletonComponent = entity.addComponent(Skeleton);
+            yeild();
+            skeletonComponent.node = gdnode;
+            yeild();
+            if (!gdnode.getParent().isNull()) {
+                yeild();
+                gdnode.getParent().removeChild(gdnode);
+                yeild();
+            }
+            yeild();
+            entity.node = gdnode;
+            yeild();
+        }
+        yeild();
+         
         var children = node.children.toArray();
         yeild();
         var nodes = state.getNodes();
