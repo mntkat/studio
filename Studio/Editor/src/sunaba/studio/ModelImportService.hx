@@ -166,6 +166,9 @@ class ModelImportService {
                 }
             }
             yeild();
+
+            var gdscene = modelDocument.generateScene(modelState);
+            yeild();
             
 
             var scene = new SceneRoot();
@@ -182,7 +185,7 @@ class ModelImportService {
                 var node = new GLTFNode(nodes.get(0));
                 yeild();
 
-                rootEntity = createEntity(modelDocument, modelState, node);
+                rootEntity = createEntity(modelDocument, modelState, node, gdscene);
                 yeild();
                 scene.addEntity(rootEntity);
             }
@@ -200,7 +203,13 @@ class ModelImportService {
                     var node = new GLTFNode(nodes.get(nodeIdx));
                     yeild();
 
-                    var entity = createEntity(modelDocument, modelState, node);
+                    var entityNodeTarget = gdscene;
+                    if (rootEntity != null) {
+                        entityNodeTarget = gdscene.getNode(node.originalName);
+                    }
+                    yeild();
+
+                    var entity = createEntity(modelDocument, modelState, node, entityNodeTarget);
                     yeild();
                     if (rootEntity != null) {
                         rootEntity.addChild(entity);
@@ -218,7 +227,7 @@ class ModelImportService {
             if (rootEntity != null) {
                 if (modelState.createAnimations == true) {
                     var animationPlayer = rootEntity.addComponent(AnimationPlayer);
-                    importAnimations(modelDocument, modelState, animationPlayer);
+                    importAnimations(modelDocument, modelState, animationPlayer, gdscene);
                 }
 
                 var prefab = Prefab.create(rootEntity, destPath);
@@ -236,30 +245,45 @@ class ModelImportService {
         }
     }
 
-    private static inline function importAnimations(document: GLTFDocument, state: GLTFState, animationPlayer: AnimationPlayer) {
-        var gdscene = document.generateScene(state);
-
+    private static inline function importAnimations(document: GLTFDocument, state: GLTFState, animationPlayer: AnimationPlayer, gdscene: Node) {
         var animPlayerNode: Node = null;
+        yeild();
         for (i in 0...gdscene.getChildCount()) {
+            yeild();
             var node = gdscene.getChild(i);
+            yeild();
             if (node.native.isClass("AnimationPlayer")) {
+                yeild();
                 animPlayerNode = node;
             }
+            yeild();
         }
+        yeild();
         if (animPlayerNode != null) {
+            yeild();
             var animationList : ArrayList = animPlayerNode.native.call("get_animation_list", new ArrayList());
+            yeild();
             var modelAnimationLibrary = new AnimationLibrary();
+            yeild();
             for (i in 0...animationList.size()) {
+                yeild();
                 var animationName: String = animationList.get(i);
+                yeild();
                 var getAnimationArgs : Array<Variant> = [animationName];
+                yeild();
                 var animation = new Animation(animPlayerNode.native.call("get_animation", getAnimationArgs));
+                yeild();
                 modelAnimationLibrary.addAnimation(animationName, animation);
+                yeild();
             }
+            yeild();
             animationPlayer.addAnimationLibrary(state.sceneName, modelAnimationLibrary);
+            yeild();
         }
+        yeild();
     }
 
-    private static function createEntity(document: GLTFDocument, state: GLTFState, node: GLTFNode): Entity {
+    private static function createEntity(document: GLTFDocument, state: GLTFState, node: GLTFNode, gdnode: Node): Entity {
         if (document == null) {
             throw 'ModelImporter: document could not be found';
             return null;
@@ -306,7 +330,7 @@ class ModelImportService {
             var meshData = MeshData.fromImporterMesh(mesh.mesh);
             yeild();
 
-            entity.addComponent(MeshDisplay);
+            var meshDisplay = entity.addComponent(MeshDisplay);
             yeild();
 
             var meshLoader = entity.addComponent(MeshLoader);
@@ -355,7 +379,7 @@ class ModelImportService {
         for (childIdx in children) {
             var childNode = new GLTFNode(nodes.get(childIdx));
             yeild();
-            var child = createEntity(document, state, childNode);
+            var child = createEntity(document, state, childNode, gdnode.getNode(childNode.originalName));
             yeild();
             entity.addChild(child);
             yeild();
