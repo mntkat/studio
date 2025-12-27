@@ -664,7 +664,14 @@ class Editor extends Widget {
                 var destPath = args[1];
                 ModelImportService.isRunningCoroutine = false;
 
-                ModelImportService.inport(srcPath, destPath);
+                try {
+                    ModelImportService.inport(srcPath, destPath);
+                }
+                catch(e) {
+                    Debug.error(e.message);
+                    return -1;
+                }
+                
                 return 0;
             });
             console.addCommand("import-model-binary", (args) -> {
@@ -672,7 +679,14 @@ class Editor extends Widget {
                 var destPath = args[1];
                 ModelImportService.isRunningCoroutine = false;
 
-                ModelImportService.inport(srcPath, destPath, true);
+                try {
+                    ModelImportService.inport(srcPath, destPath, true);
+                }
+                catch(e) {
+                    Debug.error(e.message);
+                    return -1;
+                }
+                
                 return 0;
             });
 
