@@ -332,42 +332,58 @@ class ModelImportService {
                     var param = 0;
                     while (param < 20) {
                         yeild();
-                        var ogTexture = Reference.castTo(surfaceMaterial.getTexture(param), ImageTexture);
-                        yeild();
-                        var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
-                        yeild();
-                        for (dbTexture in textureDb) {
-                            yeild();
-                            var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
-                            yeild();
-                            if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                        var txt2d = surfaceMaterial.getTexture(param);
+                        if (!txt2d.isNull()) {
+                            if (txt2d.isObjectValid()) {
                                 yeild();
-                                surfaceMaterial.setTexture(param, dbTexture);
+                                var ogTexture = Reference.castTo(txt2d, ImageTexture);
                                 yeild();
-                                break;
+                                var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
+                                yeild();
+                                for (dbTexture in textureDb) {
+                                    yeild();
+                                    var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
+                                    yeild();
+                                    if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                                        yeild();
+                                        surfaceMaterial.setTexture(param, dbTexture);
+                                        yeild();
+                                        break;
+                                    }
+                                    yeild();
+                                }
+                                yeild();
                             }
                             yeild();
                         }
                         yeild();
+                        
+                        
                         trace(param);
                         param++;
                     }
                     yeild();
-                    var ogTexture = Reference.castTo(surfaceMaterial.albedoTexture, ImageTexture);
-                    yeild();
-                    var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
-                    yeild();
-                    for (dbTexture in textureDb) {
-                        yeild();
-                        var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
-                        yeild();
-                        if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                    var txt2d = surfaceMaterial.albedoTexture;
+                    if (!txt2d.isNull()) {
+                        if (txt2d.isObjectValid()) {
                             yeild();
-                            surfaceMaterial.albedoTexture = dbTexture;
+                            var ogTexture = Reference.castTo(txt2d, ImageTexture);
                             yeild();
-                            break;
+                            var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
+                            yeild();
+                            for (dbTexture in textureDb) {
+                                yeild();
+                                var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
+                                yeild();
+                                if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                                    yeild();
+                                    surfaceMaterial.albedoTexture = dbTexture;
+                                    yeild();
+                                    break;
+                                }
+                                yeild();
+                            }
                         }
-                        yeild();
                     }
                     yeild();
                 }
