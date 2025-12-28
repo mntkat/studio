@@ -1,5 +1,8 @@
 package sunaba.studio;
 
+import haxe.crypto.Base64;
+import sunaba.core.Reference;
+import sunaba.spatial.BaseMaterial3D;
 import sunaba.spatial.Skeleton;
 import sunaba.spatial.Skin;
 import sunaba.core.Variant;
@@ -62,9 +65,9 @@ class ModelImportService {
 
         var destPathArray = destPath.split("\\").join("/").split("/");
         var modelName = destPathArray[destPathArray.length - 1].split(".")[0];
-        destPathArray = destPathArray.slice(0, destPathArray.length);
+        destPathArray = destPathArray.slice(0, destPathArray.length - 1);
         var destDir = destPathArray.join("/");
-        if (!StringTools.endsWith(destDir, "/"))
+        if (!StringTools.endsWith(destDir, "/") || StringTools.endsWith(destDir, ":/"))
             destDir += "/";
         
 
@@ -129,8 +132,10 @@ class ModelImportService {
             var modelImages = modelState.getImages();
             var lossyQuality = modelDocument.lossyQuality;
             yeild();
+            trace(imageFormat);
+            var textureDb: Array<ImageTexture> = new Array();
             if (imageFormat != "None") {
-                for (i in 0...modelTextures.size()) {
+                for (i in 0...modelTextures.size() + 1) {
                     var modelTexture = new ImageTexture(modelTextures.get(i));
                     if (modelTexture.native.isClass("ImageTexture")) {
                         var image = modelTexture.getImage();
@@ -164,6 +169,11 @@ class ModelImportService {
                             var webp = image.saveWebpToBuffer(true, lossyQuality);
                             io.saveBytes(texturePath, webp);
                         }
+                        if (!io.fileExists(texturePath)) {
+                            throw "Couldn't find texture: " + texturePath;
+                        }
+
+                        textureDb.push(modelTexture);
                     }
                     yeild();
                 }
@@ -179,7 +189,7 @@ class ModelImportService {
             var rootNodes = modelState.rootNodes;
             yeild();
 
-            var rootEntity: Entity = createEntity(modelDocument, modelState, gdscene);
+            var rootEntity: Entity = createEntity(modelDocument, modelState, gdscene, textureDb);
             yeild();
             
             yeild();
@@ -250,7 +260,7 @@ class ModelImportService {
         yeild();
     }
 
-    private static function createEntity(document: GLTFDocument, state: GLTFState, gdnode: Node): Entity {
+    private static function createEntity(document: GLTFDocument, state: GLTFState, gdnode: Node, textureDb: Array<ImageTexture>): Entity {
         if (document == null) {
             throw 'ModelImporter: document could not be found';
             return null;
@@ -315,6 +325,54 @@ class ModelImportService {
                 }
                 yeild();
 
+                for (i in 0...meshData.surfaceMaterials.size()) {
+                    yeild();
+                    var surfaceMaterial = new BaseMaterial3D(meshData.surfaceMaterials.get(i));
+                    yeild();
+                    var param = 0;
+                    while (param < 20) {
+                        yeild();
+                        var ogTexture = Reference.castTo(surfaceMaterial.getTexture(param), ImageTexture);
+                        yeild();
+                        var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
+                        yeild();
+                        for (dbTexture in textureDb) {
+                            yeild();
+                            var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
+                            yeild();
+                            if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                                yeild();
+                                surfaceMaterial.setTexture(param, dbTexture);
+                                yeild();
+                                break;
+                            }
+                            yeild();
+                        }
+                        yeild();
+                        trace(param);
+                        param++;
+                    }
+                    yeild();
+                    var ogTexture = Reference.castTo(surfaceMaterial.albedoTexture, ImageTexture);
+                    yeild();
+                    var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
+                    yeild();
+                    for (dbTexture in textureDb) {
+                        yeild();
+                        var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
+                        yeild();
+                        if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
+                            yeild();
+                            surfaceMaterial.albedoTexture = dbTexture;
+                            yeild();
+                            break;
+                        }
+                        yeild();
+                    }
+                    yeild();
+                }
+                yeild();
+
                 var meshLoader = entity.addComponent(MeshLoader);
                 yeild();
                 meshLoader.meshData = meshData;
@@ -366,7 +424,7 @@ class ModelImportService {
             yeild();
             var childNode = gdnode.getChild(childIdx); 
             yeild();
-            var child = createEntity(document, state, childNode);
+            var child = createEntity(document, state, childNode, textureDb);
             yeild();
             entity.addChild(child);
             yeild();
