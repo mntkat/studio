@@ -135,7 +135,7 @@ class ModelImportService {
             trace(imageFormat);
             var textureDb: Array<ImageTexture> = new Array();
             if (imageFormat != "None") {
-                for (i in 0...modelTextures.size() + 1) {
+                /*for (i in 0...modelTextures.size() + 1) {
                     var modelTexture = new ImageTexture(modelTextures.get(i));
                     if (modelTexture.native.isClass("ImageTexture")) {
                         var image = modelTexture.getImage();
@@ -153,8 +153,17 @@ class ModelImportService {
                         modelTexture.native.set("asset_path", texturePath);
                         yeild();
 
+                        var bytes = image.getData();
+                        if (bytes.size() == 0) {
+                            throw "Image data is empty, ARE YOU FUCKING KIDDING ME";
+                        }
+                        io.saveBytes(texturePath, bytes);
+/*
                         if (imageFormat == "PNG") {
                             var png = image.savePngToBuffer();
+                            if (png.size() == 0) {
+                                throw "-_-";
+                            }
                             io.saveBytes(texturePath, png);
                         }
                         else if (imageFormat == "JPEG") {
@@ -176,7 +185,7 @@ class ModelImportService {
                         textureDb.push(modelTexture);
                     }
                     yeild();
-                }
+                }*/
             }
             yeild();
 
@@ -189,7 +198,7 @@ class ModelImportService {
             var rootNodes = modelState.rootNodes;
             yeild();
 
-            var rootEntity: Entity = createEntity(modelDocument, modelState, gdscene, textureDb);
+            var rootEntity: Entity = createEntity(modelDocument, modelState, gdscene, destDir, io);
             yeild();
             
             yeild();
@@ -260,7 +269,7 @@ class ModelImportService {
         yeild();
     }
 
-    private static function createEntity(document: GLTFDocument, state: GLTFState, gdnode: Node, textureDb: Array<ImageTexture>): Entity {
+    private static function createEntity(document: GLTFDocument, state: GLTFState, gdnode: Node, modelDir: String, io: IoInterface): Entity {
         if (document == null) {
             throw 'ModelImporter: document could not be found';
             return null;
@@ -338,19 +347,15 @@ class ModelImportService {
                                 yeild();
                                 var ogTexture = Reference.castTo(txt2d, ImageTexture);
                                 yeild();
-                                var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
-                                yeild();
-                                for (dbTexture in textureDb) {
+                                if (ogTexture.getImage().getData().size() > 0) {
                                     yeild();
-                                    var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
+                                    var ogTextureBytes = ogTexture.getImage().saveWebpToBuffer(false);
                                     yeild();
-                                    if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
-                                        yeild();
-                                        surfaceMaterial.setTexture(param, dbTexture);
-                                        yeild();
-                                        break;
-                                    }
+                                    var textureName = entity.name + "_" + Std.string(param) + ".webp";
                                     yeild();
+                                    io.saveBytes(modelDir + textureName, ogTextureBytes);
+                                    yeild();
+                                    ogTexture.native.set("asset_path", modelDir + textureName);
                                 }
                                 yeild();
                             }
@@ -361,29 +366,6 @@ class ModelImportService {
                         
                         trace(param);
                         param++;
-                    }
-                    yeild();
-                    var txt2d = surfaceMaterial.albedoTexture;
-                    if (!txt2d.isNull()) {
-                        if (txt2d.isObjectValid()) {
-                            yeild();
-                            var ogTexture = Reference.castTo(txt2d, ImageTexture);
-                            yeild();
-                            var ogTextureBytes = ByteArrayUtils.binaryDataToBytes(ogTexture.getImage().getData());
-                            yeild();
-                            for (dbTexture in textureDb) {
-                                yeild();
-                                var dbTextureBytes = ByteArrayUtils.binaryDataToBytes(dbTexture.getImage().getData());
-                                yeild();
-                                if (Base64.encode(ogTextureBytes) == Base64.encode(dbTextureBytes)) {
-                                    yeild();
-                                    surfaceMaterial.albedoTexture = dbTexture;
-                                    yeild();
-                                    break;
-                                }
-                                yeild();
-                            }
-                        }
                     }
                     yeild();
                 }
@@ -440,7 +422,7 @@ class ModelImportService {
             yeild();
             var childNode = gdnode.getChild(childIdx); 
             yeild();
-            var child = createEntity(document, state, childNode, textureDb);
+            var child = createEntity(document, state, childNode, modelDir, io);
             yeild();
             entity.addChild(child);
             yeild();
