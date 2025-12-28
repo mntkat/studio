@@ -316,9 +316,9 @@ class ModelImportService {
                 yeild();
 
                 var meshLoader = entity.addComponent(MeshLoader);
-            yeild();
-            meshLoader.meshData = meshData;
-            yeild();
+                yeild();
+                meshLoader.meshData = meshData;
+                yeild();
             }
         }
         yeild();
