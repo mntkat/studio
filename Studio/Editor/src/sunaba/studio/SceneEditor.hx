@@ -157,6 +157,7 @@ class SceneEditor extends EditorWidget {
         prefabFile.load(path);
 
         scene = new SceneRoot();
+        scene.io = getEditor().projectIo;
         scene.processMode = CanvasItemProcessMode.disabled;
         prefab = prefabFile.instance();
         scene.addEntity(prefab);
