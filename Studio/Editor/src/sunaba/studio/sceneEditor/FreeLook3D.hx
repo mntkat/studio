@@ -36,6 +36,8 @@ class FreeLook3D extends Behavior {
         defaultVelocity = 5.0;
         boostSpeedMultiplier = 3.0;
         speedScale = 1.17;
+        minSpeed = 0.2;
+        maxSpeed = 1000.0;
     }
 
     public override function onStart() {
