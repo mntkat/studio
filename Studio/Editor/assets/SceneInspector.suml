@@ -17,7 +17,7 @@
                         <sunaba.ui.Control
                             customMinimumSize="5, 5"/>
                         <sunaba.ui.Label
-                            text="Inspector"
+                            text="Scene Inspector"
                             sizeFlagsHorizontal="3"
                             verticalAlignment="1"/>
                         <sunaba.ui.Button
