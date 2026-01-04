@@ -1396,16 +1396,44 @@ class Editor extends Widget {
         return workspaceChildern[centerTabContainer.currentTab];
     }
 
+    public function setCurrentWorkspaceChild(child: EditorWidget) {
+        if (workspaceChildern.contains(child)) {
+            var index = workspaceChildern.indexOf(child);
+            centerTabContainer.currentTab = index;
+        }
+    }
+
     public function getCurrentLeftSidebarChild() {
         return leftSidebarChildren[leftTabContainer.currentTab];
+    }
+
+    public function setCurrentLeftSidebarChild(child: EditorWidget) {
+        if (leftSidebarChildren.contains(child)) {
+            var index = leftSidebarChildren.indexOf(child);
+            leftTabContainer.currentTab = index;
+        }
     }
 
     public function getCurrentRightSidebarChild() {
         return rightSidebarChildren[rightTabContainer.currentTab];
     }
 
+    public function setCurrentRightSidebarChild(child: EditorWidget) {
+        if (rightSidebarChildren.contains(child)) {
+            var index = rightSidebarChildren.indexOf(child);
+            rightTabContainer.currentTab = index;
+        }
+    }
+
     public function getCurrentDockChild() {
         return dockChildren[bottomCenterTabContainer.currentTab];
+    }
+
+    public function setCurrentDockChlid(child: EditorWidget) {
+        if (dockChildren.contains(child)) {
+            var index = dockChildren.indexOf(child);
+            bottomCenterTabContainer.currentTab = index;
+        }
     }
 
     var isSaveKeyPressed: Bool = false;
