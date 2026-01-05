@@ -259,6 +259,7 @@ class SceneEditor extends EditorWidget {
             var sceneInspector = getEditor().sceneInspector;
             if (sceneInspector.sceneEditor != this) {
                 sceneInspector.openSceneEditor(this);
+                getEditor().setCurrentRightSidebarChild(sceneInspector);
             }
         }
 
