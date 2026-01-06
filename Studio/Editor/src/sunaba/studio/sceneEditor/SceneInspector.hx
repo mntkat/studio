@@ -797,6 +797,7 @@ class SceneInspector extends EditorWidget {
                     intSpinBox.allowGreater = true;
                     intSpinBox.allowLesser = true;
                     intSpinBox.step = 1;
+                    intSpinBox.value = cast value.toInt();
                     intSpinBox.customMinimumSize = new Vector2(150.0, 20.0);
                     intSpinBox.valueChanged.connect(Callable.fromFunction(function(newValue: Float) {
                         var dataToEdit = component.getData();
@@ -1320,6 +1321,16 @@ class SceneInspector extends EditorWidget {
                             vec4Vbox.addChild(wHBox);
 
                             propertyContainer.addChild(vec4Vbox);
+                        }
+                        else if (dict.get("type").toInt() == VariantType.object) {
+                            var resButton = new Button();
+                            resButton.text = "Edit";
+                            resButton.customMinimumSize = new Vector2(150.0, 20.0);
+                            resButton.pressed.add(() -> {
+                                getEditor().resourceInspector.openResource(dict, false, key, selectedEntity);
+                            });
+
+                            propertyContainer.addChild(resButton);
                         }
                     }
                 }

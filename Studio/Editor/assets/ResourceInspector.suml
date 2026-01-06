@@ -3,7 +3,7 @@
     <head></head>
     <body>
         <sunaba.ui.VBoxContainer
-            name="entityInspector"
+            name="vbox"
             fullRect="true">
             <sunaba.ui.Control
                 name="toolbar"
