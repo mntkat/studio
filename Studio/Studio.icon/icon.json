@@ -6,6 +6,9 @@
         {
           "blend-mode-specializations" : [
             {
+              "value" : "soft-light"
+            },
+            {
               "appearance" : "dark",
               "value" : "plus-lighter"
             }
@@ -21,10 +24,25 @@
         },
         {
           "image-name" : "2 – Layer.svg",
-          "name" : "2 – Layer"
+          "name" : "2 – Layer",
+          "opacity-specializations" : [
+            {
+              "value" : 0.5
+            },
+            {
+              "appearance" : "tinted",
+              "value" : 0.5
+            }
+          ]
         },
         {
-          "hidden" : true,
+          "fill-specializations" : [
+            {
+              "appearance" : "tinted",
+              "value" : "automatic"
+            }
+          ],
+          "hidden" : false,
           "image-name" : "1 – Layer.svg",
           "name" : "1 – Layer"
         }
