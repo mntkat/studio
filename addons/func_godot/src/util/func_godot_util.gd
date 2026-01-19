@@ -107,6 +107,14 @@ static func load_texture(texture_name: String, wad_resources: Array[QuakeWadFile
 				return texture_file
 			else:
 				printerr("Error: Texture load failed! (%s) not a valid Texture2D resource", texture_path)
+		elif FileAccess.file_exists(texture_path):
+			var texture = Image.new()
+			var load_err = texture.load(texture_path)
+			if (load_err != Error.OK):
+				printerr("Error: Texture load failed! Error Code: (%s)", load_err)
+			else:
+				var texture_file = ImageTexture.create_from_image(texture)
+				return texture_file
 	
 	var texture_name_lower: String = texture_name.to_lower()
 	for wad in wad_resources:
