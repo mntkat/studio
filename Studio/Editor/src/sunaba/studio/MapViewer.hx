@@ -66,6 +66,7 @@ class MapViewer extends EditorWidget {
             Coroutine.yield();
             viewport.addChild(scene);
             Coroutine.yield();
+            setMbcNull();
         });
         Coroutine.resume(mapBuildCoroutine);
     }
@@ -104,6 +105,10 @@ class MapViewer extends EditorWidget {
         smallGridTransform = smallGridEntity.addComponent(SpatialTransform);
         editorScene.addEntity(smallGridEntity);
         smallGridTransform.scale = new Vector3(10, 1, 10);
+    }
+
+    public function setMbcNull() {
+        mapBuildCoroutine = null;
     }
 
     public override function onProcess(delta:Float) {
