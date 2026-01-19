@@ -46,6 +46,7 @@ import sunaba.core.ArrayList;
 import sunaba.studio.fileHandlers.SmdlFileHander;
 import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
+import sunaba.studio.fileHandlers.MapFileHandler;
 import sunaba.io.IoManager;
 import sunaba.studio.sceneEditor.SceneInspector;
 import lua.Table;
@@ -658,6 +659,7 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.fileHandlers.push(new SmdlFileHandler(explorer));
             explorer.fileHandlers.push(new SmdlBinaryFileHandler(explorer));
+            explorer.fileHandlers.push(new MapFileHandler(explorer));
             explorer.newFileWidget.addAssetFileTemplate("Empty Scene", ".vscn", explorer.loadIcon("studio://icons/16_2x/clapperboard.png"), (path: String) -> {
                 var sceneRoot = new SceneRoot();
                 var sceneFile = SceneFile.create(sceneRoot);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<suml fullscreen="true">
+    <head></head>
+    <body>
+        <sunaba.ui.VBoxContainer
+            name="vbox"
+            fullRect="true">
+            <sunaba.ui.SubViewportContainer
+                name="container"
+                stretch="true"
+                sizeFlagsVertical="3">
+                <sunaba.SubViewport name="viewport" ownWorld_3d="true" size="352, 240"/>
+            </sunaba.ui.SubViewportContainer>
+        </sunaba.ui.VBoxContainer>
+    </body>
+</suml>
