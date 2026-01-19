@@ -116,3 +116,4 @@ gamepak.zip
 /.flatpak-builder
 /repo
 msgpack-haxe.zip
+.vscode/settings.json
