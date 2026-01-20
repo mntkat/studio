@@ -169,9 +169,8 @@ jobs:
           path: |
             ${{ github.workspace }}/bin/*.exe
             ${{ github.workspace }}/bin/*.zip
-            ${{ github.workspace }}/bin/*.deb
+            ${{ github.workspace }}/bin/*.d   eb
             ${{ github.workspace }}/bin/*.dmg
-
       #- name: Upload macOS artifact
       #  if: matrix.config.os == 'macos-latest'
       #  uses: actions/upload-artifact@v4
@@ -196,21 +195,27 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: ${{ github.event.repository.name }}
-      - name: Display structure of downloaded files
-        run: ls -R
-      #- uses: CyberAndrii/steam-totp@v1
-      #  name: Generate TOTP
-      #  id: steam-totp
-      #  with:
-      #    shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
-      #- uses: game-ci/steam-deploy@v3
-      #  with:
-      #    username: ${{ secrets.STEAM_USERNAME }}
-      #    password: ${{ secrets.STEAM_PASSWORD }}
-      #    totp: ${{ steps.steam-totp.outputs.code }}
-      #    appId: 2684270
-      #    buildDescription: v1.2.3
-      #    rootPath: build
-      #    depot1Path: StandaloneWindows64
-      #    depot2Path: StandaloneLinux64
-      #    releaseBranch: prerelease
+      - name: Create Build Directory
+        run: mkdir ${{ github.workspace }}/build
+      - name: Unzip Linux Build
+        run: |
+          unzip ${{ github.workspace }}/linux-x86_64-release.zip -d ${{ github.workspace }}/linux-x86_64-release 
+      - name: Unzip Windows Build
+        run: |
+          unzip ${{ github.workspace }}/windows-x86_64-release.zip -d ${{ github.workspace }}/windows-x86_64-release 
+      - uses: CyberAndrii/steam-totp@v1
+        name: Generate TOTP
+        id: steam-totp
+        with:
+          shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
+      - uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          totp: ${{ steps.steam-totp.outputs.code }}
+          appId: 2684270
+          buildDescription: v0.7.7
+          rootPath: ${{ github.workspace }}
+          depot2Path: windows-x86_64-release 
+          depot4Path: linux-x86_64-release 
+          releaseBranch: default
