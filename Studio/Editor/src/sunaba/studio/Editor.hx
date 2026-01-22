@@ -150,6 +150,9 @@ class Editor extends Widget {
 
     public var plugins: Array<Plugin> = new Array();
 
+    private var leftSidebarVisible: Bool = true;
+    private var rightSidebarVisible: Bool = true;
+
     public override function init() {
         load("studio://Editor.suml");
 
@@ -214,6 +217,42 @@ class Editor extends Widget {
         /*if (OSService.getName() != "macOS") {
             windowTitle.hide();
         }*/
+
+        var leftSidebarToggle: Button = getNodeT(Button, "vbox/statusbar/hbox/left/leftSidebarToggle");
+        var leftSidebarToggled: Bool = true;
+        leftSidebarToggle.pressed.add(() -> {
+            leftSidebarToggled = !leftSidebarToggled;
+            leftTabBar.visible = leftSidebarToggled;
+            if (leftSidebarToggled == true) {
+                leftTabContainer.visible = leftSidebarVisible;
+            }
+            else {
+                leftTabContainer.hide();
+            }
+        });
+
+        var rightSidebarToggle: Button = getNodeT(Button, "vbox/statusbar/hbox/left/rightSidebarToggle");
+        var rightSidebarToggled: Bool = true;
+        rightSidebarToggle.pressed.add(() -> {
+            rightSidebarToggled = !rightSidebarToggled;
+            rightTabBar.visible = rightSidebarToggled;
+            if (rightSidebarToggled == true) {
+                rightTabContainer.visible = rightSidebarVisible;
+            }
+            else {
+                rightTabContainer.hide();
+            }
+        });
+
+        var dockToggle: Button = getNodeT(Button, "vbox/statusbar/hbox/left/dockToggle");
+        dockToggle.pressed.add(() -> {
+            bottomCenterTabContainer.visible = !bottomCenterTabContainer.visible; 
+        });
+
+        var workspacesToggle: Button = getNodeT(Button, "vbox/statusbar/hbox/left/workspacesToggle");
+        workspacesToggle.pressed.add(() -> {
+            centerTabContainer.visible = !centerTabContainer.visible;
+        });
 
         playBuildWindow = getNodeT(Window, "playBuildWindow");
         playBuildWindow.hide();
@@ -1232,10 +1271,12 @@ class Editor extends Widget {
                 if (leftTabContainer.currentTab != i || leftTabContainer.visible == false) {
                     leftTabContainer.currentTab = i;
                     leftTabContainer.show();
+                    leftSidebarVisible = true;
                     checkLeftSideBar();
                 }
                 else if (leftTabContainer.currentTab == i) {
                     leftTabContainer.hide();
+                    leftSidebarVisible = false;
                 }
 
             }));
@@ -1288,10 +1329,12 @@ class Editor extends Widget {
                 if (rightTabContainer.currentTab != i || rightTabContainer.visible == false) {
                     rightTabContainer.currentTab = i;
                     rightTabContainer.show();
+                    rightSidebarVisible = true;
                     checkRightSidebar();
                 }
-                else if (leftTabContainer.currentTab == i) {
+                else if (rightTabContainer.currentTab == i) {
                     rightTabContainer.hide();
+                    rightSidebarVisible = false;
                 }
             }));
             tabButton.toggleMode = true;

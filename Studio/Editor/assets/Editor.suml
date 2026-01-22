@@ -208,6 +208,35 @@
                             customMinimumSize="40,40"/>
                 </sunaba.ui.VBoxContainer>
             </sunaba.ui.HBoxContainer>
+            <sunaba.ui.Control
+                name="statusbar"
+                customMinimumSize="0, 27">
+                <sunaba.ui.HBoxContainer
+                    name="hbox"
+                    fullRect="true"
+                    separation="0"
+                    customMinimumSize="0, 27">
+                    <sunaba.ui.HBoxContainer
+                        name="left"
+                        fullRect="true"
+                        separation="0"
+                        customMinimumSize="0, 27">
+                        <sunaba.ui.Button name="leftSidebarToggle" icon="studio://icons/16/application-dock-180.png" flat="true" customMinimumSize="27, 27"/>
+                        <sunaba.ui.Button name="rightSidebarToggle" icon="studio://icons/16/application-dock.png" flat="true" customMinimumSize="27, 27"/>
+                        <sunaba.ui.Button name="dockToggle" icon="studio://icons/16/application-dock-270.png" flat="true" customMinimumSize="27, 27"/>
+                        <sunaba.ui.Button name="workspacesToggle" icon="studio://icons/16/application-dock-tab.png" flat="true" customMinimumSize="27, 27"/>
+                    </sunaba.ui.HBoxContainer>
+                    <sunaba.ui.Control sizeFlagsHorizontal="3"/>
+                    <sunaba.ui.HBoxContainer
+                        name="right"
+                        fullRect="true"
+                        separation="0"
+                        customMinimumSize="0, 27">
+                        <sunaba.ui.Label name="versionLabel" text="v0.7.7" verticalAlignment="3" customMinimumSize="27,27"/>
+                        <sunaba.ui.Control customMinimumSize="10,10"/>
+                    </sunaba.ui.HBoxContainer>
+                </sunaba.ui.HBoxContainer>
+            </sunaba.ui.Control>
         </sunaba.ui.VBoxContainer>
         <sunaba.desktop.Window
                 name="pluginBuildWindow"
