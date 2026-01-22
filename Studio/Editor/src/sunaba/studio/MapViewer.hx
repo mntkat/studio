@@ -48,8 +48,6 @@ class MapViewer extends EditorWidget {
 
         var throbberPath = "studio://throbber-animated";
 
-        trace(io.directoryExists(throbberPath));
-        trace(io.fileExists(throbberPath + "/icon0.png"));
         var throbberTxtListN = io.getFileList(throbberPath, ".png", false);
         var throbberTxtList = throbberTxtListN.toArray();
         if (OSService.getName() == "macOS") {
@@ -63,7 +61,6 @@ class MapViewer extends EditorWidget {
                 }
             }
         }
-        trace(throbberTxtList.length);
         for (txtPath in throbberTxtList) {
             var txtBytes = io.loadBytes(txtPath);
             var image = new Image();
