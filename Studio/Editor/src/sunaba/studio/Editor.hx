@@ -120,6 +120,8 @@ class Editor extends Widget {
     private var resizeThreshold: Float = 10.0;
     private var resizeThresholdBottomRight: Float = 0.25;
 
+    private var toolFunctions: Array<()->Void> = new Array();
+
     private var _projectFile: ProjectFile = null;
     public var projectFile(get, default): ProjectFile;
     function get_projectFile():ProjectFile {
@@ -146,6 +148,7 @@ class Editor extends Widget {
     private var playerSubViewportContainer: SubViewportContainer = null;
     private var playerAppView: DesktopAppView = null;
 
+    private var toolsMenu: PopupMenu = null;
     private var debugMenu: PopupMenu = null;
 
     public var plugins: Array<Plugin> = new Array();
@@ -482,9 +485,12 @@ class Editor extends Widget {
             viewMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
 
             }));
-            var toolsMenu: PopupMenu = getNodeT(PopupMenu, "vbox/menuBarControl/hbox/menuBarContainer/menuBar/Tools");
+            toolsMenu = getNodeT(PopupMenu, "vbox/menuBarControl/hbox/menuBarContainer/menuBar/Tools");
             toolsMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
-
+                var func = toolFunctions[id];
+                if (func != null) {
+                    func();
+                }
             }));
             debugMenu = getNodeT(PopupMenu, "vbox/menuBarControl/hbox/menuBarContainer/menuBar/Debug");
             debugMenu.idPressed.connect(Callable.fromFunction(function(id: Int) {
@@ -1031,6 +1037,19 @@ class Editor extends Widget {
                 }
             }
         }
+    }
+
+    public function addToolFunction(func: ()->Void, title: String, icon: Texture2D) {
+        toolFunctions.push(func);
+        toolsMenu.addIconItem(icon, title, toolFunctions.indexOf(func));
+    }
+
+    public function removeToolFunctions(func: ()->Void) {
+        if (!toolFunctions.contains(func)) {
+            throw "Tool function has not been added";
+        }
+        toolsMenu.removeItem(toolFunctions.indexOf(func));
+        toolFunctions.remove(func);
     }
 
     var buildTask:Coroutine<() -> Void> = null;
