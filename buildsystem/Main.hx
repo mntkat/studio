@@ -512,7 +512,7 @@ class Main {
         Sys.println(ogControlPath + " -> " + controlPath);
         File.copy(ogControlPath, controlPath);
 
-        var licensePath = cwd + "LICENSE";
+        /*var licensePath = cwd + "LICENSE";
         if (!FileSystem.exists(ogControlPath)) {
             Sys.print("License file somehow doesn't exist.");
             Sys.exit(-1);
@@ -520,7 +520,7 @@ class Main {
 
         var debCopyrightPath = debMetadataPath + "copyright";
         Sys.println(licensePath + " -> " + debCopyrightPath);
-        File.copy(licensePath, debCopyrightPath);
+        File.copy(licensePath, debCopyrightPath);*/
 
         var result = Sys.command("dpkg-deb --build " + debPackagePath);
         
