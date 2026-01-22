@@ -297,6 +297,7 @@ class Explorer extends EditorWidget {
         var dirTreeCoroutine = Coroutine.create(function() {
             var entries = FileSystem.readDirectory(dirPath);
             for (entry in entries) {
+                if (StringTools.startsWith(entry, ".")) continue;
                 if (FileSystem.isDirectory(dirPath + entry)) {
                     var dirItem = singleColumnTree.createItem(parentItem);
                     dirItem.setText(0, entry);
