@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import haxe.Json;
 import sunaba.input.InputService;
 import sunaba.input.InputEvent;
 import sunaba.ui.Button;
@@ -104,7 +105,17 @@ class MapViewer extends EditorWidget {
             scene.destroy();
         }
 
+        var texturepathsFilepath = getEditor().projectIo.pathUrl + ".texturepaths.json";
+        var texturepaths: Array<String> = [];
+        if (io.fileExists(texturepathsFilepath)) {
+            var texturepathsJson = io.loadText(texturepathsFilepath);
+            texturepaths = Json.parse(texturepathsJson);
+        }
+
         var mapFile = new MapFile(filePath);
+        for (texturepath in texturepaths) {
+            mapFile.textureDirs.push(texturepath);
+        }
         scene = mapFile.instantiate();
         scene.isInEditor = true;
         scene.processMode = CanvasItemProcessMode.disabled;
