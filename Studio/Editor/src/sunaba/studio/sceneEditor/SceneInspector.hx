@@ -1,5 +1,11 @@
 package sunaba.studio.sceneEditor;
 
+import sunaba.audio.AudioStreamMP3;
+import sunaba.audio.AudioStreamWAV;
+import sunaba.audio.AudioStreamOggVorbis;
+import sunaba.core.AABB;
+import sunaba.audio.AudioStream;
+import sunaba.io.IoManager;
 import sunaba.spatial.mesh.BoxMesh;
 import sunaba.spatial.mesh.CapsuleMesh;
 import sunaba.spatial.mesh.CylinderMesh;
@@ -1325,25 +1331,124 @@ class SceneInspector extends EditorWidget {
                             propertyContainer.addChild(vec4Vbox);
                         }
                         else if (dict.get("type").toInt() == VariantType.object) {
+                            var resDict: Dictionary = dict.get("value");
+                            var classType: String = resDict.get("class");
+                            trace(classType);
+                            if (classType == "Texture2D" || classType == "ImageTexture" || classType == "AudioStream" || classType == "AudioStreamOggVorbis" || classType == "AudioStreamWAV" || classType == "AudioStreamMP3") {
+                                var resHbox = new HBoxContainer();
+                                var respath: String = resDict.get("path");
+                            
+                                var resLineEdit = new LineEdit();
+                                resLineEdit.sizeFlagsHorizontal = 3;
+                                resLineEdit.text = respath;
+                                resLineEdit.customMinimumSize = new Vector2(0.0, 20.0);
+                                var setPathFunction = (newPath: String) -> {
+                                    var dataToEdit = component.getData();
+                                    var vDict: Dictionary = dataToEdit.get(key);
+                                    var resToEdit: Dictionary = vDict.get("value");
+                                    resToEdit.set("path", newPath);
+                                    if (resToEdit.has("properties")) {
+                                        resToEdit.erase("properties");
+                                    }
+                                    if (StringTools.endsWith(newPath, ".ogg")) {
+                                        resToEdit.set("class", "AudioStreamOggVorbis");
+                                    }
+                                    else if (StringTools.endsWith(newPath, ".wav")) {
+                                        resToEdit.set("class", "AudioStreamWAV");
+                                    }
+                                    else if (StringTools.endsWith(newPath, ".mp3")) {
+                                        resToEdit.set("class", "AudioStreamMP3");
+                                    }
+                                    vDict.set("value", resToEdit);
+                                    dataToEdit.set(key, vDict);
+                                    component.setData(dataToEdit);
+                                    resLineEdit.text = newPath;
+                                    respath = newPath;
+                                    sceneEditor.checkScene();
+                                };
+                                resLineEdit.textSubmitted.add(setPathFunction);
+
+                                var resFileButton = new Button();
+                                if (classType == "Texture2D" 
+                                ||  classType == "ImageTexture") {
+                                    resFileButton.icon = getEditor().loadIcon("studio://icons/16/folder-open-image.png");
+                                }
+                                else if (classType == "AudioStream" 
+                                     ||  classType == "AudioStreamOggVorbis" 
+                                     ||  classType == "AudioStreamWAV" 
+                                     ||  classType == "AudioStreamMP3") {
+                                    resFileButton.icon = getEditor().loadIcon("studio://icons/16/folder-open-document-music.png");
+                                }
+                                else {
+                                    resFileButton.icon = getEditor().loadIcon("studio://icons/16/folder-open-document.png");
+                                }
+                                resFileButton.customMinimumSize = new Vector2(20.0, 20.0);
+                                resFileButton.pressed.add(() -> { 
+                                    var dialog = new FileDialog();
+                                    dialog.fileMode = FileDialogMode.openFile;
+                                    dialog.rootSubfolder = getEditor().explorer.assetsDirectory;
+                                    dialog.currentDir = getEditor().explorer.assetsDirectory;
+                                    if (respath != "?") {
+                                        dialog.currentFile = respath.split("/").pop();
+                                    }
+                                    dialog.access = 2;
+
+                                    if (classType == "Texture2D" || classType == "ImageTexture") {
+                                        dialog.title = "Open Texture";
+                                        dialog.addFilter("*.bmp, *.dds, *.jpg, *.jpeg, *.ktx, *.png, *.svg, *.tga, *.webp", "Texture");
+                                    }
+                                    else if (key == "stream" || classType == "AudioStream" || classType == "AudioStreamOggVorbis" || classType == "AudioStreamWAV" || classType == "AudioStreamMP3") {
+                                        dialog.title = "Open Audio File";
+                                        dialog.addFilter("*.ogg, *.mp3, *.wav", "Audio File");
+                                    }
+                                    addChild(dialog);
+                                    dialog.hide();
+
+                                    dialog.currentDir = getEditor().explorer.assetsDirectory;
+
+                                    var dialogScaleFactor = getWindow().contentScaleFactor;
+                                    dialog.contentScaleFactor = dialogScaleFactor;
+                                    var minSize = new Vector2i(580, 460);
+                                    minSize.x = Std.int(minSize.x * dialogScaleFactor);
+                                    minSize.y = Std.int(minSize.y * dialogScaleFactor);
+                                    dialog.minSize = minSize;
+
+                                    dialog.fileSelected.add((newPath: String) -> {
+                                        var realPath = getEditor().projectIo.getFileUrl(newPath);
+                                        setPathFunction(realPath);
+                                        dialog.queueFree();
+                                    });
+                                
+                                    dialog.popupFileDialog();
+                                });
+
+
+                                resHbox.addChild(resLineEdit);
+                                resHbox.addChild(resFileButton);
+                                resHbox.customMinimumSize = new Vector2(150.0, 20.0);
+                                propertyContainer.addChild(resHbox);
+                            }
+                            else {
+                                var resButton = new Button();
+                                resButton.text = "Edit";
+                                resButton.customMinimumSize = new Vector2(150.0, 20.0);
+                                resButton.pressed.add(() -> {
+                                    getEditor().resourceInspector.openResource(dict, false, key, selectedEntity);
+                                });
+
+                                propertyContainer.addChild(resButton);
+                            }
+                        }
+                    }
+                    else if (dict.has("path") && dict.has("classType")) {
                             var resButton = new Button();
                             resButton.text = "Edit";
                             resButton.customMinimumSize = new Vector2(150.0, 20.0);
                             resButton.pressed.add(() -> {
-                                getEditor().resourceInspector.openResource(dict, false, key, selectedEntity);
+                                getEditor().resourceInspector.openScriptableObject(dict, key, selectedEntity);
                             });
 
                             propertyContainer.addChild(resButton);
-                        }
-                    }
-                    else if (dict.has("path") && dict.has("classType")) {
-                        var resButton = new Button();
-                        resButton.text = "Edit";
-                        resButton.customMinimumSize = new Vector2(150.0, 20.0);
-                        resButton.pressed.add(() -> {
-                            getEditor().resourceInspector.openScriptableObject(dict, key, selectedEntity);
-                        });
-
-                        propertyContainer.addChild(resButton);
                     }
                 }
 
