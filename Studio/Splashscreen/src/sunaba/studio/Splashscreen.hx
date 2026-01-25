@@ -518,6 +518,7 @@ class Splashscreen extends Widget {
         window.mode = WindowMode.maximized;
 
         appView.loadLibrary(baseDir + "basetxt.slib");
+        appView.loadLibrary(baseDir + "basesfx.slib");
         appView.loadApp(baseDir + "editor.snb");
 		studioUtils.call("queue_free", new ArrayList());
         queueFree();

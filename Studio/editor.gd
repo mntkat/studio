@@ -17,4 +17,6 @@ func _init() -> void:
 	if not asm_dir.ends_with("/"):
 		asm_dir += "/"
 	var snb_path = asm_dir + "editor.snb"
+	load_library(asm_dir + "basetxt.slib")
+	load_library(asm_dir + "basesfx.slib")
 	load_app(snb_path)
