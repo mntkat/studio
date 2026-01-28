@@ -91,8 +91,9 @@ class Editor extends Widget {
     public var undoButton: Button;
     public var redoButton: Button;
     public var reloadButton: Button;
-    public var buildButton: Button;
+    public var publishButton: Button;
 
+    public var buildButton: Button;
     public var playButton:Button;
     public var pauseButton:Button;
     public var stopButton:Button;
@@ -193,12 +194,17 @@ class Editor extends Widget {
         reloadButton.pressed.connect(Callable.fromFunction(function() {
             buildPlugin();
         }));
-        buildButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/build");
+        publishButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/publish");
 
+        buildButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/build");
         playButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/play");
         pauseButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/pause");
         stopButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/stop");
 
+        buildButton.pressed.connect(Callable.fromFunction(function() {
+            if (isGameRunning == false)
+                buildProject();
+        }));
         playButton.pressed.connect(Callable.fromFunction(function() {
             if (isGameRunning == true && isGamePaused == true)
                 unpause();
@@ -417,7 +423,7 @@ class Editor extends Widget {
 
             centerTabContainer.getTabBar().tabClosePressed.connect(Callable.fromFunction(function(tab: Int) {
                 var widget = workspaceChildern[tab];
-                if (widget != null) {
+                if (widget != null) {play();
                     widget.destroy();
                     workspaceChildern.remove(widget);
                 }
@@ -1003,7 +1009,12 @@ class Editor extends Widget {
 
                 playBuildWindow.hide();
 
-                play();
+                if (playOnBuild == true)
+                    play();
+                else {
+                    playButton.disabled = false;
+                    buildButton.disabled = false;
+                }
             }
         }
         if (buildTask != null) {
@@ -1661,10 +1672,13 @@ class Editor extends Widget {
 
     var isGamePaused = false;
 
+    var playOnBuild:Bool = false;
+
     public function buildSnbForPlay() {
         if (isGameRunning) return;
 
         playButton.disabled = true;
+        buildButton.disabled = true;
         debugMenu.setItemDisabled(0, true);
         if (playBuildWindow != null) {
             var scaleFactor = window.contentScaleFactor;
@@ -1696,6 +1710,48 @@ class Editor extends Widget {
         };
 
         gamepakBuildCoroutine = buildSystem.buildCoroutine(projectFilePath);
+        playOnBuild = true;
+
+        Coroutine.resume(gamepakBuildCoroutine);
+    }
+
+    public function buildProject() {
+        if (isGameRunning) return;
+
+        playButton.disabled = true;
+        buildButton.disabled = true;
+        debugMenu.setItemDisabled(0, true);
+        if (playBuildWindow != null) {
+            var scaleFactor = window.contentScaleFactor;
+
+            var windowSize = playBuildWindow.size;
+            playBuildWindow.minSize = new Vector2i(Std.int(windowSize.x * scaleFactor), Std.int(windowSize.y * scaleFactor));
+            playBuildWindow.contentScaleFactor = scaleFactor;
+            playBuildWindow.popupCentered();
+        }
+
+        buildSystem.haxePath = haxePath;
+
+        buildSystem.chmodder = (shpath: String) -> {
+            OSService.execute("chmod", StringArray.fromArray(["+x", shpath]));
+        }
+
+        buildSystem.jsonToMsgpackConverter = (json: String) -> {
+            var data : Dictionary = JSON.parseString(json);
+            trace(data.keys().size());
+
+            var script = new NativeReference("res://Engine/MessagePack.gd", new ArrayList(), ScriptType.gdscript);
+			var args = new ArrayList();
+			args.append(data);
+			var res: Dictionary = script.call("encode", args);
+
+            var bytes : ByteArray = res.get("value"); 
+            var haxeBytes = ByteArrayUtils.binaryDataToBytes(bytes);
+            return haxeBytes;
+        };
+
+        gamepakBuildCoroutine = buildSystem.buildCoroutine(projectFilePath);
+        playOnBuild = false;
 
         Coroutine.resume(gamepakBuildCoroutine);
     }
@@ -1730,6 +1786,7 @@ class Editor extends Widget {
         playButton.disabled = false;
         pauseButton.disabled = true;
         stopButton.disabled = true;
+        buildButton.disabled = false;
         debugMenu.setItemDisabled(0, false);
         debugMenu.setItemDisabled(1, true);
         debugMenu.setItemDisabled(2, true);
