@@ -128,7 +128,7 @@
                             iconAlignment="1"
                             customMinimumSize="40,40"/>
                         <sunaba.ui.Button
-                            name="build"
+                            name="publish"
                             flat="true"
                             icon="studio://icons/16_1-5x/box--arrow.png"
                             iconAlignment="1"
