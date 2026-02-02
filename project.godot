@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+imgui/config="uid://dso7ig5mp13gv"
+
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -33,6 +37,7 @@ PlatformService="*res://Engine/PlatformService.cs"
 StudioUtils="*res://Studio/StudioUtils.cs"
 DotNetOutputRedirect="*res://Studio/DotNetOutputRedirect.cs"
 WaterShaderCache="*uid://ce8ytj1v7xfe7"
+ImGuiRoot="*uid://dugmpnsxaagba"
 
 [debug_draw_3d]
 
@@ -57,7 +62,7 @@ project/assembly_name="Sunaba.Studio"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/func_godot/plugin.cfg")
+enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/imgui-godot/plugin.cfg")
 
 [physics]
 
