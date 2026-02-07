@@ -430,7 +430,7 @@ class Editor extends Widget {
 
             centerTabContainer.getTabBar().tabClosePressed.connect(Callable.fromFunction(function(tab: Int) {
                 var widget = workspaceChildern[tab];
-                if (widget != null) {play();
+                if (widget != null) {
                     widget.destroy();
                     workspaceChildern.remove(widget);
                 }
