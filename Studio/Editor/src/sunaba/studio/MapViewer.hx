@@ -1,5 +1,8 @@
 package sunaba.studio;
 
+import sunaba.core.Color;
+import sunaba.core.Vector2i;
+import sunaba.studio.debugDraw.DebugDrawService3D;
 import haxe.Json;
 import sunaba.input.InputService;
 import sunaba.input.InputEvent;
@@ -198,6 +201,24 @@ class MapViewer extends EditorWidget {
         else {
             throbberParent.hide();
         }
+
+        var scopeConfig = DebugDrawService3D.newScopedConfig().setViewport(viewport).setThickness(0.015);
+
+        var tg = largeGridTransform.globalTransform;
+        var tn = largeGridTransform.transform.origin;
+        DebugDrawService3D.drawGrid(tg.origin, tg.basis.x, tg.basis.z, new Vector2i(250, 250), Color.rgba(0.5, 0.5, 0.5, 1), true);
+
+        scopeConfig = scopeConfig.setThickness(0.005);
+        DebugDrawService3D.drawGrid(tg.origin, tg.basis.x, tg.basis.z, new Vector2i(1000, 1000), Color.rgba(0.5, 0.5, 0.5, 1), true);
+
+        scopeConfig = scopeConfig.setThickness(0.030);
+        DebugDrawService3D.drawLine(new Vector3(1000, 0.025, 0), new Vector3(-1000, 0.025, 0), Color.rgba(1, 0, 0, 1));
+        DebugDrawService3D.drawLine(new Vector3(0, 0.025, 1000), new Vector3(0, 0.025, -1000), Color.rgba(0, 0, 1, 1));
+        DebugDrawService3D.drawLine(new Vector3(0, -1000, 0), new Vector3(0, 1000, 0), Color.rgba(0, 1, 0, 1));
+
+        scopeConfig = null;
+
+        Gc.collect();
     }
 
     var isReloadKeyPressed: Bool = false;
