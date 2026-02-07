@@ -1209,6 +1209,11 @@ class Editor extends Widget {
             _hxClasses[className] = _class;
         }
         if (sceneInspector != null) {
+            for (componentClass in sceneInspector.componentClasses) {
+                if (Type.getClassName(componentClass) == Type.getClassName(_class)) {
+                    sceneInspector.componentClasses.remove(componentClass);
+                }
+            }
             sceneInspector.componentClasses.push(_class);
         }
     }
