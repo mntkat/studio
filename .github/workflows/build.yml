@@ -35,13 +35,13 @@ jobs:
           - {
               name: "🐧 Linux",
               target: linux-x86_64,
-              os: ubuntu-latest,
+              os: ubuntu-latest-m,
               pkgformat: deb,
             }
           - {
               name: "🪟 Windows",
               target: windows-x86_64,
-              os: ubuntu-latest-m,
+              os: ubuntu-latest,
               pkgformat: nsis,
             }
           #- { name: '💪🪟 Windows Arm', target: windows-arm64, os: ubuntu-latest, pkgformat: nsis }
@@ -77,7 +77,7 @@ jobs:
         run: brew install haxe
 
       - name: Install Dependencies (Linux)
-        if: matrix.config.os == 'ubuntu-latest'
+        if: matrix.config.os == 'ubuntu-latest' or matrix.config.os == 'ubuntu-latest-m'
         run: |
           sudo apt-get update
           sudo apt-get install -y haxe nsis dpkg-dev flatpak flatpak-builder
