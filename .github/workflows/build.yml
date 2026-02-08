@@ -204,7 +204,7 @@ jobs:
       #    path: |
       #      ${{ github.workspace }}/bin/*.dmg
   merge:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest-m
     needs: build
     steps:
       - name: Merge Artifacts
@@ -213,7 +213,7 @@ jobs:
           name: ${{ github.event.repository.name }}
           pattern: ${{ github.event.repository.name }}-*
   deployToSteam:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-m
     needs: merge
     steps:
       - uses: actions/download-artifact@v5
