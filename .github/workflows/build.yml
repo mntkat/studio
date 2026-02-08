@@ -193,10 +193,22 @@ jobs:
           zip -r -0 ${{ github.workspace }}/bin/windows-x86_64-debug.zip *
 
       - name: Upload artifact
-        #if: matrix.config.os != 'macos-latest'
+        if: matrix.config.name != '🐧 Linux Flatpak'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}-${{ matrix.config.target }}-${{ matrix.build_type }}
+          path: |
+            ${{ github.workspace }}/bin/*.exe
+            ${{ github.workspace }}/bin/*.zip
+            ${{ github.workspace }}/bin/*.deb
+            ${{ github.workspace }}/bin/*.flatpak
+            ${{ github.workspace }}/bin/*.dmg
+        
+      - name: Upload artifact (Flatpak)
+        if: matrix.config.name == '🐧 Linux Flatpak'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ matrix.config.target }}-flatpak-${{ matrix.build_type }}
           path: |
             ${{ github.workspace }}/bin/*.exe
             ${{ github.workspace }}/bin/*.zip
