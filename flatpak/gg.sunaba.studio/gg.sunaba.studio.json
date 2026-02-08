@@ -1,5 +1,5 @@
 {
-  "app-id": "gg.sunaba.studio",
+  "id": "gg.sunaba.studio",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "25.08",
   "sdk": "org.freedesktop.Sdk",
