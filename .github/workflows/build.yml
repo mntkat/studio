@@ -21,7 +21,7 @@ concurrency:
 jobs:
   build:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         build_type: ["debug", "release"]
         config:
@@ -86,8 +86,8 @@ jobs:
         if: matrix.config.target == 'linux-x86_64'
         run: |
           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install flathub org.freedesktop.Platform
-          flatpak install flathub org.freedesktop.Sdk
+          flatpak install flathub org.freedesktop.Platform/x86_64/25.08
+          flatpak install flathub org.freedesktop.Sdk/x86_64/25.08
 
       - name: Setup Haxelib
         run: |
