@@ -154,7 +154,7 @@ jobs:
       - name: Build Project (Linux Flatpak)
         if: matrix.config.name == '🐧 Linux Flatpak'
         run: |
-          ${{ github.workspace }}/build.sh publish --${{ matrix.build_type }} --target=${{ matrix.config.target }} --pkgformat=flatpak --single-file-bundle
+          ${{ github.workspace }}/build.sh publish --${{ matrix.build_type }} --target=${{ matrix.config.target }} --pkgformat=flatpak --single-file-bundle --godot-command=godot
 
       - name: Build Project (Zip) (Linux Release)
         if: matrix.config.name == '🐧 Linux' && matrix.build_type == 'release'
