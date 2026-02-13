@@ -1930,6 +1930,12 @@ class Editor extends Widget {
             if (Sys.systemName() == "Linux") {
                 nrProgramName += ".x86_64";
             }
+            if (Sys.systemName() == "macOS") {
+                nrProgramName += ".arm64";
+                if (!FileSystem.exists(nrProgramName)) {
+                    Debug.error("NetRadiant Custom is not supported on Intel Macs running macOS");
+                }
+            }
         }
         var radiantExecutablePath = toolchaindir + nrProgramName;
         processSpawner.spawn(radiantExecutablePath, StringArray.fromArray([mapPath]));
