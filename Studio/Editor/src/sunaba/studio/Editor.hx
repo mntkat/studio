@@ -61,6 +61,7 @@ import sunaba.ui.StyleBoxEmpty;
 import sunaba.SystemFont;
 import sunaba.HorizontalAlignment;
 import sunaba.core.native.ScriptType;
+import sunaba.internal.ProcessSpawner;
 
 class Editor extends Widget {
     var sProjPath = "";
@@ -92,6 +93,7 @@ class Editor extends Widget {
     public var redoButton: Button;
     public var reloadButton: Button;
     public var publishButton: Button;
+    public var netradiantButton: Button;
 
     public var buildButton: Button;
     public var playButton:Button;
@@ -199,6 +201,10 @@ class Editor extends Widget {
             buildPlugin();
         }));
         publishButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/publish");
+        netradiantButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/netradiant");
+        netradiantButton.pressed.add(() -> {
+            openNetRadiant();
+        });
 
         buildButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/build");
         playButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/play");
@@ -788,6 +794,12 @@ class Editor extends Widget {
                 }, 
                 "Edit Texture Path List", 
                 loadIcon("studio://icons/16/images-stack.png")
+            );
+            addToolFunction(() -> {
+                    openNetRadiant();
+                }, 
+                "NetRadiant Custom", 
+                loadIcon("studio://icons/16/netradiant.png")
             );
 
             var hiddenDir = explorer.projectDirectory + "/.studio";
@@ -1893,5 +1905,33 @@ class Editor extends Widget {
             return iconTexture;
         }
         return null;
+    }
+
+    public inline function openNetRadiant(mapPath: String = "") {
+        var processSpawner = new ProcessSpawner();
+        var toolchaindir = StudioUtils.singleton.getToolchainDirectory();
+        var nrProgramName = "radiant";
+        if (Sys.systemName() == "Windows") {
+            toolchaindir = StringTools.replace(toolchaindir, "\\/" , "\\");
+            toolchaindir = StringTools.replace(toolchaindir, "/\\" , "\\");
+            toolchaindir = StringTools.replace(toolchaindir, "/" , "\\");
+            if (!StringTools.endsWith(toolchaindir, "\\")) {
+                toolchaindir += "\\";
+            }
+            nrProgramName += ".exe";
+        }
+        else {
+            if (!StringTools.endsWith(toolchaindir, "/")) {
+                toolchaindir += "/";
+            }
+            if (StringTools.contains(toolchaindir, "//")) {
+                toolchaindir = StringTools.replace(toolchaindir, "//", "/");
+            }
+            if (Sys.systemName() == "Linux") {
+                nrProgramName += ".x86_64";
+            }
+        }
+        var radiantExecutablePath = toolchaindir + nrProgramName;
+        processSpawner.spawn(radiantExecutablePath, StringArray.fromArray([mapPath]));
     }
 }
