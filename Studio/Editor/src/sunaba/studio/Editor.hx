@@ -203,7 +203,7 @@ class Editor extends Widget {
         publishButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/publish");
         trenchbroomButton = getNodeT(Button, "vbox/toolbar/hbox/leftToolbar/trenchbroom");
         trenchbroomButton.pressed.add(() -> {
-            openTrenchbroom();
+            openNetRadiant();
         });
 
         buildButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/build");
