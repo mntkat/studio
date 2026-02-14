@@ -49,7 +49,7 @@ class MapViewer extends EditorWidget {
         });
         editButton = getNodeT(Button, "vbox/toolbar/hbox/edit");
         editButton.pressed.add(() -> {
-            getEditor().openNetRadiant(filePath);
+            getEditor().openNetRadiant(io.getFilePath(filePath));
         });
 
         throbberParent = getNodeT(Control, "vbox/toolbar/hbox/throbber");
