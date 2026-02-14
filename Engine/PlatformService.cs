@@ -1,4 +1,7 @@
 using Godot;
+using System;
+using System.Globalization;
+using System.Reflection;
 
 namespace Sunaba.Engine;
 
@@ -27,5 +30,45 @@ public partial class PlatformService: Node
 	public bool hasFeature(string feature)
 	{
 		return OS.HasFeature(feature);
+	}
+
+	public string GetVersion()
+	{
+		return Assembly.GetExecutingAssembly().GetName().Version?.ToString();
+	}
+	
+	public String GetCompDate()
+	{
+		String compDate = GetBuildDate(Assembly.GetExecutingAssembly()).ToString(CultureInfo.CurrentCulture);//Date.GetLinkerTimestampUtc(Assembly.GetExecutingAssembly()).ToString();
+
+		return compDate;
+	}
+
+	private static DateTime GetBuildDate(Assembly assembly)
+	{
+		const string buildVersionMetadataPrefix = "+build";
+
+		var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+		if (attribute?.InformationalVersion != null)
+		{
+			var value = attribute.InformationalVersion;
+			var index = value.IndexOf(buildVersionMetadataPrefix, StringComparison.Ordinal);
+			if (index > 0)
+			{
+				value = value.Substring(index + buildVersionMetadataPrefix.Length);
+				if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+				{
+					return result.ToUniversalTime();
+				}
+			}
+		}
+
+		return default;
+	}
+
+	public String GetEngineVersion()
+	{
+		var engineVersionInfo = Godot.Engine.GetVersionInfo();
+		return engineVersionInfo["string"].ToString();
 	}
 }
