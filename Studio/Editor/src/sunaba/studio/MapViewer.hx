@@ -36,6 +36,7 @@ class MapViewer extends EditorWidget {
     var throbberRect: TextureRect;
 
     var reloadButton: Button;
+    var editButton: Button;
 
     public override function editorInit() {
         load("studio://MapViewer.suml");
@@ -45,6 +46,10 @@ class MapViewer extends EditorWidget {
         reloadButton = getNodeT(Button, "vbox/toolbar/hbox/reload");
         reloadButton.pressed.add(() -> {
             buildMap();
+        });
+        editButton = getNodeT(Button, "vbox/toolbar/hbox/edit");
+        editButton.pressed.add(() -> {
+            getEditor().openTrenchbroom(filePath);
         });
 
         throbberParent = getNodeT(Control, "vbox/toolbar/hbox/throbber");
