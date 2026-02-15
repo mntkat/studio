@@ -4,7 +4,7 @@ RequestExecutionLevel user
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Sunaba Studio"
-!define PRODUCT_VERSION "0.7.11"
+!define PRODUCT_VERSION "0.7.12"
 !define PRODUCT_PUBLISHER "sunaba.gg"
 !define PRODUCT_WEB_SITE "https://www.sunaba.gg"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Sunaba.Studio.exe"
@@ -62,6 +62,7 @@ ${If} ${RunningX64}
   CreateShortCut "$DESKTOP\Sunaba Studio.lnk" "$INSTDIR\Sunaba.Studio.exe"
   File "bin\windows-x86_64-release\sunaba.windows.template_release.x86_64.dll"
   File "bin\windows-x86_64-release\libdd3d.windows.template_release.x86_64.enabled.dll"
+  File "bin\windows-x86_64-release\libnativedialogs.windows.template_release.x86_64.dll"
   File "bin\windows-x86_64-release\libgodotsteam.windows.template_release.x86_64.dll"
   File "bin\windows-x86_64-release\steam_api64.dll"
   File "bin\windows-x86_64-release\libimgui-godot-native.windows.release.x86_64.dll"
@@ -115,6 +116,7 @@ Section Uninstall
   Delete "$INSTDIR\uninst.exe"
   RMDir /r "$INSTDIR\data_Sunaba.Studio_windows_x86_64"
   Delete "$INSTDIR\libdd3d.windows.template_release.x86_64.enabled.dll"
+  Delete "$INSTDIR\libnativedialogs.windows.template_release.x86_64.dll"
   Delete "$INSTDIR\sunaba.windows.template_release.x86_64.dll"
   Delete "$INSTDIR\libgodotsteam.windows.template_release.x86_64.dll"
   Delete "$INSTDIR\steam_api64.dll"
