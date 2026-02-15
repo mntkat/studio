@@ -1980,6 +1980,12 @@ class Editor extends Widget {
             }
         }
         var radiantExecutablePath = toolchaindir + nrProgramName;
+        if (StringTools.contains(radiantExecutablePath, " ")) {
+            radiantExecutablePath = "\"" + radiantExecutablePath + "\"";
+        }
+        if (StringTools.contains(mapPath, " ")) {
+            mapPath = "\"" + mapPath + "\"";
+        }
         processSpawner.spawn(radiantExecutablePath, StringArray.fromArray([mapPath]));
     }
 }
