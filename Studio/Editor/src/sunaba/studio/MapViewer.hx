@@ -41,6 +41,10 @@ class MapViewer extends EditorWidget {
     public override function editorInit() {
         load("studio://MapViewer.suml");
 
+        if (!io.directoryExists("user://models/")) {
+            io.createDirectory("user://models/");
+        }
+
         if (!io.fileExists("user://models/info_player_start.glb")) {
             var file = io.loadBytes("studio://models/info_player_start.glb");
             io.saveBytes("user://models/info_player_start.glb", file);

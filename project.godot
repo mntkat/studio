@@ -64,6 +64,10 @@ project/assembly_name="Sunaba.Studio"
 
 enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/imgui-godot/plugin.cfg")
 
+[func_godot]
+
+default_inverse_scale_factor=16.0
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
