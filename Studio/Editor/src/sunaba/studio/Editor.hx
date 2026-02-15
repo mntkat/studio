@@ -796,12 +796,6 @@ class Editor extends Widget {
                 loadIcon("studio://icons/16/images-stack.png")
             );
             addToolFunction(() -> {
-                    openTrenchbroom();
-                }, 
-                "TrenchBroom", 
-                loadIcon("studio://icons/16/trenchbroom.png")
-            );
-            addToolFunction(() -> {
                     openNetRadiant();
                 }, 
                 "NetRadiant Custom", 
