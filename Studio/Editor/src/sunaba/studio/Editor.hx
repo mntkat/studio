@@ -1209,6 +1209,28 @@ class Editor extends Widget {
         Coroutine.resume(buildTask);
     }
 
+    public inline function loadPluginDir(dir: String) {
+        if (!FileSystem.isDirectory(dir)) {
+            Debug.error("Invalid Directory");
+            return;
+        }
+
+        if (StringTools.contains(dir, "\\")) {
+            dir = StringTools.replace(dir, "\\", "/");
+        }
+        if (!StringTools.endsWith(dir, "/")) {
+            dir += "/";
+        }
+
+        var files = FileSystem.readDirectory(dir);
+        for (file in files) {
+            var pluginPath = dir + file;
+            if (StringTools.endsWith(dir, ".slib")) {
+                loadPluginLibrary(pluginPath);
+            }
+        }
+    }
+
     public inline function loadPluginLibrary(pluginPath: String) {
         try {
             var rootUrl = App.loadlib(pluginPath);
@@ -1217,7 +1239,7 @@ class Editor extends Widget {
             loadPlugin(header.luabin);
         }
         catch(e) {
-            Debug.error("Failed to load plugin - " + pluginPath, "Plugin loading error");
+            Debug.error("Failed to load plugin - " + pluginPath + " : " + e.message + " - " + e.stack, "Plugin loading error");
         }
     }
 
