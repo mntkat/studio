@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import haxe.Json;
+import haxe.macro.Expr.Catch;
 import sunaba.desktop.AcceptDialog;
 import sunaba.core.AABB;
 import sunaba.studio.fileHandlers.SmdlBinaryFileHandler;
@@ -1207,6 +1209,18 @@ class Editor extends Widget {
         });
 
         Coroutine.resume(buildTask);
+    }
+
+    public inline function loadPluginLibrary(pluginPath: String) {
+        try {
+            var rootUrl = App.loadlib(pluginPath);
+            var headerStr = io.loadText(rootUrl + "header.json");
+            var header: HeaderFile = Json.parse(headerStr);
+            loadPlugin(header.luabin);
+        }
+        catch(e) {
+            Debug.error("Failed to load plugin - " + pluginPath, "Plugin loading error");
+        }
     }
 
     inline function loadProjectPlugin() {
