@@ -964,6 +964,22 @@ class Editor extends Widget {
 
             haxePath = wrapper;
         }
+
+        var baseDirectory = StudioUtils.singleton.getBaseDirectory();
+        if (!StringTools.endsWith(baseDirectory, "/")) {
+            baseDirectory += "/";
+        }
+        if (StringTools.contains(baseDirectory, "//")) {
+            baseDirectory = StringTools.replace(baseDirectory, "//", "/");
+        }
+        if (StringTools.contains(baseDirectory, "\\")) {
+            baseDirectory = StringTools.replace(baseDirectory, "\\", "/");
+        }
+
+        var pluginDir = baseDirectory + "plugins/";
+        if (FileSystem.exists(pluginDir)) {
+            loadPluginDir(pluginDir);
+        }
     }
 
     private var localPluginIo: FileSystemIo;
