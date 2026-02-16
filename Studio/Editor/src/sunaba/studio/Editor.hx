@@ -976,9 +976,19 @@ class Editor extends Widget {
             baseDirectory = StringTools.replace(baseDirectory, "\\", "/");
         }
 
-        var pluginDir = baseDirectory + "plugins/";
-        if (FileSystem.exists(pluginDir)) {
-            loadPluginDir(pluginDir);
+        var basePluginDir = baseDirectory + "plugins/";
+        if (FileSystem.exists(basePluginDir)) {
+            loadPluginDir(basePluginDir);
+        }
+
+        var sprojPathArr = sProjPath.split("/");
+        sprojPathArr.slice(0, sprojPathArr.length - 1);
+        var dirPath = sprojPathArr.join("/");
+        dirPath += "/";
+
+        var projectPluginDir = dirPath + "plugins/";
+        if (FileSystem.exists(projectPluginDir)) {
+            loadPluginDir(projectPluginDir);
         }
     }
 
