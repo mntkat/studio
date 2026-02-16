@@ -721,6 +721,10 @@ class Editor extends Widget {
 
             _projectFile = haxe.Json.parse(projJson);
 
+            if (_projectFile.type != "executable") {
+                playButton.disabled = true;
+            }
+
             var sprojPathArr = sProjPath.split("/");
             sprojPathArr.slice(0, sprojPathArr.length - 1);
             var dirPath = sprojPathArr.join("/");
@@ -1088,6 +1092,9 @@ class Editor extends Widget {
                 else {
                     playButton.disabled = false;
                     buildButton.disabled = false;
+                    if (_projectFile.type != "executable") {
+                        playButton.disabled = true;
+                    }
                 }
             }
         }
