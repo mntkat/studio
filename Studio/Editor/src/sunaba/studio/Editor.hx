@@ -842,9 +842,23 @@ class Editor extends Widget {
                             fileDialog2.queueFree();
                             fileDialog.queueFree();
                         }));
+                        fileDialog2.canceled.add(() -> {
+                            fileDialog2.queueFree();
+                            fileDialog.queueFree();
+                        });
+                        fileDialog2.closeRequested.add(() -> {
+                            fileDialog2.queueFree();
+                            fileDialog.queueFree();
+                        });
 
                         fileDialog2.popupCentered();
                     }));
+                    fileDialog.canceled.add(() -> {
+                        fileDialog.queueFree();
+                    });
+                    fileDialog.closeRequested.add(() -> {
+                        fileDialog.queueFree();
+                    });
 
                     fileDialog.popupCentered();
                 },
