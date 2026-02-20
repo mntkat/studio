@@ -338,6 +338,8 @@ class ModelImportService {
                 }
                 yeild();
 
+                var textureIdx = 0;
+
                 for (i in 0...meshData.surfaceMaterials.size()) {
                     yeild();
                     var surfaceMaterial = new BaseMaterial3D(meshData.surfaceMaterials.get(i));
@@ -355,7 +357,9 @@ class ModelImportService {
                                     yeild();
                                     var ogTextureBytes = ogTexture.getImage().saveWebpToBuffer(false);
                                     yeild();
-                                    var textureName = entity.name + "_" + Std.string(param) + ".webp";
+                                    var textureName = entity.name + "_" + Std.string(textureIdx) + ".webp";
+                                    yeild();
+                                    textureIdx++;
                                     yeild();
                                     io.saveBytes(modelDir + textureName, ogTextureBytes);
                                     yeild();
