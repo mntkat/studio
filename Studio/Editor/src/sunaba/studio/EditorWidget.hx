@@ -42,4 +42,12 @@ class EditorWidget extends Widget {
     public function onSave() {
 
     }
+
+    public function onUndo() {
+        
+    }
+
+    public function onRedo() {
+        
+    }
 }

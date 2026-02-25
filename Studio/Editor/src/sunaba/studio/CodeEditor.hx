@@ -111,4 +111,12 @@ class CodeEditor extends EditorWidget {
         }
     }
     */
+
+    public override function onUndo() {
+        codeEdit.undo();
+    }
+
+    public override function onRedo() {
+        codeEdit.redo();
+    }
 }

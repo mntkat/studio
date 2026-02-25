@@ -1838,11 +1838,11 @@ class Editor extends Widget {
 
 
     public function undo() {
-        Debug.error("'Undo' not implemented");
+        getCurrentWorkspaceChild().onUndo();
     }
 
     public function redo() {
-        Debug.error("'Redo' not implemented");
+        getCurrentWorkspaceChild().onRedo();
     }
 
     public function save() {
