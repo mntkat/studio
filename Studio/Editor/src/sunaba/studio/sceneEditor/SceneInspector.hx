@@ -618,6 +618,19 @@ class SceneInspector extends EditorWidget {
             refreshSceneTree();        
             refreshInspector();
         }
+        else {
+            nothingSelected = false;
+            if (sceneEditor != null) {
+                sceneEditor.gizmo.clear();
+            }
+            sceneEditor = _sceneEditor;
+            scene = sceneEditor.scene;
+            prefab = sceneEditor.prefab;
+            mode = sceneEditor.fileType;
+            refreshSceneTree();        
+            selectedEntity = entityIndex[selectedEntityIndex];
+            refreshInspector();
+        }
     }
 
     var sceneItem: TreeItem;
@@ -693,17 +706,21 @@ class SceneInspector extends EditorWidget {
             entityText.text = nothingEntityText;
         }
         else if (sceneEditor != null) {
+            trace(entityIndex.toString());
             if (selectedEntityIndex != -1) {
                 var selectedEntity = entityIndex[selectedEntityIndex];
-                entityText.text = selectedEntity.name;
-                if (selectedEntity.isPrefab()) {
-                    entityIcon.texture = prefabIcon24;
-                    buildComponentTree(selectedEntity);
-                }
-                else {
-                    entityIcon.texture = entityIcon24;
-                    buildComponentTree(selectedEntity);
-                    entityPrefabButton.show();
+                trace(selectedEntity == null);
+                if (selectedEntity != null) {
+                    entityText.text = selectedEntity.name;
+                    if (selectedEntity.isPrefab()) {
+                        entityIcon.texture = prefabIcon24;
+                        buildComponentTree(selectedEntity);
+                    }
+                    else {
+                        entityIcon.texture = entityIcon24;
+                        buildComponentTree(selectedEntity);
+                        entityPrefabButton.show();
+                    }
                 }
             }
             else if (mode == FileType.SceneType) {
