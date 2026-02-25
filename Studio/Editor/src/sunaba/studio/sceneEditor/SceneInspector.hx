@@ -629,6 +629,7 @@ class SceneInspector extends EditorWidget {
             mode = sceneEditor.fileType;
             refreshSceneTree();        
             selectedEntity = entityIndex[selectedEntityIndex];
+            trace(selectedEntity == null);
             refreshInspector();
         }
     }
@@ -706,7 +707,6 @@ class SceneInspector extends EditorWidget {
             entityText.text = nothingEntityText;
         }
         else if (sceneEditor != null) {
-            trace(entityIndex.toString());
             if (selectedEntityIndex != -1) {
                 var selectedEntity = entityIndex[selectedEntityIndex];
                 trace(selectedEntity == null);
