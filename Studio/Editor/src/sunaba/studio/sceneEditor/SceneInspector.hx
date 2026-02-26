@@ -1,5 +1,6 @@
 package sunaba.studio.sceneEditor;
 
+import sunaba.spatial.CharacterRig;
 import sunaba.spatial.CharacterBoneMapper;
 import sunaba.spatial.BoneAttachment;
 import sunaba.spatial.Skeleton;
@@ -131,6 +132,7 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(Skeleton);
         componentClasses.push(BoneAttachment);
         componentClasses.push(CharacterBoneMapper);
+        componentClasses.push(CharacterRig);
 
         var iconBin = io.loadBytes("studio://icons/16_1-5x/clapperboard--pencil.png");
         var iconImage = new Image();
