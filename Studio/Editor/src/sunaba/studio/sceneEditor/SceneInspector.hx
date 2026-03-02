@@ -1,5 +1,6 @@
 package sunaba.studio.sceneEditor;
 
+import sunaba.spatial.RemoteTransform;
 import sunaba.spatial.CharacterRig;
 import sunaba.spatial.CharacterBoneMapper;
 import sunaba.spatial.BoneAttachment;
@@ -104,12 +105,12 @@ class SceneInspector extends EditorWidget {
 
     public var addComponentDialog: AcceptDialog;
     public var addComponentDialogTree: Tree;
-	var RemoteTransform(default, null):Class<Behavior>;
 
     public override function editorInit() {
         getEditor().setRightSidebarTabTitle(this, "Scene Inspector");
 
         componentClasses.push(SpatialTransform);
+        componentClasses.push(RemoteTransform);
         componentClasses.push(Camera);
         componentClasses.push(MeshDisplay);
         componentClasses.push(BoxMesh);
@@ -134,8 +135,7 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(BoneAttachment);
         componentClasses.push(CharacterBoneMapper);
         componentClasses.push(CharacterRig);
-        componentClasses.push(RemoteTransform);
-
+        
         var iconBin = io.loadBytes("studio://icons/16_1-5x/clapperboard--pencil.png");
         var iconImage = new Image();
         iconImage.loadPngFromBuffer(iconBin);
