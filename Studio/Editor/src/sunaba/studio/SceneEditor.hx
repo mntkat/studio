@@ -432,8 +432,8 @@ class SceneEditor extends EditorWidget {
     }
 
     public override function onDestroy() {
-        undoRedo.free();
-        valueHolder.free();
+        //undoRedo.free();
+        //valueHolder.free();
         var sceneInspector = getEditor().sceneInspector;
         if (sceneInspector.sceneEditor == this) {
             sceneInspector.openSceneEditor(null);
