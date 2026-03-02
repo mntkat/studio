@@ -104,6 +104,7 @@ class SceneInspector extends EditorWidget {
 
     public var addComponentDialog: AcceptDialog;
     public var addComponentDialogTree: Tree;
+	var RemoteTransform(default, null):Class<Behavior>;
 
     public override function editorInit() {
         getEditor().setRightSidebarTabTitle(this, "Scene Inspector");
@@ -133,6 +134,7 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(BoneAttachment);
         componentClasses.push(CharacterBoneMapper);
         componentClasses.push(CharacterRig);
+        componentClasses.push(RemoteTransform);
 
         var iconBin = io.loadBytes("studio://icons/16_1-5x/clapperboard--pencil.png");
         var iconImage = new Image();
