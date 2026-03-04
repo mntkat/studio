@@ -31,6 +31,7 @@ import sunaba.spatial.physics.BoxShape;
 import sunaba.spatial.physics.CapsuleShape;
 import sunaba.spatial.physics.CylinderShape;
 import sunaba.spatial.physics.SphereShape;
+import sunaba.spatial.CharacterLoader;
 import sunaba.audio.AudioSource;
 import sunaba.ui.VSplitContainer;
 import sunaba.SizeFlags;
@@ -133,8 +134,9 @@ class SceneInspector extends EditorWidget {
         componentClasses.push(AudioSource);
         componentClasses.push(Skeleton);
         componentClasses.push(BoneAttachment);
-        componentClasses.push(CharacterBoneMapper);
-        componentClasses.push(CharacterRig);
+        //componentClasses.push(CharacterBoneMapper);
+        //componentClasses.push(CharacterRig);
+        componentClasses.push(CharacterLoader);
         
         var iconBin = io.loadBytes("studio://icons/16_1-5x/clapperboard--pencil.png");
         var iconImage = new Image();
