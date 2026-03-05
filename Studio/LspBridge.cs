@@ -45,7 +45,7 @@ public partial class LspBridge : Node
         Editor.TextChanged += OnTextChanged;
     }
 
-    private void StartServer(string exePath, string arguments = "")
+    public void StartServer(string exePath, string arguments = "")
     {
         var psi = new ProcessStartInfo
         {
