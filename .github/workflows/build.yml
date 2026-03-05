@@ -41,7 +41,7 @@ jobs:
           - {
               name: "🪟 Windows",
               target: windows-x86_64,
-              os: ubuntu-latest,
+              os: ubuntu-latest-m,
               pkgformat: nsis,
             }
           #- { name: '💪🪟 Windows Arm', target: windows-arm64, os: ubuntu-latest, pkgformat: nsis }
