@@ -38,6 +38,7 @@ StudioUtils="*res://Studio/StudioUtils.cs"
 DotNetOutputRedirect="*res://Studio/DotNetOutputRedirect.cs"
 WaterShaderCache="*uid://ce8ytj1v7xfe7"
 ImGuiRoot="*uid://dugmpnsxaagba"
+SledgeModule="*uid://c2t4207vx3q42"
 
 [debug_draw_3d]
 

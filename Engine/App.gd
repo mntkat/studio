@@ -15,6 +15,8 @@ func init(sandboxed: bool = false, classnames: PackedStringArray = []) -> void:
 			var unixSysIo = UnixSystemIo.new()
 			io_manager.Register(unixSysIo)
 	
+	SledgeModule.Bind(dotnet_interop)
+	
 	bind_object("__ioManager", io_manager)
 	set_var("__can_debug", false)
 	bind_object("__dotnetInterop", dotnet_interop)
