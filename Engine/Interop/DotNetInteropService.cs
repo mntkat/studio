@@ -7,7 +7,7 @@ namespace Sunaba.Engine.Interop;
 
 public partial class DotNetInteropService : Node
 {
-    private List<Type> _types = new List<Type>();
+    private readonly List<Type> _types = new List<Type>();
 
     public void AddType(Type type)
     {
