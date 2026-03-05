@@ -39,7 +39,7 @@ public partial class StudioUtils : Node
 			}
 			else
 			{
-				toolchainDirectory += "-universal";
+				toolchainDirectory += "-x86_64";
 			}
 		}
 		else
