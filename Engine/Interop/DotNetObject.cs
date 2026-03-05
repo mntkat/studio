@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Sunaba.Engine.Interop;
 
+[GlobalClass]
 public partial class DotNetObject: RefCounted
 {
     protected readonly object Obj;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Godot;
+using Array = Godot.Collections.Array;
 
 namespace Sunaba.Engine.Interop;
 
@@ -36,11 +37,12 @@ public partial class DotNetInteropService : Node
         {
             if (className == type.FullName)
             {
-                return new DotNetObject(Activator.CreateInstance(type, argList.ToArray()));
+                var instance = Activator.CreateInstance(type, argList.ToArray());
+                return new DotNetObject(instance);
             }
         }
 
-        return null;
+        return new DotNetObject(null);
     }
 
     public Variant CallStatic(string className, string methodName, Array args)
