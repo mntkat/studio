@@ -10,6 +10,93 @@
                 sizeFlagsVertical="3">
                 <sunaba.ui.Control
                     name="Body">
+                    <sunaba.ui.HBoxContainer
+                        name="hbox"
+                        fullRect="true"
+                        offsetBottom="-5"
+                        offsetTop="5"
+                        offsetLeft="5"
+                        offsetRight="-5"
+                        separation="5">
+                        <sunaba.ui.VBoxContainer
+                            name="vbox">
+                            <sunaba.ui.VBoxContainer
+                                name="name"
+                                customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                    text="Character Name"/>
+                                <sunaba.ui.LineEdit
+                                    name="lineEdit"/>
+                            </sunaba.ui.VBoxContainer>
+                            <sunaba.ui.VBoxContainer
+                                    name="desc"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Character Description"/>
+                                <sunaba.ui.LineEdit
+                                        name="lineEdit"/>
+                            </sunaba.ui.VBoxContainer>
+                            <sunaba.ui.VBoxContainer
+                                    name="bodyType"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Character Body Type"/>
+                                <sunaba.ui.OptionButton
+                                        name="optionButton"/>
+                            </sunaba.ui.VBoxContainer>
+                        </sunaba.ui.VBoxContainer>
+                        <sunaba.ui.VBoxContainer
+                                name="vbox2">
+                            <sunaba.ui.VBoxContainer
+                                    name="arm"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Arm Muscle"/>
+                                <sunaba.ui.SpinBox
+                                        name="spinbox"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                                <sunaba.ui.HSlider
+                                        name="hslider"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                            </sunaba.ui.VBoxContainer>
+                            <sunaba.ui.VBoxContainer
+                                    name="chest"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Chest"/>
+                                <sunaba.ui.SpinBox
+                                        name="spinbox"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                                <sunaba.ui.HSlider
+                                        name="hslider"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                            </sunaba.ui.VBoxContainer>
+                            <sunaba.ui.VBoxContainer
+                                    name="legs"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Thighs"/>
+                                <sunaba.ui.SpinBox
+                                        name="spinbox"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                                <sunaba.ui.HSlider
+                                        name="hslider"
+                                        step="0.01"
+                                        maxValue="1.0"
+                                        minValue="0.0"/>
+                            </sunaba.ui.VBoxContainer>
+                        </sunaba.ui.VBoxContainer>
+                    </sunaba.ui.HBoxContainer>
                 </sunaba.ui.Control>
                 <sunaba.ui.Control
                     name="Face">
