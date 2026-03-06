@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.ui.ItemList;
+
 class CharacterEditor extends EditorWidget {
     public override function editorInit() {
         load("studio://CharacterEditor.suml");
