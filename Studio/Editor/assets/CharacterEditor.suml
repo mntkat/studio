@@ -20,20 +20,20 @@
                 <sunaba.ui.Control
                     name="Headwear">
                     <sunaba.ui.ItemList
-                            name="itemList"
-                            fullRect="true"/>
+                        name="itemList"
+                        fullRect="true"/>
                 </sunaba.ui.Control>
                 <sunaba.ui.Control
                     name="Clothes">
                     <sunaba.ui.ItemList
-                            name="itemList"
-                            fullRect="true"/>
+                        name="itemList"
+                        fullRect="true"/>
                 </sunaba.ui.Control>
                 <sunaba.ui.Control
                     name="Dress">
                     <sunaba.ui.ItemList
-                            name="itemList"
-                            fullRect="true"/>
+                        name="itemList"
+                        fullRect="true"/>
                 </sunaba.ui.Control>
             </sunaba.ui.TabContainer>
             <sunaba.ui.HBoxContainer
