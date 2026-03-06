@@ -2,24 +2,36 @@
 <suml fullscreen="true">
     <head></head>
     <body>
-        <sunaba.ui.TabContainer
-            name="tabs"
+        <sunaba.ui.VBoxContainer
+            name="vbox"
             fullRect="true">
-            <sunaba.ui.Control
-                name="Body">
-            </sunaba.ui.Control>
-            <sunaba.ui.Control
-                name="Face">
-            </sunaba.ui.Control>
-            <sunaba.ui.Control
-                name="Headwear">
-            </sunaba.ui.Control>
-            <sunaba.ui.Control
-                name="Clothes">
-            </sunaba.ui.Control>
-            <sunaba.ui.Control
-                name="Dress">
-            </sunaba.ui.Control>
-        </sunaba.ui.TabContainer>
+            <sunaba.ui.TabContainer
+                name="tabs"
+                sizeFlagsVertical="3">
+                <sunaba.ui.Control
+                    name="Body">
+                </sunaba.ui.Control>
+                <sunaba.ui.Control
+                    name="Face">
+                </sunaba.ui.Control>
+                <sunaba.ui.Control
+                    name="Headwear">
+                </sunaba.ui.Control>
+                <sunaba.ui.Control
+                    name="Clothes">
+                </sunaba.ui.Control>
+                <sunaba.ui.Control
+                    name="Dress">
+                </sunaba.ui.Control>
+            </sunaba.ui.TabContainer>
+            <sunaba.ui.HBoxContainer
+                name="hbox">
+                <sunaba.ui.Control
+                    sizeFlagsHorizontal="3"/>
+                <sunaba.ui.Button
+                    name="apply"
+                    text=" Apply "/>
+            </sunaba.ui.HBoxContainer>
+        </sunaba.ui.VBoxContainer>
     </body>
 </suml>
