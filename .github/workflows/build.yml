@@ -227,6 +227,9 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: ${{ github.event.repository.name }}-linux-x86_64-release 
+      - uses: actions/download-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-mac-universal-release 
       - name: Create Build Directory
         run: |
           mkdir build
