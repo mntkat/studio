@@ -38,7 +38,16 @@
     <Content Include="sunaba-studio-api.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="toolchain/**">
+    <Content Condition=" '$(GodotTargetPlatform)' == 'windows' " Include="toolchain/windows-x86_64/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Condition=" '$(GodotTargetPlatform)' == 'linuxbsd' " Include="toolchain/linux-x86_64/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Condition=" '$(GodotTargetPlatform)' == 'macos' Or '$(GodotTargetPlatform)' == 'mac' Or '$(GodotTargetPlatform)' == 'osx' " Include="toolchain/mac-x86_64/**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Condition=" '$(GodotTargetPlatform)' == 'macos' Or '$(GodotTargetPlatform)' == 'mac' Or '$(GodotTargetPlatform)' == 'osx' " Include="toolchain/mac-arm64/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Remove="bin\**\*.cs" />
