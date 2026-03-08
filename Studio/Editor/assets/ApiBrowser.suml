@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<suml fullscreen="true" name="editor">
+    <head></head>
+    <body>
+        <sunaba.ui.Panel fullRect="true"/>
+        <sunaba.ui.VBoxContainer
+                name="vbox"
+                fullRect="true"
+                offsetBottom="-5"
+                offsetTop="5"
+                offsetLeft="5"
+                offsetRight="-5"
+                separation="5">
+            <sunaba.ui.Control
+                    name="menuBarControl"
+                    customMinimumSize="0, 27">
+                <sunaba.ui.Label
+                        name="windowTitle"
+                        fullRect="true"
+                        text="Api Reference - Sunaba Studio"
+                        verticalAlignment="1"
+                        horizontalAlignment="1"/>
+                <sunaba.ui.HBoxContainer
+                        name="hbox"
+                        fullRect="true"
+                        separation="0"
+                        customMinimumSize="0, 27">
+                    <sunaba.ui.CenterContainer
+                            name="iconContainer"
+                            customMinimumSize="30,27">
+                        <sunaba.ui.TextureRect
+                                name="icon"
+                                customMinimumSize="24,24"
+                                texture="studio://icons/24/studio.png"/>
+                    </sunaba.ui.CenterContainer>
+                    <sunaba.ui.CenterContainer
+                            name="menuBarContainer"
+                            customMinimumSize="30,27">
+                    </sunaba.ui.CenterContainer>
+
+                    <sunaba.ui.Control name="spacer" sizeFlagsHorizontal="3"/>
+                    <sunaba.ui.Button
+                            name="minimizeButton"
+                            customMinimumSize="27,27"/>
+                    <sunaba.ui.Button
+                            name="maximizeButton"
+                            text="🗖"
+                            customMinimumSize="27,27"/>
+                    <sunaba.ui.Button
+                            name="closeButton"
+                            text="🗙"
+                            customMinimumSize="27,27"/>                        >
+                </sunaba.ui.HBoxContainer>
+            </sunaba.ui.Control>
+        </sunaba.ui.VBoxContainer>
+    </body>
+</suml>

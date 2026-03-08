@@ -77,6 +77,7 @@
                             <sunaba.desktop.PopupMenu
                                 name="Help">
                                 <menuItem label="Sunaba Docs" icon="studio://icons/16/book.png"/>
+                                <menuItem label="Api Reference" icon="studio://icons/16/document-code.png"/>
                                 <menuItem label="About" icon="studio://icons/16/information-italic.png"/>
                             </sunaba.desktop.PopupMenu>
                         </sunaba.ui.MenuBar>

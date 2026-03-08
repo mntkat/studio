@@ -570,6 +570,14 @@ class Editor extends Widget {
                 if (id == 0) {
                     OSService.shellOpen("https://docs.sunaba.gg");
                 }
+                else if (id == 1) {
+                    var window = new Window();
+                    window.size = new Vector2i(800, 600);
+                    var apiBrowser = new ApiBrowser(this);
+                    window.addChild(apiBrowser);
+                    addChild(window);
+                    window.popupCentered();
+                }
                 else if (id == (helpMenu.itemCount - 1)) {
                     showAboutDialog();
                 }
