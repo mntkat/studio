@@ -52,6 +52,16 @@
                             customMinimumSize="27,27"/>                        >
                 </sunaba.ui.HBoxContainer>
             </sunaba.ui.Control>
+            <sunaba.ui.HSplitContainer
+                    name="hsplit"
+                    sizeFlagsVertical="3"
+                    splitOffset="200">
+                <sunaba.ui.Tree
+                    name="tree"/>
+                <sunaba.ui.TabContainer
+                        sizeFlagsHorizontal="3"
+                        name="workspace"/>
+            </sunaba.ui.HSplitContainer>
         </sunaba.ui.VBoxContainer>
     </body>
 </suml>
