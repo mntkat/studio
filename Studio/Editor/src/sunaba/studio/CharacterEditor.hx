@@ -6,6 +6,7 @@ import sunaba.ui.OptionButton;
 import sunaba.ui.HSlider;
 import sunaba.ui.HBoxContainer;
 import sunaba.ui.Control;
+import sunaba.ui.ColorPickerButton;
 
 class CharacterEditor extends EditorWidget {
     public var characterViewer: CharacterViewer = null;

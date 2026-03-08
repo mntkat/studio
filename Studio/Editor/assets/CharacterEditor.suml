@@ -44,6 +44,20 @@
                                 <sunaba.ui.OptionButton
                                         name="optionButton"/>
                             </sunaba.ui.VBoxContainer>
+                            <sunaba.ui.VBoxContainer
+                                    name="skinColor"
+                                    customMinimumSize="200,0">
+                                <sunaba.ui.Label
+                                        text="Character Skin Color"/>
+                                <!--sunaba.ui.HBoxContainer
+                                    name="hbox"-->
+                                <sunaba.ui.ColorPickerButton
+                                        name="colorButton"
+                                        customMinimumSize="0.0,26.0"/>
+                                    <!--sunaba.ui.Button
+                                            name="palletButton"/>
+                                </sunaba.ui.HBoxContainer-->
+                            </sunaba.ui.VBoxContainer>
                         </sunaba.ui.VBoxContainer>
                         <sunaba.ui.VBoxContainer
                                 name="vbox2">
