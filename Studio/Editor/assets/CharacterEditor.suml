@@ -81,7 +81,7 @@
                                     name="chest"
                                     customMinimumSize="200,0">
                                 <sunaba.ui.Label
-                                        text="Cup Size"/>
+                                        text="Chest"/>
                                 <sunaba.ui.SpinBox
                                         name="spinbox"
                                         step="0.01"
