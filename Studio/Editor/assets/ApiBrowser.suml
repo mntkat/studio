@@ -17,7 +17,7 @@
                 <sunaba.ui.Label
                         name="windowTitle"
                         fullRect="true"
-                        text="Api Reference - Sunaba Studio"
+                        text="API Reference - Sunaba Studio"
                         verticalAlignment="1"
                         horizontalAlignment="1"/>
                 <sunaba.ui.HBoxContainer

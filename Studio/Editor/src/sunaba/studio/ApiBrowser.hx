@@ -61,7 +61,7 @@ class ApiBrowser extends Widget {
         menuBarHbox = getNodeT(HBoxContainer, "vbox/menuBarControl/hbox");
 
         window = getWindow();
-        window.title = "Api Reference - Sunaba Studio";
+        window.title = "API Reference - Sunaba Studio";
         var displayScale = DisplayService.screenGetScale(window.currentScreen);
         if (OSService.getName() == "Windows") {
             var dpi = DisplayService.screenGetDpi(window.currentScreen);
