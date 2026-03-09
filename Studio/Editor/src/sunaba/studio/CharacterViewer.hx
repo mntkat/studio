@@ -92,5 +92,11 @@ class CharacterViewer extends EditorWidget {
         if (visible) {
             characterEditor.refresh();
         }
+        getEditor().setWorkspaceTabTitle(this, filePath.split("/").pop() + "*");
+    }
+
+    public override function onSave() {
+        data.save(filePath);
+        getEditor().setWorkspaceTabTitle(this, filePath.split("/").pop());
     }
 }
