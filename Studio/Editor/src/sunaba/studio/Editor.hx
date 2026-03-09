@@ -2170,13 +2170,26 @@ class Editor extends Widget {
                 toolchaindir = StringTools.replace(toolchaindir, "//", "/");
             }
             if (Sys.systemName() == "Linux") {
-                nrProgramName = "trenchbroom";
+                nrProgramName = "squashfs-root/usr/bin/trenchbroom";
+                /*var trenchbroomPath = "~/.TrenchBroom/";
+                if (!FileSystem.exists(trenchbroomPath)) {
+                    FileSystem.createDirectory(trenchbroomPath);
+                }
+                var gamesPath = trenchbroomPath + "games";
+                if (!FileSystem.exists(gamesPath)) {
+                    Sys.command("ln", ["-s", gamesPath, toolchaindir + "games"]);
+                }
+                else {
+                    Sys.command("ln", ["-sf", gamesPath, toolchaindir + "games"]);
+                }*/
             }
             if (Sys.systemName() == "macOS") {
                 nrProgramName = nrProgramName + ".app/Contents/MacOS/" + nrProgramName;
             }
         }
         var radiantExecutablePath = toolchaindir + nrProgramName;
+        trace(radiantExecutablePath);
+        trace(FileSystem.exists(radiantExecutablePath));
         if (Sys.systemName() != "Windows") {
             Sys.command("chmod", ["+x", radiantExecutablePath]);
             Sys.command("chmod", ["+X", radiantExecutablePath]);
