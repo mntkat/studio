@@ -87,5 +87,10 @@ class CharacterViewer extends EditorWidget {
 
     public function apply() {
         characterLoader.data = data;
+        data = characterLoader.data;
+        var characterEditor = getEditor().characterEditor;
+        if (visible) {
+            characterEditor.refresh();
+        }
     }
 }

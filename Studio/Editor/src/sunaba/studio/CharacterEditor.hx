@@ -128,7 +128,7 @@ class CharacterEditor extends EditorWidget {
         femaleChestSpinBox.maxValue = 1.0;
         femaleChestSpinBox.step = 0.01;
         femaleChestSpinBox.valueChanged.add((value: Float) -> {
-            data.maleArmThickness = value;
+            data.femaleChestSize = value;
             femaleChestHSlider.value = value;
         });
         femaleChestHSlider = getNodeT(HSlider, "vbox/tabs/Body/hbox/vbox2/chest/hslider");
@@ -136,7 +136,7 @@ class CharacterEditor extends EditorWidget {
         femaleChestHSlider.maxValue = 1.0;
         femaleChestHSlider.step = 0.01;
         femaleChestHSlider.valueChanged.add((value: Float) -> {
-            data.maleArmThickness = value;
+            data.femaleChestSize = value;
             femaleChestSpinBox.value = value;
         });
         legSpinBox = getNodeT(SpinBox, "vbox/tabs/Body/hbox/vbox2/legs/spinbox");
@@ -144,7 +144,7 @@ class CharacterEditor extends EditorWidget {
         legSpinBox.maxValue = 1.0;
         legSpinBox.step = 0.01;
         legSpinBox.valueChanged.add((value: Float) -> {
-            data.maleArmThickness = value;
+            data.legThickness = value;
             legHSlider.value = value;
         });
         legHSlider = getNodeT(HSlider, "vbox/tabs/Body/hbox/vbox2/legs/hslider");
@@ -152,7 +152,7 @@ class CharacterEditor extends EditorWidget {
         legHSlider.maxValue = 1.0;
         legHSlider.step = 0.01;
         legHSlider.valueChanged.add((value: Float) -> {
-            data.maleArmThickness = value;
+            data.legThickness = value;
             legSpinBox.value = value;
         });
 
@@ -184,6 +184,12 @@ class CharacterEditor extends EditorWidget {
             return;
         }
 
+        refresh();
+
+        vbox.show();
+    }
+
+    public function refresh() {
         nameLineEdit.text = data.name;
         descLineEdit.text = data.desc;
         bodyTypeOptionButton.selected = data.bodyType;
@@ -206,7 +212,5 @@ class CharacterEditor extends EditorWidget {
             femaleChestVBox.visible = true;
             tabs.setTabDisabled(4, false);
         }
-
-        vbox.show();
     }
 }
