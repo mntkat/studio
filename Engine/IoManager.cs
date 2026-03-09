@@ -152,6 +152,21 @@ namespace Sunaba.Engine
             return 1;
         }
 
+        public override Array<string> GetFileListAll(string extension, bool recursive = true)
+        {
+            Array<string> fileList = new Array<string>();
+            foreach (var pathUrlStr in GetPathUrls())
+            {
+                var subFileList = GetFileList(pathUrlStr, extension, recursive);
+                foreach (var file in subFileList)
+                {
+                    fileList.Add(file);
+                }
+            }
+
+            return fileList;
+        }
+
         public override Array<string> GetFileList(string path, string extension = "", bool recursive = true)
         {
 	        Array<string> fileList = new Array<string>();
