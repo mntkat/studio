@@ -18,6 +18,8 @@ import sunaba.spatial.mesh.CylinderMesh;
 import sunaba.spatial.mesh.SphereMesh;
 import sunaba.spatial.mesh.PlaneMesh;
 import sunaba.spatial.mesh.QuadMesh;
+import sunaba.spatial.mesh.MaleMesh;
+import sunaba.spatial.mesh.FemaleMesh;
 import sunaba.spatial.mesh.MeshDisplay;
 import sunaba.spatial.Camera;
 import sunaba.spatial.lighting.OmniLight;
