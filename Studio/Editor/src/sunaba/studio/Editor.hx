@@ -824,10 +824,10 @@ class Editor extends Widget {
             );
             
             addToolFunction(() -> {
-                    openNetRadiant();
+                    openTrenchbroom();
                 }, 
-                "NetRadiant Custom", 
-                loadIcon("studio://icons/16/netradiant.png")
+                "TrenchBroom", 
+                loadIcon("studio://icons/16/trenchbroom.png")
             );
 
             addToolFunction(() -> {
