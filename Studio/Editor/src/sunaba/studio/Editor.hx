@@ -783,7 +783,7 @@ class Editor extends Widget {
                 sceneFile.save(path);
                 sceneRoot.queueFree();
             });
-            explorer.newFileWidget.addAssetFileTemplate("Sinple Map", ".vscn", explorer.loadIcon("studio://icons/16_2x/clapperboard.png"), (path: String) -> {
+            explorer.newFileWidget.addAssetFileTemplate("Sinple Map", ".map", explorer.loadIcon("studio://icons/16_2x/clapperboard.png"), (path: String) -> {
                 var mapContents = io.loadBytes("studio://scenes/Template.map");
                 io.saveBytes(path, mapContents);
             });

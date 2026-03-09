@@ -125,6 +125,15 @@ class NewFileWidget extends Widget {
             }
             _explorer.refresh();
         });
+
+        itemList.itemSelected.add((index: Int) -> {
+            if (pathType == PathType.assetFile) {
+                assetSelect(index);
+            }
+            else if (pathType == PathType.scriptFile) {
+                scriptSelect(index);
+            }
+        });
     }
 
     public function addAssetFileTemplate(name:String, fileExtension:String, icon: Texture2D, createFile: String->Void) {
