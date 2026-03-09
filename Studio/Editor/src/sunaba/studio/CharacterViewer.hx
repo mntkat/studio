@@ -5,6 +5,7 @@ import sunaba.spatial.SpringArm;
 import sunaba.spatial.CharacterLoader;
 import sunaba.spatial.MapFile;
 import sunaba.spatial.Camera;
+import sunaba.spatial.CharacterData;
 
 class CharacterViewer extends EditorWidget {
     private var filePath: String;
@@ -16,6 +17,8 @@ class CharacterViewer extends EditorWidget {
     public var panLook: Entity = null;
 
     public var characterLoader: CharacterLoader;
+
+    public var data: CharacterData;
 
     var camera: Camera = null;
 
@@ -68,6 +71,8 @@ class CharacterViewer extends EditorWidget {
         characterLoader = characterEntity.addComponent(CharacterLoader);
         characterLoader.path = filePath;
         editorScene.addEntity(characterEntity);
+        characterLoader.load();
+        data = characterLoader.data;
     }
 
     public override function onProcess(deltaTime: Float) {
@@ -78,5 +83,9 @@ class CharacterViewer extends EditorWidget {
                 getEditor().setCurrentDockChlid(characterEditor);
             }
         }
+    }
+
+    public function apply() {
+        characterLoader.data = data;
     }
 }
