@@ -155,9 +155,9 @@ namespace Sunaba.Engine
         public override Array<string> GetFileListAll(string extension, bool recursive = true)
         {
             Array<string> fileList = new Array<string>();
-            foreach (var pathUrlStr in GetPathUrls())
+            foreach (var ioInterface in IoInterfaces)
             {
-                var subFileList = GetFileList(pathUrlStr, extension, recursive);
+                var subFileList = ioInterface.GetFileListAll(extension, recursive);
                 foreach (var file in subFileList)
                 {
                     fileList.Add(file);
