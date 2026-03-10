@@ -1,5 +1,10 @@
 package sunaba.studio;
 
+import sunaba.ui.TreeItem;
+import sunaba.core.native.NativeObject;
+import sunaba.core.Vector2i;
+import sunaba.spatial.FaceTextureData;
+import sunaba.spatial.Clothing;
 import sunaba.core.Vector2;
 import sunaba.ui.ItemList;
 import sunaba.ui.OptionButton;
@@ -71,6 +76,9 @@ class CharacterEditor extends EditorWidget {
         vbox = getNodeT(Control, "vbox");
         vbox.hide();
         tabs = getNodeT(TabContainer, "vbox/tabs");
+
+        faceTextureIndex = new Map();
+        clothingIndex = new Map();
 
         nameLineEdit = getNodeT(LineEdit, "vbox/tabs/Body/hbox/vbox/name/lineEdit");
         nameLineEdit.textChanged.add((newText: String) -> {
@@ -158,12 +166,48 @@ class CharacterEditor extends EditorWidget {
         });
 
         faceItemList = getNodeT(ItemList, "vbox/tabs/Face/itemList");
+        faceItemList.fixedIconSize = new Vector2i(64, 64);
+        faceItemList.maxColumns = 0;
+        faceItemList.iconMode = 0;
         headwearItemList = getNodeT(ItemList, "vbox/tabs/Headwear/hbox/itemList");
+        headwearItemList.fixedIconSize = new Vector2i(64, 64);
+        headwearItemList.maxColumns = 0;
+        headwearItemList.iconMode = 0;
         headwearTree = getNodeT(Tree, "vbox/tabs/Headwear/hbox/tree");
         clothingItemList = getNodeT(ItemList, "vbox/tabs/Clothes/hbox/itemList");
+        clothingItemList.fixedIconSize = new Vector2i(64, 64);
+        clothingItemList.maxColumns = 0;
+        clothingItemList.iconMode = 0;
         clothingTree = getNodeT(Tree, "vbox/tabs/Clothes/hbox/tree");
         dressItemList = getNodeT(ItemList, "vbox/tabs/Dress/itemList");
+        dressItemList.fixedIconSize = new Vector2i(64, 64);
+        dressItemList.maxColumns = 0;
+        dressItemList.iconMode = 0;
         dressControl = getNodeT(Control, "vbox/tabs/Dress");
+
+        faceItemList.itemSelected.add((index: Int) -> {
+            var faceTexture = faceTextureIndex[index];
+            data.faceTexture = faceTexture;
+        });
+        
+        clothingItemList.itemActivated.add((index: Int) -> {
+            var clothing = clothingIndex[index];
+            data.clothes.push(clothing);
+            refresh();
+        });
+
+        clothingTree.buttonClicked.add((itemNative: NativeObject, column: Int, id: Int, mouseButtonIdx: Int) -> {
+            var item = new TreeItem(itemNative);
+            if (column == 0) {
+                if (id == 0) {
+                    if (mouseButtonIdx == 1) {
+                        var clothingMetadata: Int = item.getMetadata(0);
+                        data.clothes.remove(data.clothes[clothingMetadata]);
+                        refresh();
+                    }
+                }
+            }
+        });
 
         var applyButton = getNodeT(Button, "vbox/hbox/apply");
         applyButton.pressed.add(() -> {
@@ -190,6 +234,10 @@ class CharacterEditor extends EditorWidget {
         vbox.show();
     }
 
+    public var faceTextureIndex: Map<Int, FaceTextureData>;
+
+    public var clothingIndex: Map<Int, Clothing>;
+
     public function refresh() {
         nameLineEdit.text = data.name;
         descLineEdit.text = data.desc;
@@ -212,6 +260,43 @@ class CharacterEditor extends EditorWidget {
             maleArmVBox.visible = false;
             femaleChestVBox.visible = true;
             tabs.setTabDisabled(4, false);
+        }
+
+        var faceTextureList = io.getFileListAll(".ftd");
+        var faceTextureList2 = io.getFileListAll(".ftd.dat");
+        faceItemList.clear();
+        for (i in 0...faceTextureList2.size()) {
+            var faceTexturePath = faceTextureList2.get(i);
+            faceTextureList.append(faceTexturePath);
+        }
+        for (i in 0...faceTextureList.size()) {
+            var faceTexturePath = faceTextureList.get(i);
+            var faceTextureData = new FaceTextureData();
+            faceTextureData.load(faceTexturePath);
+
+            var item = faceItemList.addItem(faceTextureData.name, faceTextureData.texture, true);
+            faceTextureIndex[item] = faceTextureData;
+        }
+
+        var clothingList = io.getFileListAll(".vclt");
+        clothingList.appendArray(io.getFileListAll(".vclt.dat"));
+        clothingItemList.clear();
+        for (i in 0...clothingList.size()) {
+            var clothingPath = clothingList.get(i);
+            var clothingData = new Clothing();
+            clothingData.load(clothingPath);
+
+            var item = clothingItemList.addItem(clothingData.name, clothingData.texture, true);
+            clothingIndex[item] = clothingData;
+        }
+        clothingTree.clear();
+        clothingTree.hideRoot = true;
+        var clothingTreeRoot = clothingTree.createItem();
+        for (clothingItem in data.clothes) {
+            var item = clothingTree.createItem(clothingTreeRoot);
+            item.setText(0, clothingItem.name);
+            item.setMetadata(0, data.clothes.indexOf(clothingItem));
+            item.addButton(0, getEditor().loadIcon("studio://icons/16/cross.png"));
         }
     }
 }
