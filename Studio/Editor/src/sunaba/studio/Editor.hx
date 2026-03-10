@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import haxe.crypto.Base64;
 import haxe.io.Path;
 import sunaba.desktop.FileDialog;
 import haxe.Json;
@@ -1951,6 +1952,26 @@ class Editor extends Widget {
             OSService.execute("chmod", StringArray.fromArray(["+x", shpath]));
         }
 
+        var zipBuilder = new NativeReference("res://Studio/ZipBuilder.cs", new ArrayList(), ScriptType.csharp);
+        trace(zipBuilder.isValid());
+        buildSystem.createZip = (path) -> {
+            var args = new ArrayList();
+            args.append(path);
+            zipBuilder.call("CreateZip", args);
+        };
+        buildSystem.addToZipFile = (path, bytes) -> {
+            var args = new ArrayList();
+            args.append(path);
+            var base64 = Base64.encode(bytes);
+            args.append(base64);
+            zipBuilder.call("AddToZipFile", args);
+        };
+        buildSystem.buildZip = (path) -> {
+            var args = new ArrayList();
+            args.append(path);
+            zipBuilder.call("BuildZip", args);
+        };
+
         buildSystem.jsonToMsgpackConverter = (json: String) -> {
             var data : Dictionary = JSON.parseString(json);
             trace(data.keys().size());
@@ -1993,6 +2014,26 @@ class Editor extends Widget {
         buildSystem.chmodder = (shpath: String) -> {
             OSService.execute("chmod", StringArray.fromArray(["+x", shpath]));
         }
+
+        var zipBuilder = new NativeReference("res://Studio/ZipBuilder.cs", new ArrayList(), ScriptType.csharp);
+        trace(zipBuilder.isValid());
+        buildSystem.createZip = (path) -> {
+            var args = new ArrayList();
+            args.append(path);
+            zipBuilder.call("CreateZip", args);
+        };
+        buildSystem.addToZipFile = (path, bytes) -> {
+            var args = new ArrayList();
+            args.append(path);
+            var base64 = Base64.encode(bytes);
+            args.append(base64);
+            zipBuilder.call("AddToZipFile", args);
+        };
+        buildSystem.buildZip = (path) -> {
+            var args = new ArrayList();
+            args.append(path);
+            zipBuilder.call("BuildZip", args);
+        };
 
         buildSystem.jsonToMsgpackConverter = (json: String) -> {
             var data : Dictionary = JSON.parseString(json);
