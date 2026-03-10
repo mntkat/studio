@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.spatial.Headwear;
 import sunaba.ui.TreeItem;
 import sunaba.core.native.NativeObject;
 import sunaba.core.Vector2i;
@@ -78,6 +79,7 @@ class CharacterEditor extends EditorWidget {
         tabs = getNodeT(TabContainer, "vbox/tabs");
 
         faceTextureIndex = new Map();
+        headwearIndex = new Map();
         clothingIndex = new Map();
 
         nameLineEdit = getNodeT(LineEdit, "vbox/tabs/Body/hbox/vbox/name/lineEdit");
@@ -190,6 +192,25 @@ class CharacterEditor extends EditorWidget {
             data.faceTexture = faceTexture;
         });
         
+        headwearItemList.itemActivated.add((index: Int) -> {
+            var headwear = headwearIndex[index];
+            data.headwearList.push(headwear);
+            refresh();
+        });
+
+        headwearTree.buttonClicked.add((itemNative: NativeObject, column: Int, id: Int, mouseButtonIdx: Int) -> {
+            var item = new TreeItem(itemNative);
+            if (column == 0) {
+                if (id == 0) {
+                    if (mouseButtonIdx == 1) {
+                        var headwearMetadata: Int = item.getMetadata(0);
+                        data.headwearList.remove(data.headwearList[headwearMetadata]);
+                        refresh();
+                    }
+                }
+            }
+        });
+        
         clothingItemList.itemActivated.add((index: Int) -> {
             var clothing = clothingIndex[index];
             data.clothes.push(clothing);
@@ -236,6 +257,8 @@ class CharacterEditor extends EditorWidget {
 
     public var faceTextureIndex: Map<Int, FaceTextureData>;
 
+    public var headwearIndex: Map<Int, Headwear>;
+
     public var clothingIndex: Map<Int, Clothing>;
 
     public function refresh() {
@@ -264,11 +287,11 @@ class CharacterEditor extends EditorWidget {
 
         var faceTextureList = io.getFileListAll(".ftd");
         var faceTextureList2 = io.getFileListAll(".ftd.dat");
-        faceItemList.clear();
         for (i in 0...faceTextureList2.size()) {
             var faceTexturePath = faceTextureList2.get(i);
             faceTextureList.append(faceTexturePath);
         }
+        faceItemList.clear();
         for (i in 0...faceTextureList.size()) {
             var faceTexturePath = faceTextureList.get(i);
             var faceTextureData = new FaceTextureData();
@@ -278,8 +301,37 @@ class CharacterEditor extends EditorWidget {
             faceTextureIndex[item] = faceTextureData;
         }
 
+        var headwearList = io.getFileListAll(".vhw");
+        var headwearList2 = io.getFileListAll(".vhw.dat");
+        for (i in 0...headwearList2.size()) {
+            var headwearPath = headwearList2.get(i);
+            headwearList.append(headwearPath);
+        }
+        headwearItemList.clear();
+        for (i in 0...headwearList.size()) {
+            var headwearPath = headwearList.get(i);
+            var headwearData = new Headwear();
+            headwearData.load(headwearPath);
+
+            var item = headwearItemList.addItem(headwearData.name, getEditor().loadIcon("studio://icons/16_2x/snowman-hat.png"), true);
+            headwearIndex[item] = headwearData;
+        }
+        headwearTree.clear();
+        headwearTree.hideRoot = true;
+        var headwearTreeRoot = headwearTree.createItem();
+        for (headwearData in data.headwearList) {
+            var item = headwearTree.createItem(headwearTreeRoot);
+            item.setText(0, headwearData.name);
+            item.setMetadata(0, getEditor().loadIcon("studio://icons/16/cross.png"));
+            item.addButton(0, getEditor().loadIcon("studio://icons/16/cross.png"));
+        }
+
         var clothingList = io.getFileListAll(".vclt");
-        clothingList.appendArray(io.getFileListAll(".vclt.dat"));
+        var clothingList2 = io.getFileListAll(".vclt.dat");
+        for (i in 0...clothingList2.size()) {
+            var clothingPath = clothingList2.get(i);
+            clothingList.append(clothingPath);
+        }
         clothingItemList.clear();
         for (i in 0...clothingList.size()) {
             var clothingPath = clothingList.get(i);
