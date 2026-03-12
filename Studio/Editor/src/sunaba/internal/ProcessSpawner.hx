@@ -25,4 +25,8 @@ class ProcessSpawner extends Node {
     public function stop() {
         native.call("Stop", new ArrayList());
     }
+
+    public function hasExited(): Bool {
+        return native.call("HasExited", new ArrayList());
+    }
 }
