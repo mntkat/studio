@@ -99,7 +99,7 @@ jobs:
       - name: Checkout Sunaba
         uses: actions/checkout@v4
         with:
-          repository: mntkat/libsunaba
+          repository: sunabacommunity/libsunaba
           path: ${{github.workspace}}/libsunaba
           #token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true`
@@ -107,7 +107,7 @@ jobs:
       - name: Checkout Gamepak
         uses: actions/checkout@v4
         with:
-          repository: mntkat/gamepak
+          repository: sunabacommunity/gamepak
           path: ${{github.workspace}}/gamepak
           #token: ${{ secrets.ACCESS_TOKEN }}
           persist-credentials: true
@@ -125,7 +125,7 @@ jobs:
           # The source repository path.
           # Expected format {owner}/{repo}
           # Default: ${{ github.repository }}
-          repository: mntkat/libsunaba
+          repository: sunabacommunity/libsunaba
           latest: true
           tag: "0.7.1"
           fileName: "godot-cpp-template.zip"
@@ -220,39 +220,39 @@ jobs:
   #      with:
   #        name: ${{ github.event.repository.name }}
   #        pattern: ${{ github.event.repository.name }}-*
-  #deployToSteam:
-  #  runs-on: ubuntu-latest-m
-  #  needs: build
-  #  steps:
-  #    - uses: actions/download-artifact@v5
-  #      with:
-  #        name: ${{ github.event.repository.name }}-windows-x86_64-release
-  #    - uses: actions/download-artifact@v5
-  #      with:
-  #        name: ${{ github.event.repository.name }}-linux-x86_64-release 
-  #    - uses: actions/download-artifact@v5
-  #      with:
-  #        name: ${{ github.event.repository.name }}-mac-universal-release 
-  #    - name: Create Build Directory
-  #      run: |
-  #        mkdir build
-  #    - name: Unzip Linux Build
-  #      run: |
-  #        unzip ${{ github.workspace }}/linux-x86_64-release.zip -d ./build/linux-x86_64-release 
-  #    - name: Unzip Windows Build
-  #      run: |
-  #        unzip ${{ github.workspace }}/windows-x86_64-release.zip -d ./build/windows-x86_64-release 
-  #    - name: Unzip Mac Build
-  #      run: |
-  #        unzip ${{ github.workspace }}/mac-universal-release.zip -d ./build/mac-universal-release
-  #    - uses: game-ci/steam-deploy@v3
-  #      with:
-  #        username: ${{ secrets.STEAM_USERNAME }}
-  #        configVdf: ${{ secrets.STEAM_CONFIG_VDF }}
-  #        appId: 2684270
-  #        buildDescription: v0.7.11
-  #        rootPath: build
-  #        depot1Path: mac-universal-release 
-  #        depot3Path: windows-x86_64-release 
-  #        depot4Path: linux-x86_64-release 
-  #        releaseBranch: nightly
+  deployToSteam:
+    runs-on: ubuntu-latest-m
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-windows-x86_64-release
+      - uses: actions/download-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-linux-x86_64-release 
+      - uses: actions/download-artifact@v5
+        with:
+          name: ${{ github.event.repository.name }}-mac-universal-release 
+      - name: Create Build Directory
+        run: |
+          mkdir build
+      - name: Unzip Linux Build
+        run: |
+          unzip ${{ github.workspace }}/linux-x86_64-release.zip -d ./build/linux-x86_64-release 
+      - name: Unzip Windows Build
+        run: |
+          unzip ${{ github.workspace }}/windows-x86_64-release.zip -d ./build/windows-x86_64-release 
+      - name: Unzip Mac Build
+        run: |
+          unzip ${{ github.workspace }}/mac-universal-release.zip -d ./build/mac-universal-release
+      - uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          configVdf: ${{ secrets.STEAM_CONFIG_VDF }}
+          appId: 2684270
+          buildDescription: v0.7.11
+          rootPath: build
+          depot1Path: mac-universal-release 
+          depot3Path: windows-x86_64-release 
+          depot4Path: linux-x86_64-release 
+          releaseBranch: nightly
