@@ -29,6 +29,7 @@ boot_splash/image="uid://04u8hdxy5ltl"
 config/icon="uid://b8ivw4vau3olu"
 config/macos_native_icon="res://Studio/SunabaStudioMacIconV2.icns"
 config/windows_native_icon="res://Studio/studio.ico"
+boot_splash/show_image.macos=false
 
 [autoload]
 
@@ -56,6 +57,8 @@ window/size/borderless.macos=false
 window/size/extend_to_title.macos=true
 window/size/viewport_width.linux=1152
 window/size/viewport_height.linux=648
+window/size/viewport_width.macos=1152
+window/size/viewport_height.macos=648
 
 [dotnet]
 
@@ -63,7 +66,7 @@ project/assembly_name="Sunaba.Studio"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/imgui-godot/plugin.cfg")
+enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/func_godot/plugin.cfg")
 
 [func_godot]
 
