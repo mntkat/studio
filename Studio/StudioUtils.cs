@@ -12,7 +12,7 @@ public partial class StudioUtils : Node
 	public string GetToolchainDirectory()
 	{
 		var baseDir = GetBaseDirectory();
-		if (OS.HasFeature("editor"))
+		if (OS.HasFeature("editor") && OS.GetName() == "macOS")
 		{
 			baseDir = ProjectSettings.GlobalizePath("res://");
 		}
