@@ -138,7 +138,8 @@ class HaxePlugin extends CodeEditorPlugin {
         if (OSService.getName() == "Windows") {
             haxePath += ".exe";
         }
-        lspBridge.haxePath = haxePath;
+        trace(haxePath);
+        lspBridge.haxePath = codeEditor.getEditor().sourceIo.getFilePath(haxePath);
         codeEditor.getEditor().generateHaxeBuildHxml();
         lspBridge.hxmlPath = "ide.hxml";
         lspBridge.codePath = codeEditor.path;
