@@ -1,0 +1,127 @@
+Sunaba Studio 
+Character Name
+Character Description 
+Character Body Type
+Character Skin Color
+Arm Muscle
+Chest
+Thighs
+Body
+Face
+Headwear 
+Clothes
+Dress
+ Apply 
+File 
+New File
+Open File
+Save File
+Publish 
+Open Project in Visual Studio Code 
+Exit
+Edit
+Undo
+Redo
+Cut
+Copy
+Paste
+View
+Left Sidebar
+Right Sidebar
+Workspace
+Dock
+Tools
+Debug 
+Play
+Pause
+Stop
+Help
+Sunaba Docs
+API Reference
+About
+Building project
+Building project plugin
+Building project…
+Project
+Edit in TrenchBroom
+ Reload 
+Browse
+Resource Inspector
+Scene Inspector
+ Load 
+Nothing Selected 
+Add Component
+Add Entity
+Set Asset File Path 
+Set Script File Path
+Script file must end in '.hx' 
+Scene Inspector
+Load Prefab
+Prefab
+Invalid file path.
+Error saving prefab
+Save 
+ as prefab
+Character Editor
+None
+Ln 
+", Col "
+Command Mode
+Code Mode
+Invalid Mode 
+Enter console commands here…
+Enter shell code here…
+Console
+Settings
+New File' not implemented
+Open File' not implemented 
+Publish' not implemented
+Open Project in Visual Studio Code' not implemented
+Cut' not implemented
+Copy' not implemented
+Paste' not implemented
+Project not found.
+Empty Scene
+Sinple Map
+Empty Script
+Edit Texture Path List
+Open 3D Model
+GLTF Binary
+Select 3D Model Destination
+Sunaba 3D Model
+Import 3D Model
+The custom titlebar cannot be disabled on macOS
+Version 
+(C) 2022-2026 mintkat
+Engine Version: 
+Unknown
+Desktop
+Mobile
+Web
+XR
+Device Type: 
+Build Date: 
+About Sunaba Studio
+Tool function has not been added
+No plugin entrypoint specified in the project file. 
+No script directory specified in the project file. 
+Plugin failed to build with exit code: 
+Invalid Directory
+Failed to load plugin - 
+Error loading project plugin
+Game
+Project Explorer
+Folder
+Folder creation not implemented. 
+Assets
+Scripts
+Resource 
+Builtin path
+Project path 
+Select Builtin Path
+Base Textures
+Open Project Texture Path
+Project Launcher
+New Project 
+Open Project
+Sunaba project
