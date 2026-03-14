@@ -124,7 +124,11 @@ class HaxePlugin extends CodeEditorPlugin {
 
         lspBridge = new LspBridge();
 
-        var nodePath = Path.addTrailingSlash(StudioUtils.singleton.getToolchainDirectory());
+        var toolchainDir = Path.addTrailingSlash(StudioUtils.singleton.getToolchainDirectory());
+        if (StringTools.contains(toolchainDir, "//")) {
+            toolchainDir = StringTools.replace(toolchainDir, "//", "/");
+        }
+        var nodePath = toolchainDir;
         if (OSService.getName() == "Windows") {
             nodePath += "node.exe";
         }
@@ -134,7 +138,7 @@ class HaxePlugin extends CodeEditorPlugin {
             Sys.command("chmod", ["+X", nodePath]);
         }
         lspBridge.editor = codeEditor.codeEdit;
-        var haxePath = Path.addTrailingSlash(StudioUtils.singleton.getToolchainDirectory()) + "haxe";
+        var haxePath = toolchainDir + "haxe";
         if (OSService.getName() == "Windows") {
             haxePath += ".exe";
         }

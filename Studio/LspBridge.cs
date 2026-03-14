@@ -178,35 +178,35 @@ public partial class LspBridge : Node
         }
     }
 
-    private int MapCompletionKind(CompletionItemKind? kind)
+    private CodeEdit.CodeCompletionKind MapCompletionKind(CompletionItemKind? kind)
     {
         return kind switch
         {
-            CompletionItemKind.Text => 0, // PlainText
-            CompletionItemKind.Method => 2, // Function
-            CompletionItemKind.Function => 2, // Function
-            CompletionItemKind.Constructor => 11, // Class
-            CompletionItemKind.Field => 5, // Member
-            CompletionItemKind.Variable => 4, // Variable
-            CompletionItemKind.Class => 11, // Class
-            CompletionItemKind.Interface => 11, // Class
-            CompletionItemKind.Module => 11, // Class
-            CompletionItemKind.Property => 5, // Member
-            CompletionItemKind.Unit => 0, // PlainText
-            CompletionItemKind.Value => 7, // Constant
-            CompletionItemKind.Enum => 6, // Enum
-            CompletionItemKind.Keyword => 1, // Keyword
-            CompletionItemKind.Snippet => 12, // Snippet
-            CompletionItemKind.Color => 13, // Color
-            CompletionItemKind.File => 9, // FilePath
-            CompletionItemKind.Reference => 8, // NodePath
-            CompletionItemKind.Folder => 10, // Directory
-            CompletionItemKind.EnumMember => 6, // Enum
-            CompletionItemKind.Constant => 7, // Constant
-            CompletionItemKind.Struct => 11, // Class
-            CompletionItemKind.Event => 3, // Signal
-            CompletionItemKind.Operator => 0, // PlainText
-            CompletionItemKind.TypeParameter => 11, // Class
+            CompletionItemKind.Text => CodeEdit.CodeCompletionKind.PlainText, // PlainText
+            CompletionItemKind.Method => CodeEdit.CodeCompletionKind.Function, // Function
+            CompletionItemKind.Function => CodeEdit.CodeCompletionKind.Function, // Function
+            CompletionItemKind.Constructor => CodeEdit.CodeCompletionKind.Class, // Class
+            CompletionItemKind.Field => CodeEdit.CodeCompletionKind.Member, // Member 
+            CompletionItemKind.Variable => CodeEdit.CodeCompletionKind.Variable, // Variable
+            CompletionItemKind.Class => CodeEdit.CodeCompletionKind.Class, // Class
+            CompletionItemKind.Interface => CodeEdit.CodeCompletionKind.Class, // Class
+            CompletionItemKind.Module => CodeEdit.CodeCompletionKind.Class, // Class
+            CompletionItemKind.Property => CodeEdit.CodeCompletionKind.Member, // Member
+            CompletionItemKind.Unit => CodeEdit.CodeCompletionKind.PlainText, // PlainText
+            CompletionItemKind.Value => CodeEdit.CodeCompletionKind.Constant, // Constant
+            CompletionItemKind.Enum => CodeEdit.CodeCompletionKind.Enum, // Enum
+            CompletionItemKind.Keyword => CodeEdit.CodeCompletionKind.PlainText, // Keyword
+            CompletionItemKind.Snippet => CodeEdit.CodeCompletionKind.PlainText, // Snippet
+            CompletionItemKind.Color => CodeEdit.CodeCompletionKind.PlainText, // Color
+            CompletionItemKind.File => CodeEdit.CodeCompletionKind.FilePath, // FilePath
+            CompletionItemKind.Reference => CodeEdit.CodeCompletionKind.FilePath, // NodePath
+            CompletionItemKind.Folder => CodeEdit.CodeCompletionKind.FilePath, // Directory
+            CompletionItemKind.EnumMember => CodeEdit.CodeCompletionKind.Enum, // Enum
+            CompletionItemKind.Constant => CodeEdit.CodeCompletionKind.Constant, // Constant
+            CompletionItemKind.Struct => CodeEdit.CodeCompletionKind.Class, // Class
+            CompletionItemKind.Event => CodeEdit.CodeCompletionKind.Signal, // Signal
+            CompletionItemKind.Operator => CodeEdit.CodeCompletionKind.PlainText, // PlainText
+            CompletionItemKind.TypeParameter => CodeEdit.CodeCompletionKind.PlainText, // Class
             _ => 0 // PlainText
         };
     }
