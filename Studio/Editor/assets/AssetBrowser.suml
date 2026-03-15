@@ -7,7 +7,7 @@
             fullRect="true"
             separation="0">
             <sunaba.ui.Control
-                name="toolbar1"
+                name="toolbar"
                 customMinimumSize="30, 30">
                 <sunaba.ui.HBoxContainer
                     name="hbox"
