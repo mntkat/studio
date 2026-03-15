@@ -193,14 +193,21 @@ jobs:
           cd ${{ github.workspace }}/bin/windows-x86_64-debug
           zip -r -0 ${{ github.workspace }}/bin/windows-x86_64-debug.zip *
 
-      - name: Upload artifact
+      - name: Upload artifact (Zip)
         #if: matrix.config.os != 'macos-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.repository.name }}-${{ matrix.config.target }}-${{ matrix.build_type }}
+          name: ${{ github.event.repository.name }}-${{ matrix.config.target }}-${{ matrix.build_type }}-zip
+          path: |
+            ${{ github.workspace }}/bin/*.zip
+
+      - name: Upload artifact 
+        #if: matrix.config.os != 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ matrix.config.target }}-${{ matrix.build_type }}-installer
           path: |
             ${{ github.workspace }}/bin/*.exe
-            ${{ github.workspace }}/bin/*.zip
             ${{ github.workspace }}/bin/*.deb
             ${{ github.workspace }}/bin/*.flatpak
             ${{ github.workspace }}/bin/*.dmg
@@ -226,13 +233,13 @@ jobs:
     steps:
       - uses: actions/download-artifact@v5
         with:
-          name: ${{ github.event.repository.name }}-windows-x86_64-release
+          name: ${{ github.event.repository.name }}-windows-x86_64-release-zip
       - uses: actions/download-artifact@v5
         with:
-          name: ${{ github.event.repository.name }}-linux-x86_64-release 
+          name: ${{ github.event.repository.name }}-linux-x86_64-release-zip
       - uses: actions/download-artifact@v5
         with:
-          name: ${{ github.event.repository.name }}-mac-universal-release 
+          name: ${{ github.event.repository.name }}-mac-universal-release-zip
       - name: Create Build Directory
         run: |
           mkdir build
