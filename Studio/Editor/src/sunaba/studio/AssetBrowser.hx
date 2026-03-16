@@ -91,7 +91,7 @@ class AssetBrowser extends EditorWidget {
                         buildDirTree(dir, pathUrlItem);
                         Coroutine.yield();
                     }
-                }
+                }/*
                 else {
                     trace("");
                     var subIo = ioManager.getIoInterface(pathUrl);
@@ -104,7 +104,7 @@ class AssetBrowser extends EditorWidget {
                             Coroutine.yield();
                         }
                     }
-                }
+                }*/
                 
                 Coroutine.yield();
             });
