@@ -85,15 +85,27 @@ class AssetBrowser extends EditorWidget {
                 Coroutine.yield();
                 var dirs: Array<Variant> = io.getFileList(pathUrl, "/", false);
                 Coroutine.yield();
-                for (dir in dirs) {
-                    Coroutine.yield();
-                    if (dir == pathUrl || dir == pathUrl + "/") {
-                        continue;
+                if (dirs.length != 0) {
+                    for (dir in dirs) {
+                        Coroutine.yield();
+                        buildDirTree(dir, pathUrlItem);
+                        Coroutine.yield();
                     }
-                    Coroutine.yield();
-                    buildDirTree(dir, pathUrlItem);
-                    Coroutine.yield();
                 }
+                else {
+                    trace("");
+                    var subIo = ioManager.getIoInterface(pathUrl);
+                    dirs = subIo.getFileListAll("/", false);
+                    trace(dirs.length);
+                    if (dirs.length != 0) {
+                        for (dir in dirs) {
+                            Coroutine.yield();
+                            buildDirTree(dir, pathUrlItem);
+                            Coroutine.yield();
+                        }
+                    }
+                }
+                
                 Coroutine.yield();
             });
             dirTreeCoroutines.push(dirTreeCoroutine);
@@ -130,7 +142,7 @@ class AssetBrowser extends EditorWidget {
                     buildDirTree(subDir, item);
                     Coroutine.yield();
                 }
-            Coroutine.yield();
+                Coroutine.yield();
             }
             
         });
