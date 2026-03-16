@@ -123,6 +123,7 @@ public partial class IoInterfaceZip : IoInterface
 		var path2 = GetFilePath(path);
 		if (!path2.EndsWith("/") && path2 != "")
 			path2 += "/";
+		
 		if (extension != "" && extension != "/")
 		{
 			foreach (var file in files)
@@ -166,34 +167,30 @@ public partial class IoInterfaceZip : IoInterface
 			foreach (var file in files)
 			{
 				var filePath = PathUrl + file;
-				if (file.StartsWith(path2) && file.EndsWith("/") && !file.Replace(path2, "").Contains("/"))
-				{
-					fileList.Add(filePath);
+				var baseDir = file.GetBaseDir();
+				if (String.IsNullOrEmpty(baseDir)) continue;
+				if (baseDir.StartsWith("/")) {
+					baseDir = baseDir.Substring(1);
 				}
-				else
+				var dirPath = PathUrl + baseDir + "/";
+				if (dirPath == path) continue;
+				if (dirPath.StartsWith(path) || path == PathUrl)
 				{
-					var baseDir = file.GetBaseDir();
-					var dirPath = PathUrl + baseDir + "/";
-					if (baseDir.StartsWith(path2))
+					string remaining = dirPath.Replace(path, "");
+					if (remaining != "")
 					{
-						if (path2 == "")
+						if (remaining.EndsWith("/")) {
+							remaining = remaining.Substring(0, remaining.Length - 1);
+						}
+						if (!remaining.Contains("/")) 
 						{
 							if (!fileList.Contains(dirPath))
 							{
 								fileList.Add(dirPath);
 							}
-							continue;
-						}
-						if (!baseDir.Replace(path2, "").Contains("/"))
-						{
-							if (!fileList.Contains(dirPath))
-							{
-								fileList.Add(dirPath);
-							}
-						}
+						}		
 					}
 				}
-
 			}
 			if (recursive)
 			{
