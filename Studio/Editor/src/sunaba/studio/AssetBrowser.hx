@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.io.IoManager;
 import sunaba.ui.ItemList;
 import sunaba.ui.Tree;
 import sunaba.ui.TreeItem;
@@ -44,9 +45,21 @@ class AssetBrowser extends EditorWidget {
         newButton = getNodeT(MenuButton, "vbox/toolbar/hbox/new");
 
         tree = getNodeT(Tree, "vbox/view/hsplit/tree");
+        tree.hideRoot = true;
         itemList = getNodeT(ItemList, "vbox/view/hsplit/itemList");
 
         currentDir = getEditor().projectIo.pathUrl;
+        
+        buildTreeRoot();
+    }
+
+    public function buildTreeRoot() {
+        var ioManager: IoManager = cast io;
+
+        var pathUrls = ioManager.getPathUrls();
+
+        tree.clear();
+        var root = tree.createItem();
         
     }
 }
