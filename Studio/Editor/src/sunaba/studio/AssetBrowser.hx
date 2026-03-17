@@ -142,6 +142,12 @@ class AssetBrowser extends EditorWidget {
         else {
             forwardButton.disabled = false;
         }
+        if (StringTools.startsWith(currentDir, getEditor().projectIo.pathUrl)) {
+            newButton.disabled = false;
+        }
+        else {
+            newButton.disabled = true;
+        }
         addressBar.text = currentDir;
         refresh();
     }
