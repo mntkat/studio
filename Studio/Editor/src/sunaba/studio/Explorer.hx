@@ -190,11 +190,15 @@ class Explorer extends EditorWidget {
         var metadata = item.getMetadata(0);
         if (metadata.getType() == VariantType.string) {
             var path: String = metadata;
-            for (fileHandler in fileHandlers) {
-                if (StringTools.endsWith(path, "." + fileHandler.extension)) {
-                    fileHandler.openFile(path);
-                    break;
-                }
+            openFile(path);
+        }
+    }
+
+    public function openFile(path: String) {
+        for (fileHandler in fileHandlers) {
+            if (StringTools.endsWith(path, "." + fileHandler.extension)) {
+                fileHandler.openFile(path);
+                break;
             }
         }
     }

@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.core.Vector2i;
 import lua.Coroutine;
 import sunaba.core.Variant;
 import sunaba.io.IoManager;
@@ -48,11 +49,35 @@ class AssetBrowser extends EditorWidget {
 
         tree = getNodeT(Tree, "vbox/view/hsplit/tree");
         tree.hideRoot = true;
+        tree.itemSelected.add(() -> {
+            var selected = tree.getSelected();
+            var metadata = selected.getMetadata(0);
+            currentDir = metadata;
+            refresh();
+        });
         itemList = getNodeT(ItemList, "vbox/view/hsplit/itemList");
+        itemList.maxColumns = 0;
+        itemList.fixedIconSize = new Vector2i(32, 32);
+        itemList.fixedColumnWidth = 96;
+        itemList.iconMode = 0;
+        itemList.itemActivated.add((index: Int) -> {
+            var metadata: String = itemList.getItemMetadata(index);
+            if (StringTools.endsWith(metadata, "/")) {
+                currentDir = metadata;
+                refresh();
+            }
+            else {
+                getEditor().explorer.openFile(metadata);
+            }
+        });
 
         currentDir = getEditor().projectIo.pathUrl;
+
+        fileIcon32 = getEditor().loadIcon("studio://icons/32/document.png");
+        dirIcon32 = getEditor().loadIcon("studio://icons/32/blue-folder-horizontal.png");
         
         buildTreeRoot();
+        refreshItemList();
     }
 
     var dirIconTexture: ImageTexture;
@@ -81,6 +106,7 @@ class AssetBrowser extends EditorWidget {
             pathUrlItem.setText(0, StringTools.replace(pathUrl, "://", ""));
             pathUrlItem.setIcon(0, pathUrlDirIconTexture);
             pathUrlItem.setMetadata(0, pathUrl);
+            pathTreeItemMap[pathUrl] = pathUrlItem;
 
             var dirTreeCoroutine = Coroutine.create(() -> {
                 Coroutine.yield();
@@ -117,6 +143,7 @@ class AssetBrowser extends EditorWidget {
             pathUrlItem.setText(0, StringTools.replace(pathUrl, "://", ""));
             pathUrlItem.setIcon(0, pathUrlDirIconTexture);
             pathUrlItem.setMetadata(0, pathUrl);
+            pathTreeItemMap[pathUrl] = pathUrlItem;
 
             var dirTreeCoroutine = Coroutine.create(() -> {
                 Coroutine.yield();
@@ -169,6 +196,7 @@ class AssetBrowser extends EditorWidget {
                 item.setIcon(0, dirIconTexture);
                 Coroutine.yield();
                 item.setMetadata(0, dir);
+                pathTreeItemMap[dir] = item;
                 Coroutine.yield();
                 item.collapsed = true;
                 Coroutine.yield();
@@ -185,6 +213,68 @@ class AssetBrowser extends EditorWidget {
         });
         dirTreeCoroutines.push(dirTreeCoroutine);
         Coroutine.resume(dirTreeCoroutine);
+    }
+
+    public function refresh() {
+        refreshItemList();
+    }
+
+    var fileIcon32: ImageTexture;
+    var dirIcon32: ImageTexture;
+
+    var itemListCoroutine: Coroutine<()->Void> = null;
+
+    public function refreshItemList() {
+        if (itemListCoroutine != null) {
+            dirTreeCoroutines.remove(itemListCoroutine);
+        }
+        itemListCoroutine = Coroutine.create(() -> {
+            Coroutine.yield();
+            Coroutine.yield();
+            var dirs: Array<Variant> = io.getFileList(currentDir, "/", false);
+            Coroutine.yield();
+            var files: Array<Variant> = io.getFileList(currentDir, "", false);
+            Coroutine.yield();
+            itemList.clear();
+            Coroutine.yield();
+            for (dir in dirs) {
+                Coroutine.yield();
+                var dirPathArray = dir.toString().split("/");
+                Coroutine.yield();
+                dirPathArray.remove(dirPathArray.pop());
+                Coroutine.yield();
+                var dirName = dirPathArray.pop();
+                Coroutine.yield();
+                var item = itemList.addIconItem(dirIcon32, true);
+                Coroutine.yield();
+                itemList.setItemText(item, dirName);
+                Coroutine.yield();
+                itemList.setItemMetadata(item, dir);
+                Coroutine.yield();
+            }
+            Coroutine.yield();
+            for (file in files) {
+                Coroutine.yield();
+                var icon = fileIcon32;
+                Coroutine.yield();
+                var fileName = file.toString().split("/").pop();
+                Coroutine.yield();
+                if (StringTools.endsWith(file, "/")) {
+                    Coroutine.yield();
+                    continue;
+                }
+                Coroutine.yield();
+                var item = itemList.addIconItem(icon, true);
+                Coroutine.yield();
+                itemList.setItemText(item, fileName);
+                Coroutine.yield();
+                itemList.setItemMetadata(item, file);
+                Coroutine.yield();
+            }
+            Coroutine.yield();
+        });
+        dirTreeCoroutines.push(itemListCoroutine);
+        Coroutine.resume(itemListCoroutine);
     }
 
     public override function onProcess(delta:Float) {
