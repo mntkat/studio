@@ -1061,6 +1061,9 @@ class Editor extends Widget {
             haxePath = wrapper;
         }
 
+        leftTabContainer.visible = false;
+        rightTabContainer.visible = false;
+
         var baseDirectory = StudioUtils.singleton.getBaseDirectory();
         if (!StringTools.endsWith(baseDirectory, "/")) {
             baseDirectory += "/";
@@ -1867,6 +1870,10 @@ class Editor extends Widget {
         if (leftSidebarChildren.contains(child)) {
             var index = leftSidebarChildren.indexOf(child);
             leftTabContainer.currentTab = index;
+            if (leftTabContainer.visible == false && leftTabBar.visible == true) {
+                leftTabContainer.visible = true;
+                checkLeftSideBar();
+            }
         }
     }
 
@@ -1878,6 +1885,10 @@ class Editor extends Widget {
         if (rightSidebarChildren.contains(child)) {
             var index = rightSidebarChildren.indexOf(child);
             rightTabContainer.currentTab = index;
+            if (rightTabContainer.visible == false && rightTabBar.visible == true) {
+                rightTabContainer.visible = true;
+                checkRightSidebar();
+            }
         }
     }
 
