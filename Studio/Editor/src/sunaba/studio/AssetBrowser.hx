@@ -75,6 +75,43 @@ class AssetBrowser extends EditorWidget {
         pathUrlDirIconImage.loadPngFromBuffer(pathUrlDirIconBytes);
         var pathUrlDirIconTexture = ImageTexture.createFromImage(pathUrlDirIconImage);
         
+        if (!pathUrls.contains(getEditor().projectIo.pathUrl)) {
+            var pathUrl = getEditor().projectIo.pathUrl;
+            var pathUrlItem = tree.createItem(root);
+            pathUrlItem.setText(0, StringTools.replace(pathUrl, "://", ""));
+            pathUrlItem.setIcon(0, pathUrlDirIconTexture);
+            pathUrlItem.setMetadata(0, pathUrl);
+
+            var dirTreeCoroutine = Coroutine.create(() -> {
+                Coroutine.yield();
+                var dirs: Array<Variant> = io.getFileList(pathUrl, "/", false);
+                Coroutine.yield();
+                if (dirs.length != 0) {
+                    for (dir in dirs) {
+                        Coroutine.yield();
+                        buildDirTree(dir, pathUrlItem);
+                        Coroutine.yield();
+                    }
+                }/*
+                else {
+                    trace("");
+                    var subIo = ioManager.getIoInterface(pathUrl);
+                    dirs = subIo.getFileListAll("/", false);
+                    trace(dirs.length);
+                    if (dirs.length != 0) {
+                        for (dir in dirs) {
+                            Coroutine.yield();
+                            buildDirTree(dir, pathUrlItem);
+                            Coroutine.yield();
+                        }
+                    }
+                }*/
+                
+                Coroutine.yield();
+            });
+            dirTreeCoroutines.push(dirTreeCoroutine);
+            Coroutine.resume(dirTreeCoroutine);
+        }
         for (pathUrl in pathUrls) {
             var pathUrlItem = tree.createItem(root);
             pathUrlItem.setText(0, StringTools.replace(pathUrl, "://", ""));
