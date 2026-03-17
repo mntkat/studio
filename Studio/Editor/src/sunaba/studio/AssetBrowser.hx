@@ -30,6 +30,7 @@ class AssetBrowser extends EditorWidget {
     var nextDirs: Array<String> = [];
 
     var pathTreeItemMap: Map<String, TreeItem> = new Map();
+    var pathDisabledMap: Map<String, Bool> = new Map();
 
     public override function editorInit() {
         load("studio://AssetBrowser.suml");
@@ -179,6 +180,10 @@ class AssetBrowser extends EditorWidget {
             pathUrlItem.setIcon(0, getEditor().loadIcon("studio://icons/16/application-blue-studio.png"));
             pathUrlItem.setMetadata(0, pathUrl);
             pathTreeItemMap[pathUrl] = pathUrlItem;
+            var collapsed = pathDisabledMap[pathUrl];
+            if (collapsed != null) {
+                pathUrlItem.collapsed = collapsed;
+            }
 
             var dirTreeCoroutine = Coroutine.create(() -> {
                 Coroutine.yield();
@@ -217,6 +222,10 @@ class AssetBrowser extends EditorWidget {
             pathUrlItem.collapsed = true;
             pathUrlItem.setMetadata(0, pathUrl);
             pathTreeItemMap[pathUrl] = pathUrlItem;
+            var collapsed = pathDisabledMap[pathUrl];
+            if (collapsed != null) {
+                pathUrlItem.collapsed = collapsed;
+            }
 
             var dirTreeCoroutine = Coroutine.create(() -> {
                 Coroutine.yield();
@@ -274,6 +283,10 @@ class AssetBrowser extends EditorWidget {
                 item.collapsed = true;
                 Coroutine.yield();
                 var subDirs: Array<Variant> = io.getFileList(dir, "/", false);
+                var collapsed = pathDisabledMap[dir];
+                if (collapsed != null) {
+                    item.collapsed = collapsed;
+                }
                 Coroutine.yield();
                 for (subDir in subDirs) {
                     Coroutine.yield();
@@ -289,6 +302,12 @@ class AssetBrowser extends EditorWidget {
     }
 
     public function refresh() {
+        pathDisabledMap = new Map();
+        for (path in pathTreeItemMap.keys()) {
+            var treeItem = pathTreeItemMap[path];
+            pathDisabledMap[path] = treeItem.collapsed;
+        }
+        buildTreeRoot();
         refreshItemList();
     }
 
