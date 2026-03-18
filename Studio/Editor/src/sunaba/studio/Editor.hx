@@ -53,6 +53,15 @@ import sunaba.studio.fileHandlers.SmdlFileHander;
 import sunaba.studio.fileHandlers.VpfbFileHandler;
 import sunaba.studio.fileHandlers.VscnFileHandler;
 import sunaba.studio.fileHandlers.MapFileHandler;
+import sunaba.studio.fileHandlers.BmpFileHandler;
+import sunaba.studio.fileHandlers.DdsFileHandler;
+import sunaba.studio.fileHandlers.JpegFileHandler;
+import sunaba.studio.fileHandlers.JpgFileHandler;
+import sunaba.studio.fileHandlers.KtxFileHandler;
+import sunaba.studio.fileHandlers.PngFileHandler;
+import sunaba.studio.fileHandlers.SvgFileHandler;
+import sunaba.studio.fileHandlers.TgaFileHandler;
+import sunaba.studio.fileHandlers.WebpFileHandler;
 import sunaba.io.IoManager;
 import sunaba.studio.sceneEditor.SceneInspector;
 import lua.Table;
@@ -777,6 +786,15 @@ class Editor extends Widget {
             }
 
             explorer = new Explorer(this, EditorArea.leftSidebar);
+            explorer.fileHandlers.push(new BmpFileHandler(explorer));
+            explorer.fileHandlers.push(new DdsFileHandler(explorer));
+            explorer.fileHandlers.push(new JpegFileHandler(explorer));
+            explorer.fileHandlers.push(new JpgFileHandler(explorer));
+            explorer.fileHandlers.push(new KtxFileHandler(explorer));
+            explorer.fileHandlers.push(new PngFileHandler(explorer));
+            explorer.fileHandlers.push(new SvgFileHandler(explorer));
+            explorer.fileHandlers.push(new TgaFileHandler(explorer));
+            explorer.fileHandlers.push(new WebpFileHandler(explorer));
             explorer.fileHandlers.push(new HxFileHandler(explorer));
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
