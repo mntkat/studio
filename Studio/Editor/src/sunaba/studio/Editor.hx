@@ -482,21 +482,15 @@ class Editor extends Widget {
                     assetBrowser.newFile();
                 }
                 else if (id == 1) {
-                    Debug.error("'Open File' not implemented");
-                }
-                else if (id == 2) {
                     save();
                 }
-                else if (id == 3) {
+                else if (id == 2) {
                     Debug.error("'Publish' not implemented");
                 }
                 else if (id == 4) {
-
-                }
-                else if (id == 5) {
                     Debug.error("'Open Project in Visual Studio Code' not implemented");
                 }
-                else if (id == 6) {
+                else if (id == 5) {
                     App.exit(0);
                 }
             }));
