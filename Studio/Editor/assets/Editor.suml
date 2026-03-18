@@ -41,7 +41,7 @@
                             fullRect="true">
                             <sunaba.desktop.PopupMenu
                                 name="File">
-                                <menuItem label="New File" icon="studio://icons/16/blue-folder--plus.png"/>
+                                <menuItem label="New File" icon="studio://icons/16/document--plus.png"/>
                                 <menuItem label="Save File" icon="studio://icons/16/disk.png"/>
                                 <menuItem label="Publish" icon="studio://icons/16/box--arrow.png"/>
                                 <menuItem separator="true"/>
