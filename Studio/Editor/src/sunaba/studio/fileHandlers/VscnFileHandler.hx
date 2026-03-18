@@ -17,4 +17,8 @@ class VscnFileHandler extends FileHandler {
 
         sceneEditor.openScene(assetPath);
     }
+
+    public override function getThunbnail(path:String):Texture2D {
+        return editor.loadIcon("studio://icons/16_2x/clapperboard.png");
+    }
 }

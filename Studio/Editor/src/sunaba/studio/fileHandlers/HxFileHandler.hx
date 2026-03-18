@@ -17,4 +17,8 @@ class HxFileHandler extends FileHandler {
         editor.setWorkspaceTabIcon(codeEditor, explorer.loadIcon(iconPath));
         codeEditor.openFile(path, HaxePlugin);
     }
+
+    public override function getThunbnail(path:String):Texture2D {
+        return editor.loadIcon("studio://icons/16_2x/script-code.png");
+    }
 }

@@ -24,4 +24,7 @@ class FileHandler {
 
     public function init() {}
     public function openFile(path : String) {}
+    public function getThunbnail(path: String): Texture2D {
+        return null;
+    }
 }

@@ -24,4 +24,8 @@ class VchrFileHandler extends FileHandler {
             Debug.error(e.message + " : " + e.stack);
         }
     }
+
+    public override function getThunbnail(path:String):Texture2D {
+        return editor.loadIcon("studio://icons/16_2x/toilet-male.png");
+    }
 }

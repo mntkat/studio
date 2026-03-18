@@ -347,7 +347,16 @@ class AssetBrowser extends EditorWidget {
             Coroutine.yield();
             for (file in files) {
                 Coroutine.yield();
-                var icon = fileIcon32;
+                var icon: Texture2D = fileIcon32;
+                var fileHandlers = getEditor().explorer.fileHandlers;
+                for (fileHandler in fileHandlers) {
+                    if (StringTools.endsWith(file, "." + fileHandler.extension)) {
+                        var thumb = fileHandler.getThunbnail(file);
+                        if (thumb != null) {
+                            icon = thumb;
+                        }
+                    }
+                }
                 Coroutine.yield();
                 var fileName = file.toString().split("/").pop();
                 Coroutine.yield();

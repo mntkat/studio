@@ -22,4 +22,8 @@ class SmdlFileHandler extends FileHandler {
             editor.console.error("Error opening model: " + e.toString());
         }
     }
+
+    public override function getThunbnail(path:String):Texture2D {
+        return editor.loadIcon("studio://icons/16_2x/block.png");
+    }
 }
