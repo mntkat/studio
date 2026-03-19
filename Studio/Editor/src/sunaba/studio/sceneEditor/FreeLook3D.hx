@@ -79,6 +79,13 @@ class FreeLook3D extends Behavior {
             }
         }
 
+        if (InputService.isKeyPressed(Key.alt)) {
+            InputService.mouseMode = MouseMode.captured;
+        }
+        else {
+            InputService.mouseMode = MouseMode.visible;
+        }
+
         if (InputService.mouseMode == MouseMode.captured) {
             if (event.native.isClass("InputEventMouseMotion")) {
                 var eventMouseMotion = Reference.castTo(event, InputEventMouseMotion);
