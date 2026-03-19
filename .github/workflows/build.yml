@@ -195,7 +195,7 @@ jobs:
       - name: Build Project (Zip) (Windows Arm Release)
         if: matrix.config.target == 'windows-arm64' && matrix.build_type == 'release'
         run: |
-          cd ${{ github.workspace }}/bin/windows-x86_64-release
+          cd ${{ github.workspace }}/bin/windows-arm64-release
           zip -r -0 ${{ github.workspace }}/bin/windows-arm64-release.zip *
 
       - name: Build Project (Zip) (Windows Debug)
