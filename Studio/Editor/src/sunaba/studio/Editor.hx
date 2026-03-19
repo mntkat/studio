@@ -1437,6 +1437,7 @@ class Editor extends Widget {
             Sys.setCwd(explorer.projectDirectory);
 
             var process = new ProcessSpawner();
+            addChild(process);
             process.spawn(commandName, args);
             while (!process.hasExited()) {
                 Coroutine.yield();
