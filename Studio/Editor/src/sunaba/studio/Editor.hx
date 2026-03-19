@@ -2131,9 +2131,6 @@ class Editor extends Widget {
         debugMenu.setItemDisabled(0, true);
         if (playBuildWindow != null) {
             var scaleFactor = window.contentScaleFactor;
-
-            var windowSize = playBuildWindow.size;
-            playBuildWindow.minSize = new Vector2i(Std.int(windowSize.x * scaleFactor), Std.int(windowSize.y * scaleFactor));
             playBuildWindow.contentScaleFactor = scaleFactor;
             playBuildWindow.popupCentered();
         }
