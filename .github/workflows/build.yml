@@ -47,12 +47,12 @@ jobs:
               os: ubuntu-latest,
               pkgformat: nsis,
             }
-          - { 
-              name: '💪🪟 Windows Arm', 
-              target: windows-arm64, 
-              os: ubuntu-latest, 
-              pkgformat: nsis 
-            }
+          #- { 
+          #    name: '💪🪟 Windows Arm', 
+          #    target: windows-arm64, 
+          #    os: ubuntu-latest, 
+          #    pkgformat: nsis 
+          #  }
 
     name: 🛠 Build / ${{ matrix.config.name }} (${{ matrix.build_type }})
     runs-on: ${{ matrix.config.os }}
