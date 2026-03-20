@@ -685,6 +685,7 @@ class SceneInspector extends EditorWidget {
             if (entity == prefab) {
                 for (i in 0...entity.getChildCount()) {
                     var child = entity.getChild(i);
+                    if (child.hidden) continue;
                     buildEntityTree(item, child);
                 }
             }
