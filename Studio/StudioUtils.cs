@@ -4,9 +4,14 @@ using System.Runtime.InteropServices;
 
 public partial class StudioUtils : Node
 {
+	public static string BaseDirectory = "";
+
 	public string GetBaseDirectory()
 	{
-		return AppDomain.CurrentDomain.BaseDirectory;
+		if (BaseDirectory == "")
+			BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+		return BaseDirectory;
 	}
 
 	public string GetToolchainDirectory()

@@ -150,6 +150,8 @@ class Editor extends Widget {
 
     private var toolFunctions: Array<()->Void> = new Array();
 
+    public var toolchainDir: String;
+
     private var _projectFile: ProjectFile = null;
     public var projectFile(get, default): ProjectFile;
     function get_projectFile():ProjectFile {
@@ -989,6 +991,8 @@ class Editor extends Widget {
         catch(e: Exception) {
             Debug.error(e.message);
         }
+
+        toolchainDir = StudioUtils.singleton.getToolchainDirectory();
 
         if (OSService.getName() == "Windows") {
             var hiddenDir = explorer.projectDirectory + "/.studio";

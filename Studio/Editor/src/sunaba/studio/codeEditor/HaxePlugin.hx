@@ -124,10 +124,8 @@ class HaxePlugin extends CodeEditorPlugin {
 
         lspBridge = new LspBridge();
 
-        var toolchainDir = Path.addTrailingSlash(StudioUtils.singleton.getToolchainDirectory());
-        if (StringTools.contains(toolchainDir, "//")) {
-            toolchainDir = StringTools.replace(toolchainDir, "//", "/");
-        }
+        var toolchainDir = codeEditor.getEditor().toolchainDir;
+        toolchainDir = Path.addTrailingSlash(toolchainDir);
         var nodePath = toolchainDir;
         if (OSService.getName() == "Windows") {
             nodePath += "node.exe";
