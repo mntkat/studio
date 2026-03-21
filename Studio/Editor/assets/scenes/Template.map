@@ -20,3 +20,10 @@
 "classname" "info_environmet_standard"
 "origin" "-56 24 8"
 }
+// entity 2
+{
+"classname" "info_prefab"
+"origin" "8 8 8"
+"path" "studio://prefabs/DirectionalLight.vpfb"
+"name" "Directional Light"
+}

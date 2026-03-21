@@ -1,0 +1,143 @@
+{
+	"children": [
+		{
+			"children": [],
+			"classType": "sunaba.EntityData",
+			"components": [
+				{
+					"data": {
+						"position": {
+							"type": 9,
+							"value": [
+								0.0,
+								0.0,
+								0.0
+							]
+						},
+						"rotation": {
+							"type": 9,
+							"value": [
+								-0.785000026226044,
+								0.0,
+								0.0
+							]
+						},
+						"scale": {
+							"type": 9,
+							"value": [
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					},
+					"type": "sunaba.spatial.SpatialTransform"
+				},
+				{
+					"data": {
+						"directionalShadowBlendSplits": false,
+						"directionalShadowFadeStart": 0.800000011920929,
+						"directionalShadowMaxDistance": 100.0,
+						"directionalShadowMode": 2,
+						"directionalShadowPancakeSize": 20.0,
+						"directionalShadowSplit1": 0.100000001490116,
+						"directionalShadowSplit2": 0.200000002980232,
+						"directionalShadowSplit3": 0.5,
+						"distanceFadeBegin": 40.0,
+						"distanceFadeEnabled": false,
+						"distanceFadeLength": 10.0,
+						"distanceFadeShadow": 50.0,
+						"layerMask": 0,
+						"lightAngularDistance": 0.0,
+						"lightBakeMode": 2,
+						"lightColor": {
+							"type": 20,
+							"value": "ffffffff"
+						},
+						"lightCullMask": -1,
+						"lightEnergy": 1.0,
+						"lightIndirectEnergy": 1.0,
+						"lightIntensityLumens": 100000.0,
+						"lightIntensityLux": 100000.0,
+						"lightNegative": false,
+						"lightProjector": {
+							"type": 24,
+							"value": {
+								"class": "Texture2D",
+								"path": "?",
+								"properties": {
+									"resource_local_to_scene": {
+										"type": 1,
+										"value": false
+									},
+									"resource_name": {
+										"type": 4,
+										"value": ""
+									},
+									"resource_path": {
+										"type": 4,
+										"value": ""
+									},
+									"resource_scene_unique_id": {
+										"type": 4,
+										"value": ""
+									}
+								}
+							}
+						},
+						"lightSize": 0.0,
+						"lightSpecular": 1.0,
+						"lightTemperature": 6500.0,
+						"lightVolumetricFogEnergy": 1.0,
+						"shadowBias": 0.100000001490116,
+						"shadowBlur": 1.0,
+						"shadowCasterMask": -1,
+						"shadowEnabled": false,
+						"shadowReverseCullFace": false,
+						"shadowTransmittanceBias": 0.0500000007450581,
+						"skyMode": 0,
+						"sortingOffset": 0.0,
+						"sortingUseAabbCenter": true
+					},
+					"type": "sunaba.spatial.lighting.DirectionalLight"
+				}
+			],
+			"name": "Light",
+			"path": ""
+		}
+	],
+	"classType": "sunaba.Prefab",
+	"components": [
+		{
+			"data": {
+				"position": {
+					"type": 9,
+					"value": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				"rotation": {
+					"type": 9,
+					"value": [
+						0.0,
+						0.0,
+						0.0
+					]
+				},
+				"scale": {
+					"type": 9,
+					"value": [
+						1.0,
+						1.0,
+						1.0
+					]
+				}
+			},
+			"type": "sunaba.spatial.SpatialTransform"
+		}
+	],
+	"name": "DirectionalLight",
+	"path": "studio://prefabs/DirectionalLight.vpfb"
+}
