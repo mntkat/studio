@@ -2310,13 +2310,17 @@ class Editor extends Widget {
         subViewport.addChild(playerAppView);
         playerAppView.init(false);
         var studioUtils = StudioUtils.singleton;
-        var baseDir = studioUtils.getBaseDirectory();
+        if (baseDir == null) {
+            baseDir = studioUtils.getBaseDirectory();
+        }
         studioUtils.queueFree();
         playerAppView.loadLibrary(baseDir + "basetxt.slib");
         playerAppView.loadLibrary(baseDir + "basesfx.slib");
         playerAppView.loadLibrary(baseDir + "basechar.slib");
         playerAppView.loadApp(snbPath);
     }
+
+    public var baseDir: String = null;
 
     private var showDialog = false;
 
