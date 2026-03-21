@@ -1947,16 +1947,23 @@ class Editor extends Widget {
         }
 
         if (isGameRunning) {
-            if (InputService.isKeyLabelPressed(Key.f6) && isGamePaused)
+            if (InputService.isKeyLabelPressed(Key.f5) && isGamePaused)
                 unpause();
             else if (InputService.isKeyLabelPressed(Key.f7))
                 pause();
             else if (InputService.isKeyLabelPressed(Key.f8))
                 stop();
         }
-        else
-            if (InputService.isKeyLabelPressed(Key.f6))
+        else if (gamepakBuildCoroutine == null) {
+            if (InputService.isKeyLabelPressed(Key.f5))
                 buildSnbForPlay();
+            else if (InputService.isKeyLabelPressed(Key.f6))
+                buildProject();
+        }
+        if (InputService.isKeyLabelPressed(Key.f4) && buildTask == null) {
+            buildPlugin();
+        }
+
 
 
         if (OSService.getName() != "macOS" && customTitlebar) {
