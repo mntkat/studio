@@ -916,7 +916,7 @@ class Editor extends Widget {
                             fileDialog.queueFree();
                         });
 
-                        fileDialog2.popupCentered();
+                        fileDialog2.popupFileDialog();
                     }));
                     fileDialog.canceled.add(() -> {
                         fileDialog.queueFree();
@@ -925,7 +925,7 @@ class Editor extends Widget {
                         fileDialog.queueFree();
                     });
 
-                    fileDialog.popupCentered();
+                    fileDialog.popupFileDialog();
                 },
                 "Import 3D Model",
                 loadIcon("studio://icons/16/block.png")
