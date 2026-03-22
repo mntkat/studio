@@ -41,6 +41,15 @@ class Gizmo3D extends Behavior {
         return value;
     }
 
+    public var manualSnapping(get, set): Bool;
+    function get_manualSnapping():Bool {
+        return node.native.get("manual_snapping");
+    }
+    function set_manualSnapping(value:Bool):Bool {
+        node.native.set("manual_snapping", value);
+        return value;
+    }
+
     public var snapping(get, default): Bool;
     function get_snapping():Bool {
         return node.native.get("snapping");

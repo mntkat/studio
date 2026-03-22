@@ -44,17 +44,12 @@
                         iconAlignment="1"
                         icon="studio://icons/16/arrow-out.png"
                         flat="true"/>
-                </sunaba.ui.HBoxContainer>
-            </sunaba.ui.Control>
-            <sunaba.ui.Control
-                name="objectToolbar2"
-                customMinimumSize="0, 32">
-                <sunaba.ui.HBoxContainer
-                    name="hbox"
-                    fullRect="true">
-                    <sunaba.ui.CenterContainer customMinimumSize="0, 32">
-                        <sunaba.ui.TextureRect texture="studio://icons/16/magnet-blue.png"/>
-                    </sunaba.ui.CenterContainer>
+                    <sunaba.ui.VSeparator/>
+                    <sunaba.ui.CheckBox
+                        name="snapToGrid"
+                        icon="studio://icons/16/magnet-blue.png"
+                        text=" Snap to Grid "
+                        flat="true"/>
                     <sunaba.ui.Label text="Translate: "/>
                     <sunaba.ui.SpinBox name="translateSpinBox" value="1"/>
                     <sunaba.ui.Label text="Rotate: "/>
@@ -63,6 +58,28 @@
                     <sunaba.ui.SpinBox name="scaleSpinBox" value="1"/>
                 </sunaba.ui.HBoxContainer>
             </sunaba.ui.Control>
+            <!--sunaba.ui.Control
+                name="objectToolbar2"
+                customMinimumSize="0, 32">
+                <sunaba.ui.HBoxContainer
+                    name="hbox"
+                    fullRect="true">
+                    <sunaba.ui.CenterContainer customMinimumSize="0, 32">
+                        <sunaba.ui.TextureRect texture="studio://icons/16/magnet-blue.png"/>
+                    </sunaba.ui.CenterContainer>
+                    <sunaba.ui.CheckBox
+                        name="snapToGrid"
+                        icon="studio://icons/16/magnet-blue.png"
+                        text=" Snap to Grid "
+                        flat="true"/>
+                    <sunaba.ui.Label text="Translate: "/>
+                    <sunaba.ui.SpinBox name="translateSpinBox" value="1"/>
+                    <sunaba.ui.Label text="Rotate: "/>
+                    <sunaba.ui.SpinBox name="rotateSpinBox" value="1"/>
+                    <sunaba.ui.Label text="Scale: "/>
+                    <sunaba.ui.SpinBox name="scaleSpinBox" value="1"/>
+                </sunaba.ui.HBoxContainer>
+            </sunaba.ui.Control-->
             <sunaba.ui.SubViewportContainer
                 name="container"
                 stretch="true"

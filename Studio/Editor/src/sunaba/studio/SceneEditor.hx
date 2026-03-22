@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.ui.CheckBox;
 import sunaba.ui.VBoxContainer;
 import sunaba.ui.Control;
 import sunaba.ui.OptionButton;
@@ -28,6 +29,7 @@ import sunaba.core.Callable;
 import sunaba.Prefab;
 import sunaba.UndoRedo;
 import sunaba.VariantHolder;
+import sunaba.ui.VSeparator;
 
 class SceneEditor extends EditorWidget {
     private var filePath: String;
@@ -41,6 +43,7 @@ class SceneEditor extends EditorWidget {
     public var rotateButton: Button;
     public var scaleButton: Button;
 
+    public var snapToGridCheckBox: CheckBox;
     public var translateSpinBox: SpinBox;
     public var rotateSpinBox: SpinBox;
     public var scaleSpinBox: SpinBox;
@@ -66,7 +69,7 @@ class SceneEditor extends EditorWidget {
     private var valueHolder: VariantHolder;
 
     private var objectToolbar: Control;
-    private var objectToolbar2: Control;
+    //private var objectToolbar2: Control;
 
     public var toolbarVbox: VBoxContainer;
 
@@ -105,14 +108,14 @@ class SceneEditor extends EditorWidget {
         onModeChanged.add((m) -> {
             if (m == 0) {
                 objectToolbar.show();
-                objectToolbar2.show();
+                //objectToolbar2.show();
                 if (getEditor().sceneInspector.selectedEntity != null) {
                     gizmo.select(getEditor().sceneInspector.selectedEntity.getComponent(SpatialTransform));
                 }
             }
             else {
                 objectToolbar.hide();
-                objectToolbar2.hide();
+                //objectToolbar2.hide();
                 gizmo.clearSelection();
             }
         });
@@ -137,20 +140,24 @@ class SceneEditor extends EditorWidget {
             gizmoMode = GizmoToolMode.scale;
         }));
 
-        objectToolbar2 = getNodeT(Control, "vbox/objectToolbar2");
-        translateSpinBox = getNodeT(SpinBox, "vbox/objectToolbar2/hbox/translateSpinBox");
+        //objectToolbar2 = getNodeT(Control, "vbox/objectToolbar2");
+        snapToGridCheckBox = getNodeT(CheckBox, "vbox/objectToolbar/hbox/snapToGrid");
+        snapToGridCheckBox.toggled.add((on: Bool) -> {
+            gizmo.manualSnapping = on;
+        });
+        translateSpinBox = getNodeT(SpinBox, "vbox/objectToolbar/hbox/translateSpinBox");
         translateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
             if (gizmo != null) {
                 gizmo.translateSnap = value;
             }
         }));
-        rotateSpinBox = getNodeT(SpinBox, "vbox/objectToolbar2/hbox/rotateSpinBox");
+        rotateSpinBox = getNodeT(SpinBox, "vbox/objectToolbar/hbox/rotateSpinBox");
         rotateSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
             if (gizmo != null) {
                 gizmo.rotateSnap = value;
             }
         }));
-        scaleSpinBox = getNodeT(SpinBox, "vbox/objectToolbar2/hbox/scaleSpinBox");
+        scaleSpinBox = getNodeT(SpinBox, "vbox/objectToolbar/hbox/scaleSpinBox");
         scaleSpinBox.valueChanged.connect(Callable.fromFunction(function(value: Float) {
             if (gizmo != null) {
                 gizmo.scaleSnap = value;

@@ -63,6 +63,7 @@ var layers: int:
 ## The nodes this gizmo will apply transformations to.
 var _selections : Dictionary[Node3D, SelectedItem]
 ## Whether or not transformations will be snapped to rotate_snap, scale_snap, and/or translate_snap.
+var manual_snapping: bool = false
 var _snapping : bool
 ## Shift modifier for snapping at lower intervals.
 var _shift_snap : bool
@@ -385,10 +386,12 @@ func get_scale_snap() -> float:
 
 func _unhandled_input(event : InputEvent) -> void:
 	_hovering = false
+	if manual_snapping == true:
+		_snapping = true
 	if !visible:
 		_editing = false
 	elif event is InputEventKey:
-		if event.keycode == KEY_CTRL:
+		if event.keycode == KEY_CTRL and manual_snapping == false:
 			_snapping = event.pressed
 		elif event.keycode == KEY_SHIFT:
 			_shift_snap = event.pressed
