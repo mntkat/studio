@@ -289,14 +289,6 @@ class ModelImportService {
         yeild();
         var transform = entity.addComponent(SpatialTransform);
         yeild();
-        if (!gdnode.getParent().isNull()) {
-            yeild();
-            gdnode.getParent().removeChild(gdnode);
-            yeild();
-        }
-        yeild();
-        transform.node = gdnode;
-        yeild();
 
         if (gdnode.native.isClass("Camera3D")) {
             yeild();
@@ -434,10 +426,26 @@ class ModelImportService {
                 yeild();
                 continue;
             }
+            if (entity.find(childNode.name) != null) {
+                yeild();
+                continue;
+            }
             yeild();
             var child = createEntity(document, state, childNode, modelDir, io);
             yeild();
             entity.addChild(child);
+
+            var childTransform = child.getComponent(SpatialTransform);
+            yeild();
+            if (childTransform != null) {
+                yeild();
+                childTransform.position = childNode.native.get("position");
+                yeild();
+                childTransform.rotation = childNode.native.get("rotation");
+                yeild();
+                childTransform.scale = childNode.native.get("scale");
+                yeild();
+            }
             yeild();
         }
         yeild();
