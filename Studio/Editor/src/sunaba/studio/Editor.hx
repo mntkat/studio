@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.studio.sceneEditor.SceneEditorPlugin;
 import haxe.crypto.Base64;
 import haxe.io.Path;
 import sunaba.desktop.FileDialog;
@@ -151,6 +152,15 @@ class Editor extends Widget {
     private var toolFunctions: Array<()->Void> = new Array();
 
     public var toolchainDir: String;
+
+    private var _sceneEditorPlugins: Array<Class<SceneEditorPlugin>> = null;
+    public var sceneEditorPlugins(get, default): Array<Class<SceneEditorPlugin>>;
+    function get_sceneEditorPlugins(): Array<Class<SceneEditorPlugin>> {
+        if (_sceneEditorPlugins == null) {
+            _sceneEditorPlugins = [];
+        }
+        return _sceneEditorPlugins;
+    }
 
     private var _projectFile: ProjectFile = null;
     public var projectFile(get, default): ProjectFile;
