@@ -200,6 +200,11 @@ class ModelImportService {
 
             var rootEntity: Entity = createEntity(modelDocument, modelState, gdscene, destDir, io);
             yeild();
+            if (rootEntity.name == "") {
+                var destName = destPath.split("/").pop();
+                var modelName = destName.split(".")[0];
+                rootEntity.name = modelName;
+            }
             
             yeild();
             if (modelState.createAnimations == true) {
