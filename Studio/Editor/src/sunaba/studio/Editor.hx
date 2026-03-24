@@ -1134,6 +1134,8 @@ class Editor extends Widget {
         if (FileSystem.exists(projectPluginDir)) {
             loadPluginDir(projectPluginDir);
         }
+
+        assetBrowser.refresh();
     }
 
     private function generateHaxeWrapper() {
