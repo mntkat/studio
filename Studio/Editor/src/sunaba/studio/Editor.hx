@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.ui.CheckBox;
+import sunaba.ui.CheckButton;
 import sunaba.studio.sceneEditor.SceneEditorPlugin;
 import haxe.crypto.Base64;
 import haxe.io.Path;
@@ -117,6 +119,7 @@ class Editor extends Widget {
     public var trenchbroomButton: Button;
     //public var netradiantButton: Button;
 
+    public var fastBuildButton: CheckBox;
     public var buildButton: Button;
     public var playButton:Button;
     public var pauseButton:Button;
@@ -199,6 +202,8 @@ class Editor extends Widget {
     var leftSidebarToggled: Bool = true;
     var rightSidebarToggled: Bool = true;
 
+    var fastBuild: Bool = false;
+
     public override function init() {
         load("studio://Editor.suml");
 
@@ -247,11 +252,16 @@ class Editor extends Widget {
             openNetRadiant();
         });*/
 
+        fastBuildButton = getNodeT(CheckBox, "vbox/toolbar/hbox/rightToolbar/fastBuild");
         buildButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/build");
         playButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/play");
         pauseButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/pause");
         stopButton = getNodeT(Button, "vbox/toolbar/hbox/rightToolbar/stop");
 
+        fastBuild = false;
+        fastBuildButton.toggled.add((toggled) -> {
+            fastBuild = !fastBuild;
+        });
         buildButton.pressed.connect(Callable.fromFunction(function() {
             if (isGameRunning == false)
                 buildProject();
@@ -2110,6 +2120,8 @@ class Editor extends Widget {
     public function buildSnbForPlay() {
         if (isGameRunning) return;
 
+        buildSystem.skipAssets = fastBuild;
+
         playButton.disabled = true;
         buildButton.disabled = true;
         debugMenu.setItemDisabled(0, true);
@@ -2169,6 +2181,8 @@ class Editor extends Widget {
     public function buildProject() {
         if (isGameRunning) return;
 
+        buildSystem.skipAssets = fastBuild;
+
         playButton.disabled = true;
         buildButton.disabled = true;
         debugMenu.setItemDisabled(0, true);
@@ -2218,7 +2232,6 @@ class Editor extends Widget {
             return haxeBytes;
         };
         
-
         gamepakBuildCoroutine = buildSystem.buildCoroutine(projectFilePath);
         progressBarCoroutine = getPbcrt();
         playOnBuild = false;
@@ -2346,6 +2359,10 @@ class Editor extends Widget {
         playerAppView.loadLibrary(baseDir + "basetxt.slib");
         playerAppView.loadLibrary(baseDir + "basesfx.slib");
         playerAppView.loadLibrary(baseDir + "basechar.slib");
+
+        if (fastBuild == true) {
+            playerAppView.ioManager.register(projectIo);
+        }
         playerAppView.loadApp(snbPath);
     }
 

@@ -162,6 +162,11 @@
                         name="rightToolbar"
                         fullRect="true"
                         separation="0">
+                        <sunaba.ui.CheckBox
+                            name="fastBuild"
+                            flat="true"
+                            text="Fast Build"
+                            customMinimumSize="40,40"/>
                         <sunaba.ui.Button
                             name="build"
                             flat="true"
