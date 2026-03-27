@@ -1,5 +1,10 @@
 package sunaba.studio;
 
+import sunaba.ui.Button;
+import haxe.Exception;
+import sunaba.ui.Widget;
+import sunaba.core.Color;
+import sunaba.desktop.Window;
 import sunaba.ui.Label;
 import sunaba.ui.CodeEdit;
 
@@ -8,6 +13,7 @@ class SumlEditor extends EditorWidget {
 
     public var lineAndColumnLabel: Label;
     public var languageLabel: Label;
+    public var refreshButton: Button;
 
     public var languageName(get, set): String;
     function get_languageName():String {
@@ -26,12 +32,25 @@ class SumlEditor extends EditorWidget {
     public var path: String;
     public var savedCode: String = "";
 
+    public var outputWindow: Window;
+
+    public var previewWidget: Widget = null;
+
     public override function init() {
         load("studio://SumlEditor.suml");
 
         codeEdit = getNodeT(CodeEdit, "vbox/hsplit/codeEdit");
         lineAndColumnLabel = getNodeT(Label, "vbox/statusbar/hbox/lineAndColumnLabel");
         languageLabel = getNodeT(Label, "vbox/statusbar/hbox/languageLabel");
+        refreshButton = getNodeT(Button, "vbox/statusbar/hbox/refresh");
+        refreshButton.pressed.add(() -> {
+            refresh();
+        });
+
+        outputWindow = getNodeT(Window, "vbox/hsplit/container/subViewport/window");
+
+        var subViewport = getNodeT(SubViewport, "vbox/hsplit/container/subViewport");
+        subViewport.transparentBg = true;
 
         codeEdit.drawControlChars = true;
         codeEdit.lineFolding = true;
@@ -58,6 +77,8 @@ class SumlEditor extends EditorWidget {
         code = io.loadText(path);
         savedCode = code;
         codeEdit.clearUndoHistory();
+
+        refresh();
     }
 
     public override function onSave() {
@@ -68,6 +89,22 @@ class SumlEditor extends EditorWidget {
         savedCode = code;
         var tabTitle = getEditor().getWorkspaceTabTitle(this);
         getEditor().setWorkspaceTabTitle(this, StringTools.replace(tabTitle, "*", ""));
+    }
+
+    public function refresh() {
+        try {
+            if (previewWidget == null) {
+                previewWidget = new Widget();
+                outputWindow.addChild(previewWidget);
+                previewWidget.load(path);
+            }
+            else {
+                previewWidget.parseMarkup(code);
+            }
+        }
+        catch(e: Exception) {
+            Debug.error(e.message + "\n\n" + e.stack, "Error parsing SUML");
+        }
     }
 
     public override function onProcess(deltaTime: Float) {
@@ -83,6 +120,8 @@ class SumlEditor extends EditorWidget {
         if (lineAndColumnLabel.text != labelText) {
             lineAndColumnLabel.text = labelText;
         }
+
+        outputWindow.theme = theme;
     }
 
     public override function onUndo() {

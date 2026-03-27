@@ -19,9 +19,9 @@
                     autoBraceCompletionEnabled="true"
                     drawControlChars="true"
                     drawTabs="true"/>
-                <sunaba.ui.SubViewportContainer name="SubViewportContainer" customMinimumSize="352, 275" stretch="true">
-                    <sunaba.SubViewport name="SubViewport" guiEmbedSubwindows="true">
-                        <sunaba.desktop.Window name="Window" size="352, 240" title="Output" />
+                <sunaba.ui.SubViewportContainer name="container" customMinimumSize="400, 300" stretch="true">
+                    <sunaba.SubViewport name="subViewport" guiEmbedSubwindows="true">
+                        <sunaba.desktop.Window name="window" size="352, 240" title="Output" />
                     </sunaba.SubViewport>
                 </sunaba.ui.SubViewportContainer>
             </sunaba.ui.HSplitContainer>
@@ -34,9 +34,9 @@
                     <sunaba.ui.Control customMinimumSize="0.25,0"/>
                     <sunaba.ui.Label name="languageLabel" text="SUML"/>
                     <sunaba.ui.Control sizeFlagsHorizontal="3"/>
-                    <sunaba.ui.Button name="refresh" text="Refresh UI View"/>
                     <sunaba.ui.Label name="lineAndColumnLabel" text="Ln0, Col 0"/>
                     <sunaba.ui.Control customMinimumSize="5,5"/>
+                    <sunaba.ui.Button name="refresh" text="Refresh UI View"/>
                 </sunaba.ui.HBoxContainer>
             </sunaba.ui.Control>
         </sunaba.ui.VBoxContainer>
