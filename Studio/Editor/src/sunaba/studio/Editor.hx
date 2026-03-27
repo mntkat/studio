@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.studio.fileHandlers.SumlFileHandler;
 import sunaba.ui.CheckBox;
 import sunaba.ui.CheckButton;
 import sunaba.studio.sceneEditor.SceneEditorPlugin;
@@ -830,6 +831,7 @@ class Editor extends Widget {
             explorer.fileHandlers.push(new OggVorbisFileHandler(explorer));
             explorer.fileHandlers.push(new WavFileHandler(explorer));
             explorer.fileHandlers.push(new HxFileHandler(explorer));
+            explorer.fileHandlers.push(new SumlFileHandler(explorer));
             explorer.fileHandlers.push(new VscnFileHandler(explorer));
             explorer.fileHandlers.push(new VpfbFileHandler(explorer));
             explorer.fileHandlers.push(new SmdlFileHandler(explorer));
