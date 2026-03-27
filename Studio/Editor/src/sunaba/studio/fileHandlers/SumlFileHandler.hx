@@ -1,9 +1,10 @@
 package sunaba.studio.fileHandlers;
 
+import sunaba.io.IoManager;
+import haxe.Exception;
 import sunaba.studio.explorer.FileHandler;
-import sunaba.studio.CodeEditor;
+import sunaba.studio.SumlEditor;
 import sunaba.studio.EditorArea;
-import sunaba.studio.codeEditor.HaxePlugin;
 
 
 class SumlFileHandler extends FileHandler {
@@ -13,9 +14,20 @@ class SumlFileHandler extends FileHandler {
     }
 
     public override function openFile(path: String) {
-        //var codeEditor = new CodeEditor(editor, EditorArea.workspace);
-        //editor.setWorkspaceTabIcon(codeEditor, explorer.loadIcon(iconPath));
-        //codeEditor.openFile(path, HaxePlugin);
+        var ioManager: IoManager = cast editor.io;
+        var assetPath = path;
+        if (!StringTools.contains(assetPath, "://")) {
+            assetPath = ioManager.getFileUrl(path);
+        }
+
+        try {
+            var sumlEditor = new SumlEditor(editor, EditorArea.workspace);
+            editor.setWorkspaceTabIcon(sumlEditor, explorer.loadIcon(iconPath));
+            sumlEditor.openFile(assetPath);
+        }
+        catch(e: Exception) {
+            Debug.error(e.message);
+        }
     }
 
     public override function getThunbnail(path:String):Texture2D {
