@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.ui.CodeHighlighter;
 import sunaba.ui.Button;
 import haxe.Exception;
 import sunaba.ui.Widget;
@@ -54,6 +55,17 @@ class SumlEditor extends EditorWidget {
 
         codeEdit.drawControlChars = true;
         codeEdit.lineFolding = true;
+
+        var codeHighlighter = new CodeHighlighter();
+        codeHighlighter.numberColor = Color.html("#df7aff");
+        codeHighlighter.symbolColor = Color.html("9a9a9a");//"#1dff60");
+        codeHighlighter.functionColor = Color.html("#83cdff");
+        codeHighlighter.memberVariableColor = Color.html("#00cebe");
+        codeHighlighter.addColorRegion("'", "'", Color.html("#9bda7b"));
+        codeHighlighter.addColorRegion('"', '"', Color.html("#9bda7b"));
+        codeHighlighter.addColorRegion('<!--', '-->', Color.html("#9bda7b"), true);
+
+        codeEdit.syntaxHighlighter = codeHighlighter;
     }
 
     public override function editorInit() {
