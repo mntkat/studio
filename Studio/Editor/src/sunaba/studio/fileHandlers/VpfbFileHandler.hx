@@ -1,5 +1,6 @@
 package sunaba.studio.fileHandlers;
 
+import sunaba.io.IoManager;
 import sunaba.studio.explorer.FileHandler;
 
 class VpfbFileHandler extends FileHandler {
@@ -9,7 +10,8 @@ class VpfbFileHandler extends FileHandler {
     }
 
     public override function openFile(path: String) {
-        var assetPath = StringTools.replace(path, explorer.assetsDirectory, editor.projectIo.pathUrl);
+        var ioManager: IoManager = cast editor.io;
+        var assetPath = ioManager.getFileUrl(path);
 
         var sceneEditor = new SceneEditor(editor, EditorArea.workspace);
         editor.setWorkspaceTabIcon(sceneEditor, explorer.loadIcon(iconPath));

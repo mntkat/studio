@@ -1,5 +1,6 @@
 package sunaba.studio.fileHandlers;
 
+import sunaba.io.IoManager;
 import sunaba.studio.explorer.FileHandler;
 import sunaba.studio.SceneEditor;
 import sunaba.studio.MapViewer;
@@ -12,7 +13,8 @@ class VchrFileHandler extends FileHandler {
     }
 
     public override function openFile(path: String) {
-        var assetPath = StringTools.replace(path, explorer.assetsDirectory, editor.projectIo.pathUrl);
+        var ioManager: IoManager = cast editor.io;
+        var assetPath = ioManager.getFileUrl(path);
 
         try {
             var characterViewer = new CharacterViewer(editor, EditorArea.workspace);
