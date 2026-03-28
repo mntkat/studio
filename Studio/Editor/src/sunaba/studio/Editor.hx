@@ -1,5 +1,6 @@
 package sunaba.studio;
 
+import sunaba.ui.ColorPicker;
 import sunaba.studio.fileHandlers.SumlFileHandler;
 import sunaba.ui.CheckBox;
 import sunaba.ui.CheckButton;
@@ -912,6 +913,37 @@ class Editor extends Widget {
                 },
                 "Import 3D Model",
                 loadIcon("studio://icons/16/block.png")
+            );
+
+            addToolFunction(() -> {
+                    try {
+                    var colorPickerWindow = new Window();
+                    colorPickerWindow.theme = theme;
+                    var panel = new Panel();
+                    panel.setAnchorsPreset(LayoutPreset.fullRect);
+                    panel.offsetTop = -10;
+                    panel.offsetBottom = 10;
+                    panel.offsetLeft = -10;
+                    panel.offsetRight = 10;
+                    colorPickerWindow.addChild(panel);
+                    var colorPicker = new ColorPicker();
+                    colorPickerWindow.addChild(colorPicker);
+                    colorPicker.setAnchorsPreset(LayoutPreset.fullRect);
+                    colorPickerWindow.closeRequested.add(() -> {
+                        colorPickerWindow.queueFree();
+                    });
+                    addChild(colorPickerWindow);
+                    colorPickerWindow.hide();
+                    colorPickerWindow.contentScaleFactor = this.window.contentScaleFactor;
+                    colorPickerWindow.minSize = new Vector2i(Std.int(300 * colorPickerWindow.contentScaleFactor), Std.int(634 * colorPickerWindow.contentScaleFactor));
+                    colorPickerWindow.popupCentered();
+                    }
+                    catch(e: Exception) {
+                        Debug.error(e.message + "\n\n" + e.stack);
+                    }
+                },
+                "Color Picker",
+                loadIcon("studio://icons/16/color.png")
             );
 
             addToolFunction(() -> {
