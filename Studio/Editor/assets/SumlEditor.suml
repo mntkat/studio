@@ -21,7 +21,9 @@
                     drawTabs="true"/>
                 <sunaba.ui.SubViewportContainer name="container" customMinimumSize="400, 300" stretch="true">
                     <sunaba.SubViewport name="subViewport" guiEmbedSubwindows="true">
-                        <sunaba.desktop.Window name="window" size="352, 240" title="Output" />
+                        <sunaba.desktop.Window name="window" size="352, 240" title="Output">
+                            <sunaba.ui.Panel name="panel" fullRect="true" offsetBottom="10" offsetTop="-10" offsetLeft="-10" offsetRight="10"/>
+                        </sunaba.desktop.Window>
                     </sunaba.SubViewport>
                 </sunaba.ui.SubViewportContainer>
             </sunaba.ui.HSplitContainer>
@@ -36,7 +38,8 @@
                     <sunaba.ui.Control sizeFlagsHorizontal="3"/>
                     <sunaba.ui.Label name="lineAndColumnLabel" text="Ln0, Col 0"/>
                     <sunaba.ui.Control customMinimumSize="5,5"/>
-                    <sunaba.ui.Button name="refresh" text="Refresh UI View"/>
+                    <sunaba.ui.CheckButton name="showPanel" flat="true" text="Show Panel"/>
+                    <sunaba.ui.Button name="refresh" flat="true" text="Refresh UI View"/>
                 </sunaba.ui.HBoxContainer>
             </sunaba.ui.Control>
         </sunaba.ui.VBoxContainer>

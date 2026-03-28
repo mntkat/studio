@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.ui.Panel;
+import sunaba.ui.CheckButton;
 import sunaba.input.InputService;
 import sunaba.input.InputEvent;
 import sunaba.ui.CodeHighlighter;
@@ -45,6 +47,7 @@ class SumlEditor extends EditorWidget {
     public var lineAndColumnLabel: Label;
     public var languageLabel: Label;
     public var refreshButton: Button;
+    public var showPanelButton: CheckButton;
 
     public var languageName(get, set): String;
     function get_languageName():String {
@@ -64,6 +67,7 @@ class SumlEditor extends EditorWidget {
     public var savedCode: String = "";
 
     public var outputWindow: Window;
+    public var panel: Panel;
 
     public var previewWidget: Widget = null;
 
@@ -73,12 +77,18 @@ class SumlEditor extends EditorWidget {
         codeEdit = getNodeT(CodeEdit, "vbox/hsplit/codeEdit");
         lineAndColumnLabel = getNodeT(Label, "vbox/statusbar/hbox/lineAndColumnLabel");
         languageLabel = getNodeT(Label, "vbox/statusbar/hbox/languageLabel");
+        showPanelButton = getNodeT(CheckButton, "vbox/statusbar/hbox/showPanel");
+        showPanelButton.toggled.add((toggled: Bool) -> {
+            panel.visible = toggled;
+        });
         refreshButton = getNodeT(Button, "vbox/statusbar/hbox/refresh");
         refreshButton.pressed.add(() -> {
             refresh();
         });
 
         outputWindow = getNodeT(Window, "vbox/hsplit/container/subViewport/window");
+        panel = getNodeT(Panel, "vbox/hsplit/container/subViewport/window/panel");
+        panel.hide();
 
         var subViewport = getNodeT(SubViewport, "vbox/hsplit/container/subViewport");
         subViewport.transparentBg = true;
