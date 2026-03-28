@@ -849,6 +849,10 @@ class Editor extends Widget {
                 var mapContents = io.loadBytes("studio://scenes/Template.map");
                 io.saveBytes(path, mapContents);
             });
+            explorer.newFileWidget.addAssetFileTemplate("UI Document", ".suml", explorer.loadIcon("studio://icons/16_2x/document-attribute-s.png"), (path: String) -> {
+                var mapContents = io.loadBytes("studio://Template.suml");
+                io.saveBytes(path, mapContents);
+            });
             explorer.newFileWidget.addScriptFileTemplate("Empty Script", ".hx", explorer.loadIcon("studio://icons/16_2x/document.png"), (path: String) -> {
                 sourceIo.saveText(path, "");
             });
