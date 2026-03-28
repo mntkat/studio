@@ -934,6 +934,7 @@ class Editor extends Widget {
                     });
                     addChild(colorPickerWindow);
                     colorPickerWindow.hide();
+                    colorPickerWindow.title = "Color Picker - Sunaba Studio";
                     colorPickerWindow.contentScaleFactor = this.window.contentScaleFactor;
                     colorPickerWindow.minSize = new Vector2i(Std.int(300 * colorPickerWindow.contentScaleFactor), Std.int(634 * colorPickerWindow.contentScaleFactor));
                     colorPickerWindow.popupCentered();
