@@ -1,5 +1,7 @@
 package sunaba.studio;
 
+import sunaba.input.InputService;
+import sunaba.input.InputEvent;
 import sunaba.ui.CodeHighlighter;
 import sunaba.ui.Button;
 import haxe.Exception;
@@ -162,6 +164,14 @@ class SumlEditor extends EditorWidget {
         }
 
         outputWindow.theme = theme;
+    }
+
+    public override function onInput(event:InputEvent) {
+        if (getEditor().isControlKeyPressed()) {
+            if (InputService.isKeyLabelPressed(Key.r)) {
+                refresh();
+            }
+        }
     }
 
     public override function onUndo() {
