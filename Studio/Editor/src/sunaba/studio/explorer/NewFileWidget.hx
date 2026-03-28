@@ -124,6 +124,7 @@ class NewFileWidget extends Widget {
                 scriptLastSelected.createFile(scriptFilePath);
             }
             _explorer.refresh();
+            _explorer.getEditor().assetBrowser.refresh();
         });
 
         itemList.itemSelected.add((index: Int) -> {
